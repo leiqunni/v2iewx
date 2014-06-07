@@ -55,14 +55,12 @@
         <_TCHARMapping>wchar_t</_TCHARMapping>
         <ProjectType>CppVCLApplication</ProjectType>
         <Multithreaded>true</Multithreaded>
-        <ILINK_LibraryPath>..\v2\;..\v2iewx++\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <Manifest_File>None</Manifest_File>
         <VerInfo_Keys>CompanyName=DarkEra Software;FileDescription=v2iewrx the image viewer.;FileVersion=2014.6.8.0;InternalName=;LegalCopyright=Copyright © 2007-2014 793 ◆7BJkZFw08A / DarkEra;LegalTrademarks=;OriginalFilename=v2iewrx.exe;ProductName=v2iewrx;ProductVersion=2014.6.8.0;Comments=</VerInfo_Keys>
         <BCC_PCHCache>true</BCC_PCHCache>
         <AllPackageLibs>rtl.lib;vcl.lib;GdViewerPro4.lib;vclx.lib</AllPackageLibs>
         <Icon_MainIcon>..\..\..\GitHub\v2iewx\v2iewx_Icon.ico</Icon_MainIcon>
-        <IncludePath>..\v2\;..\v2iewx++\;$(IncludePath)</IncludePath>
         <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
         <IntermediateOutputDir>.\$(Platform)\$(Config)</IntermediateOutputDir>
         <FinalOutputDir>.\$(Platform)\$(Config)</FinalOutputDir>
@@ -107,12 +105,7 @@
         <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\debug\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <VerInfo_MajorVer>2014</VerInfo_MajorVer>
-        <VerInfo_MinorVer>6</VerInfo_MinorVer>
-        <VerInfo_Release>8</VerInfo_Release>
         <VerInfo_Keys>CompanyName=DarkEra Software;FileDescription=v2iewx the image viewer;FileVersion=2014.6.8.0;InternalName=;LegalCopyright=Copyright 2007 - 2014 793 ◆7BJkZFw08A / DarkEra Software;LegalTrademarks=;OriginalFilename=v2iewx.exe;ProductName=v2iewx;ProductVersion=2014.6.8.0;Comments=</VerInfo_Keys>
-        <Icon_MainIcon>..\..\..\GitHub\v2iewx\v2iewx_Icon.ico</Icon_MainIcon>
-        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <LinkPackageStatics>rtl.lib;vcl.lib;GdViewerPro4.lib;vclx.lib</LinkPackageStatics>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
