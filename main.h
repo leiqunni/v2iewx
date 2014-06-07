@@ -53,11 +53,9 @@ __published:	// IDE-managed Components
 	TMainMenu *MainMenu;
 	TMenuItem *mnuFile;
 	TMenuItem *mnuFileNewWindow;
-	TMenuItem *mnuFileOpen;
+	TMenuItem *mnuFileOpenFile;
 	TMenuItem *mnuFile_0;
 	TMenuItem *mnuFileDelete;
-	TMenuItem *mnuFile_1;
-	TMenuItem *mnuFileProperty;
 	TMenuItem *mnuFile_2;
 	TMenuItem *mnuFileExit;
 	TMenuItem *mnuEdit;
@@ -138,12 +136,14 @@ __published:	// IDE-managed Components
 	TToolButton *tbtnKeepRot;
 	TToolButton *tbtnSep_4;
 	TToolButton *tbtnDelete;
+	TFileOpenDialog *FileOpenDialog;
+	TMenuItem *mnuFileOpenFolder;
+	TMenuItem *N1;
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall FormResize(TObject *Sender);
 	void __fastcall ScrollBarChange(TObject *Sender);
-	void __fastcall mnuFileOpenClick(TObject *Sender);
+	void __fastcall mnuFileOpenFileClick(TObject *Sender);
 	void __fastcall mnuFileExitClick(TObject *Sender);
-	void __fastcall mnuFilePropertyClick(TObject *Sender);
 	void __fastcall mnuPlaySlideShowClick(TObject *Sender);
 	void __fastcall mnuEditCopyClick(TObject *Sender);
 	void __fastcall mnuEditPathClick(TObject *Sender);
@@ -205,6 +205,7 @@ __published:	// IDE-managed Components
           float *X, float *Y);
 	void __fastcall Gdv1MouseMoveControl(TObject *Sender, short *Button, short *shift,
           float *X, float *Y);
+	void __fastcall mnuFileOpenFolderClick(TObject *Sender);
 private:	// User declarations
 
 	enum SortOrder {
@@ -215,12 +216,6 @@ private:	// User declarations
 		kBySize
 	};
 
-	enum SpreadOrder {
-		kNone,
-		kRightToLeft,
-		kLeftToRighr
-	};
-
 	struct { // Config structure
 		int rot;
 		bool asc;
@@ -228,6 +223,7 @@ private:	// User declarations
 		bool isSPI;
 		bool KeepPos;
 		bool KeepSize;
+		bool KeepListWhenFileOpen;
 		bool MouseGesture;
 		SortOrder order;
 		int errorcode;
@@ -250,26 +246,23 @@ private:	// User declarations
 		String Ext;
 		TDateTime Date;
 		int Size;
-		int Time;
+//		int Time;
 	};
-
-	TFI *gFI;
 
 	// Susie Plug-in
 	TObjectList *hSPI;
 
 	// File list
-	TObjectList *fileList;
+	TObjectList *flst;
 
 	// Command parameters
 	TStringList *paramStr;
 
 	// Inifile's path
 	String IniFile, KeyFile, LangFile;
+
 	TMemIniFile *KeyConf;
 //	bool isSetWindowSize;
-
-	String SlideShowStart, SlideShowStop;
 
 #pragma region  " sortFunc "
 
@@ -293,8 +286,8 @@ private:	// User declarations
 	void __fastcall DropFiles(TWMDropFiles Message);
 	void __fastcall ExecAction(String value);
 	void __fastcall FindDir(String dir, String name);
-	void __fastcall LoadFiles(String path);
-	void __fastcall LoadFiles(TStringList *list);
+	void __fastcall fn_LoadFiles(String);
+	void __fastcall fn_LoadFiles(TStringList*);
 	void __fastcall LoadImage(TGdViewer *gv, TFI *fi);
 	void __fastcall LoadImageSpread(TFI *fi1, TFI *fi2);
 	void __fastcall LoadIni();
@@ -306,7 +299,8 @@ private:	// User declarations
 	void __fastcall fn_BackColor(String value);
 	void __fastcall fn_DeleteFile(int);
 	void __fastcall fn_EnableMenu(bool value);
-	void __fastcall fn_FileOpenDialog();
+	void __fastcall fn_OpenDialog();
+	void __fastcall fn_FileOpenDialog(bool);
 	void __fastcall fn_Focus(int);
 	void __fastcall fn_FullScreen();
 	void __fastcall fn_ImageCopy();
@@ -319,7 +313,7 @@ private:	// User declarations
 	void __fastcall fn_OptimizeDrawingSpeed(bool);
 	void __fastcall fn_OptimizeWindowSize(bool);
 	void __fastcall fn_Options();
-	void __fastcall fn_ParseCmdLine(TStringList *list);
+	void __fastcall fn_ParseFiles(TStringList*);
 	void __fastcall fn_PathCopy();
 	void __fastcall fn_Prev();
 	void __fastcall fn_PrevFrame();
@@ -345,6 +339,9 @@ private:	// User declarations
 	void __fastcall fn_Bmp2in1(Graphics::TBitmap *bmp, String path1, String path2);
 	void __fastcall TForm1::fn_Glass(TGdViewer *gv, bool value);
 	TColor __fastcall fn_IntToColor(int rgb);
+double __fastcall TForm1::fn_GetVer();
+void __fastcall TForm1::fn_FileOpenDialogEx(bool);
+
 
 	BEGIN_MESSAGE_MAP
 		VCL_MESSAGE_HANDLER(WM_DROPFILES, TWMDropFiles, DropFiles)
@@ -352,6 +349,8 @@ private:	// User declarations
 
 public:		// User declarations
 	__fastcall TForm1(TComponent* Owner);
+
+	String SlideShowStart, SlideShowStop;
 
 	String FullPath;
 };

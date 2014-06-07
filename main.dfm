@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 0
   Top = 0
-  Caption = 'Form1'
+  Caption = 'v2iewx'
   ClientHeight = 290
   ClientWidth = 641
   Color = clBtnFace
@@ -10,6 +10,7 @@ object Form1: TForm1
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   Menu = MainMenu
   OldCreateOrder = False
   OnDestroy = FormDestroy
@@ -22,7 +23,7 @@ object Form1: TForm1
     Left = 0
     Top = 16
     Width = 641
-    Height = 232
+    Height = 228
     Align = alClient
     BevelOuter = bvNone
     BevelWidth = 2
@@ -32,7 +33,7 @@ object Form1: TForm1
       Left = 0
       Top = 0
       Width = 641
-      Height = 232
+      Height = 228
       TabStop = False
       Align = alClient
       TabOrder = 0
@@ -40,12 +41,12 @@ object Form1: TForm1
       OnDblClickControl = Gdv1DblClickControl
       OnMouseDownControl = Gdv1MouseDownControl
       OnMouseUpControl = Gdv1MouseUpControl
-      ExplicitWidth = 234
-      ExplicitHeight = 166
+      ExplicitTop = -3
+      ExplicitHeight = 226
       ControlData = {
         93B2000088010000030008000BF25747200000005F0065007800740065006E00
         7400780040420000030008000AF25747200000005F0065007800740065006E00
-        74007900FA1700000B000A00A9D2B51C240000007300630072006F006C006C00
+        74007900911700000B000A00A9D2B51C240000007300630072006F006C006C00
         6200610072007300000000000B000A002F18E5962400000065006E0061006200
         6C0065006D0065006E007500000000000B0010001EFB760D3000000065006E00
         610062006C0065006D006F0075007300650077006800650065006C0000000000
@@ -84,16 +85,20 @@ object Form1: TForm1
     SimplePanel = True
   end
   object ToolBar: TToolBar
-    Left = 0
-    Top = 248
-    Width = 641
+    AlignWithMargins = True
+    Left = 2
+    Top = 246
+    Width = 637
     Height = 22
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     Align = alBottom
     Images = ImageList
     PopupMenu = pumMain
     TabOrder = 3
     Transparent = False
-    ExplicitTop = 254
     object tbtnPrev: TToolButton
       Left = 0
       Top = 0
@@ -262,7 +267,7 @@ object Form1: TForm1
     Left = 136
     Top = 32
     Bitmap = {
-      494C010114001600100010001000FFFFFFFF2000FFFFFFFFFFFFFFFF424D3600
+      494C010114001900040010001000FFFFFFFF2000FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1044,9 +1049,13 @@ object Form1: TForm1
         Caption = '&New Window'
         OnClick = mnuFileNewWindowClick
       end
-      object mnuFileOpen: TMenuItem
-        Caption = '&Open File...'
-        OnClick = mnuFileOpenClick
+      object mnuFileOpenFile: TMenuItem
+        Caption = 'Open &File...'
+        OnClick = mnuFileOpenFileClick
+      end
+      object mnuFileOpenFolder: TMenuItem
+        Caption = 'Open Fo&lder...'
+        OnClick = mnuFileOpenFolderClick
       end
       object mnuFile_0: TMenuItem
         Caption = '-'
@@ -1054,13 +1063,6 @@ object Form1: TForm1
       object mnuFileDelete: TMenuItem
         Caption = '&Delete'
         OnClick = mnuFileDeleteClick
-      end
-      object mnuFile_1: TMenuItem
-        Caption = '-'
-      end
-      object mnuFileProperty: TMenuItem
-        Caption = 'Property'
-        OnClick = mnuFilePropertyClick
       end
       object mnuFile_2: TMenuItem
         Caption = '-'
@@ -1277,6 +1279,9 @@ object Form1: TForm1
         Caption = 'Next'
         OnClick = mnuPlayNextClick
       end
+      object N1: TMenuItem
+        Caption = '-'
+      end
       object mnuPlayPrevFrame: TMenuItem
         Caption = 'Prev Frame'
         OnClick = mnuPlayPrevFrameClick
@@ -1309,9 +1314,9 @@ object Form1: TForm1
     end
   end
   object OpenDialog: TOpenDialog
-    Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
-    Left = 40
-    Top = 80
+    Options = [ofHideReadOnly, ofAllowMultiSelect, ofPathMustExist, ofFileMustExist, ofEnableSizing]
+    Left = 328
+    Top = 136
   end
   object pumMain: TPopupMenu
     Left = 240
@@ -1322,5 +1327,12 @@ object Form1: TForm1
     OnTimer = TimerTimer
     Left = 72
     Top = 24
+  end
+  object FileOpenDialog: TFileOpenDialog
+    FavoriteLinks = <>
+    FileTypes = <>
+    Options = [fdoAllowMultiSelect, fdoPathMustExist, fdoFileMustExist]
+    Left = 416
+    Top = 136
   end
 end

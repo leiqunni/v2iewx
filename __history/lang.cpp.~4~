@@ -1,0 +1,44 @@
+//---------------------------------------------------------------------------
+
+#pragma hdrstop
+
+#include "lang.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+
+// ---------------------------------------------------------------------------
+// lang.ini loading
+void __fastcall LoadLang(TForm1* form, String inifile)
+{
+	if (TFile::Exists(LangFile)) {
+		TStringList *sect = new TStringList();
+		TMemIniFile *ini = new TMemIniFile(LangFile);
+
+		ini->ReadSectionValues("Lang.TMenuItem.Caption", sect);
+		for (int i = 0; i < sect->Count; ++i) {
+			String key = sect->Names[i];
+			String val = sect->Values[key];
+			TMenuItem *item = static_cast<TMenuItem*>(Form1->FindComponent(key));
+			if (item != NULL) {
+				item->Caption = val;
+			}
+		}
+
+		ini->ReadSectionValues("Lang.TToolButton.Hint", sect);
+		for (int i = 0; i < sect->Count; ++i) {
+			String key = sect->Names[i];
+			String val = sect->Values[key];
+			TToolButton *item = static_cast<TToolButton*>(Form1->FindComponent(key));
+			if (item != NULL) {
+				item->Hint = val;
+			}
+		}
+
+		SlideShowStart = ini->ReadString("Lang.Etc", "SlideShowStart", "Slide Show Start");
+		SlideShowStop = ini->ReadString("Lang.Etc", "SlideShowStop", "Slide Show Stop");
+		mnuPlaySlideShow->Caption = SlideShowStart;
+
+		delete ini;
+		delete sect;
+	}
+}

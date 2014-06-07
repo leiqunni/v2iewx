@@ -8,11 +8,52 @@
 
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::fn_ParseCmdLine(TStringList *list) {
+void __fastcall TForm1::fn_ParseFiles(TStringList *list) {
+	flst->Clear();
+
 	if (list->Count == 1 && FileExists(list->Strings[0])) {
-		LoadFiles(list->Strings[0]);
+		fn_LoadFiles(list->Strings[0]);
 	} else {
-		LoadFiles(list);
+		fn_LoadFiles(list);
+	}
+}
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::fn_LoadFiles(TStringList *list)
+{
+	for (int i = 0; i < list->Count; ++i) {
+		if (DirectoryExists(list->Strings[i])) {
+			FindDir(list->Strings[i], "*.*");
+		} else {
+			FindDir(IncludeTrailingPathDelimiter(ExtractFileDir(list->Strings[i])), list->Strings[i]);
+		}
+	}
+
+	if (flst->Count > 0) {
+		fn_Sort(conf.order, conf.asc);
+		ScrollBar->Max = flst->Count;
+		ScrollBar->Position = 1;
+		ScrollBarChange(NULL);
+	}
+}
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::fn_LoadFiles(String path)
+{
+	FindDir(IncludeTrailingPathDelimiter(ExtractFileDir(path)), L"*.*");
+
+	if (flst->Count > 0) {
+		fn_Sort(conf.order, conf.asc);
+		ScrollBar->Max = flst->Count;
+		for (int i = 0; i < flst->Count; ++i) {
+			if (((TFI*)(flst->Items[i]))->FullName == path) {
+				ScrollBar->Position = i + 1;
+				if (ScrollBar->Position == 1) {
+					ScrollBarChange(NULL);
+				}
+				break;
+			}
+		}
 	}
 }
 // ---------------------------------------------------------------------------
@@ -38,11 +79,11 @@ void __fastcall TForm1::RunProcess(String path, String argv) {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_Next() {
-	if (fileList->Count == 0) {
+	if (flst->Count == 0) {
 		return;
 	}
 
-	if (ScrollBar->Position >= fileList->Count) {
+	if (ScrollBar->Position >= flst->Count) {
 		ScrollBar->Position = 1;
 	} else {
 		ScrollBar->Position += 1;
@@ -51,33 +92,84 @@ void __fastcall TForm1::fn_Next() {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_Prev() {
-	if (fileList->Count == 0) {
+	if (flst->Count == 0) {
 		return;
 	}
 
 	if (ScrollBar->Position <= 1) {
-		ScrollBar->Position = fileList->Count;
+		ScrollBar->Position = flst->Count;
 	} else {
 		ScrollBar->Position -= 1;
 	}
 }
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::fn_FileOpenDialog() {
-	TStringBuilder *sb3 = new TStringBuilder();
+void __fastcall TForm1::fn_FileOpenDialogEx(bool folder)
+{
+	if (fn_GetVer() < 6.0) {
+		fn_OpenDialog();
+	} else {
+		fn_FileOpenDialog(folder);
+	}
+}
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::fn_OpenDialog()
+{
+	TStringBuilder *sb = new TStringBuilder();
 
 	TMatchCollection m = TRegEx::Matches(conf.Ext, "\\.(.+?)\\$");
-	for (int i = 1; i < m.Count; ++i) {
+	for (int i = 0; i < m.Count; ++i) {
 		String _ext = m.Item[i].Groups[1].Value;
-		sb3->Append("*." + _ext + "; ");
+		sb->Append("*." + _ext + "; ");
 	}
 
-	OpenDialog->Filter = "All Image Types (" + sb3->ToString() + ")|" + sb3->ToString() + "|" + "All Files (*.*)|*.*|";
+	OpenDialog->Filter = "All Image Types (" + sb->ToString() + ")|" + sb->ToString() + "|" + "All Files (*.*)|*.*|";
 
-	delete sb3;
+	delete sb;
 
 	if (OpenDialog->Execute() == true) {
-		LoadFiles(OpenDialog->FileName);
+		fn_LoadFiles((TStringList*)FileOpenDialog->Files);
+	}
+}
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::fn_FileOpenDialog(bool folder)
+{
+	TStringBuilder *sb = new TStringBuilder();
+
+	TMatchCollection m = TRegEx::Matches(conf.Ext, "\\.(.+?)\\$");
+
+	for (int i = 0; i < m.Count; ++i) {
+		sb->Append( "*." + m.Item[i].Groups[1].Value + ";");
+	}
+
+	TFileTypeItem *item;
+
+	item = FileOpenDialog->FileTypes->Add();
+	item->DisplayName = "All Image Types";
+	item->FileMask = sb->ToString();
+
+
+	for (int i = 0; i < m.Count; ++i) {
+		item = FileOpenDialog->FileTypes->Add();
+		item->DisplayName = m.Item[i].Groups[1].Value;
+		item->FileMask = "*." + m.Item[i].Groups[1].Value;
+	}
+
+	item = FileOpenDialog->FileTypes->Add();
+	item->DisplayName = "All Files";
+	item->FileMask = "*.*";
+
+
+	if (folder) {
+		FileOpenDialog->Options = TFileDialogOptions()<<fdoPickFolders<<fdoAllowMultiSelect<<fdoPathMustExist<<fdoFileMustExist;
+	} else {
+		FileOpenDialog->Options = TFileDialogOptions()<<fdoAllowMultiSelect<<fdoPathMustExist<<fdoFileMustExist;
+	}
+
+	if (FileOpenDialog->Execute() == true) {
+		fn_ParseFiles((TStringList*)FileOpenDialog->Files);
 	}
 }
 // ---------------------------------------------------------------------------
@@ -118,7 +210,7 @@ void __fastcall TForm1::fn_ImageCopy() {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_PathCopy() {
-	Clipboard()->AsText = ((TFI*)(fileList->Items[ScrollBar->Position - 1]))->FullName;
+	Clipboard()->AsText = ((TFI*)(flst->Items[ScrollBar->Position - 1]))->FullName;
 }
 // ---------------------------------------------------------------------------
 //
@@ -273,43 +365,43 @@ void __fastcall TForm1::fn_Sort(SortOrder order, bool asc) {
 	}
 
 	switch (order) {
-	case kByName: // [名前]
+	case kByName: // [Name]
 		if (asc) {
-			fileList->Sort(cmpNameAsc);
+			flst->Sort(cmpNameAsc);
 		} else {
-			fileList->Sort(cmpNameDesc);
+			flst->Sort(cmpNameDesc);
 		}
 		mnuViewOrderName->Checked = true;
 		break;
-	case kByNameNum: // [数値]
+	case kByNameNum: // [Numeric]
 		if (asc) {
-			fileList->Sort(cmpNameNumAsc);
+			flst->Sort(cmpNameNumAsc);
 		} else {
-			fileList->Sort(cmpNameNumDesc);
+			flst->Sort(cmpNameNumDesc);
 		}
 		mnuViewOrderNameNum->Checked = true;
 		break;
-	case kByTime: // [更新日時]
+	case kByTime: // [Modify Date]
 		if (asc) {
-			fileList->Sort(cmpTimeAsc);
+			flst->Sort(cmpTimeAsc);
 		} else {
-			fileList->Sort(cmpTimeDesc);
+			flst->Sort(cmpTimeDesc);
 		}
 		mnuViewOrderDate->Checked = true;
 		break;
-	case kByType: // [種類]
+	case kByType: // [Type]
 		if (asc) {
-			fileList->Sort(cmpTypeAsc);
+			flst->Sort(cmpTypeAsc);
 		} else {
-			fileList->Sort(cmpTypeDesc);
+			flst->Sort(cmpTypeDesc);
 		}
 		mnuViewOrderType->Checked = true;
 		break;
-	case kBySize: // [サイズ]
+	case kBySize: // [Size]
 		if (asc) {
-			fileList->Sort(cmpSizeAsc);
+			flst->Sort(cmpSizeAsc);
 		} else {
-			fileList->Sort(cmpSizeDesc);
+			flst->Sort(cmpSizeDesc);
 		}
 		mnuViewOrderSize->Checked = true;
 		break;
@@ -368,7 +460,7 @@ void __fastcall TForm1::fn_WindowMinimize() {
 	}
 }
 // ---------------------------------------------------------------------------
-// [フルスクリーン]
+// [Full Screen]
 void __fastcall TForm1::fn_FullScreen() {
 	if (mnuViewFullScreen->Checked) {
 		BorderStyle = bsSizeable;
@@ -381,24 +473,27 @@ void __fastcall TForm1::fn_FullScreen() {
 	}
 }
 // ---------------------------------------------------------------------------
-// [拡大]
-void __fastcall TForm1::fn_ZoomIn() {
+// [Zoom In]
+void __fastcall TForm1::fn_ZoomIn()
+{
 	Gdv1->ZoomIN();
 	fn_StatusText();
 }
 // ---------------------------------------------------------------------------
-// [縮小]
-void __fastcall TForm1::fn_ZoomOut() {
+// [Zoom Out]
+void __fastcall TForm1::fn_ZoomOut()
+{
 	Gdv1->ZoomOUT();
 	fn_StatusText();
 }
 // ---------------------------------------------------------------------------
-// [縮小]
-void __fastcall TForm1::fn_ZoomStep(int value) {
+// [Zoom Step]
+void __fastcall TForm1::fn_ZoomStep(int value)
+{
 	Gdv1->ZoomStep = value;
 }
 // ---------------------------------------------------------------------------
-// [縮小]
+// [Aero Glass???]
 void __fastcall TForm1::fn_Glass(TGdViewer *gv, bool value) {
 	if (value) {
 		gv->BackColor = clBlack; // StringToColor(L"000000");
@@ -411,13 +506,13 @@ void __fastcall TForm1::fn_Glass(TGdViewer *gv, bool value) {
 	}
 }
 // ---------------------------------------------------------------------------
-// [ファイル削除]
+// [Delete File]
 void __fastcall TForm1::fn_DeleteFile(int flags) {
-	if (fileList->Count == 0) {
+	if (flst->Count == 0) {
 		return;
 	}
 
-	String path = ((TFI*)fileList->Items[ScrollBar->Position - 1])->FullName;
+	String path = ((TFI*)flst->Items[ScrollBar->Position - 1])->FullName;
 	path.cat_printf(L"%c%c", 0, 0);
 
 	SHFILEOPSTRUCT shfo;
@@ -430,7 +525,7 @@ void __fastcall TForm1::fn_DeleteFile(int flags) {
 	SHFileOperation(&shfo);
 
 	if (shfo.fAnyOperationsAborted != true) {
-		fileList->Delete(ScrollBar->Position - 1);
+		flst->Delete(ScrollBar->Position - 1);
 		ScrollBar->Max--;
 		fn_Next();
 	}
@@ -443,21 +538,22 @@ void __fastcall TForm1::fn_StatusText() {
 	}
 }
 // ---------------------------------------------------------------------------
-// [タイトル フォーマッティング]
-String __fastcall TForm1::fn_TitleFormatting(String value) {
-	gFI = (TFI*)(fileList->Items[ScrollBar->Position - 1]);
+// [Title Formatting]
+String __fastcall TForm1::fn_TitleFormatting(String value)
+{
+	TFI *fi = (TFI*)(flst->Items[ScrollBar->Position - 1]);
 
-	value = StringReplace(value, "%_path%", gFI->FullName, TReplaceFlags() << rfReplaceAll);
-	value = StringReplace(value, "%_filename_ext%", ExtractFileName(gFI->FullName), TReplaceFlags() << rfReplaceAll);
-	value = StringReplace(value, "%_filesize%", gFI->Size, TReplaceFlags() << rfReplaceAll);
-	value = StringReplace(value, "%_filesize_kb%", gFI->Size / 1024, TReplaceFlags() << rfReplaceAll);
-	value = StringReplace(value, "%_filesize_mb%", gFI->Size / 1048576, TReplaceFlags() << rfReplaceAll);
+	value = StringReplace(value, "%_path%", fi->FullName, TReplaceFlags() << rfReplaceAll);
+	value = StringReplace(value, "%_filename_ext%", ExtractFileName(fi->FullName), TReplaceFlags() << rfReplaceAll);
+	value = StringReplace(value, "%_filesize%", fi->Size, TReplaceFlags() << rfReplaceAll);
+	value = StringReplace(value, "%_filesize_kb%", fi->Size / 1024, TReplaceFlags() << rfReplaceAll);
+	value = StringReplace(value, "%_filesize_mb%", fi->Size / 1048576, TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_width%", Gdv1->ImageWidth, TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_height%", Gdv1->ImageHeight, TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_zoom%", int(Gdv1->ZOOM * 100), TReplaceFlags() << rfReplaceAll);
-	value = StringReplace(value, "%_last_modified%", (gFI->Date).DateTimeString(), TReplaceFlags() << rfReplaceAll);
+	value = StringReplace(value, "%_last_modified%", (fi->Date).DateTimeString(), TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_position%", ScrollBar->Position, TReplaceFlags() << rfReplaceAll);
-	value = StringReplace(value, "%_total%", fileList->Count, TReplaceFlags() << rfReplaceAll);
+	value = StringReplace(value, "%_total%", flst->Count, TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_codec%", Gdv1->GetImageFormat(), TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_isspi%", conf.isSPI ? "SPI" : "GD", TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_errorcode%", IntToStr(conf.errorcode), TReplaceFlags() << rfReplaceAll);
@@ -467,7 +563,8 @@ String __fastcall TForm1::fn_TitleFormatting(String value) {
 }
 // ---------------------------------------------------------------------------
 //
-TColor __fastcall TForm1::fn_IntToColor(int rgb) {
+TColor __fastcall TForm1::fn_IntToColor(int rgb)
+{
 	int r = 255 - (rgb % 256);
 	int g = 255 - ((rgb / 256) % 256);
 	int b = 255 - (rgb / 65536);
@@ -475,3 +572,10 @@ TColor __fastcall TForm1::fn_IntToColor(int rgb) {
 }
 // ---------------------------------------------------------------------------
 //
+double __fastcall TForm1::fn_GetVer()
+{
+	OSVERSIONINFO OSver;
+	OSver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+	GetVersionEx(&OSver);
+	return OSver.dwMajorVersion + OSver.dwMinorVersion * 0.1;
+}

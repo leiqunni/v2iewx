@@ -1,0 +1,15 @@
+//---------------------------------------------------------------------------
+
+#ifndef langH
+#define langH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <System.IniFiles.hpp>
+
+#include "main.h">
+
+void __fastcall LoadLang(TForm* form);
+
+
+
+#endif

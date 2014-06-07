@@ -46,6 +46,11 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <VerInfo_MinorVer>6</VerInfo_MinorVer>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Release>8</VerInfo_Release>
+        <VerInfo_MajorVer>2014</VerInfo_MajorVer>
+        <RunBCCOutOfProcess>true</RunBCCOutOfProcess>
         <VerInfo_Locale>1041</VerInfo_Locale>
         <_TCHARMapping>wchar_t</_TCHARMapping>
         <ProjectType>CppVCLApplication</ProjectType>
@@ -53,10 +58,10 @@
         <ILINK_LibraryPath>..\v2\;..\v2iewx++\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <Manifest_File>None</Manifest_File>
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=DarkEra Software;FileDescription=v2iewrx the image viewer.;FileVersion=2014.6.8.0;InternalName=;LegalCopyright=Copyright © 2007-2014 793 ◆7BJkZFw08A / DarkEra;LegalTrademarks=;OriginalFilename=v2iewrx.exe;ProductName=v2iewrx;ProductVersion=2014.6.8.0;Comments=</VerInfo_Keys>
         <BCC_PCHCache>true</BCC_PCHCache>
         <AllPackageLibs>rtl.lib;vcl.lib;GdViewerPro4.lib;vclx.lib</AllPackageLibs>
-        <Icon_MainIcon>v2iewx++_Icon.ico</Icon_MainIcon>
+        <Icon_MainIcon>..\..\..\GitHub\v2iewx\v2iewx_Icon.ico</Icon_MainIcon>
         <IncludePath>..\v2\;..\v2iewx++\;$(IncludePath)</IncludePath>
         <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
         <IntermediateOutputDir>.\$(Platform)\$(Config)</IntermediateOutputDir>
@@ -78,7 +83,6 @@
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <PackageImports>adortl;bindcomp;bindcompdbx;bindcompfmx;bindcompvcl;bindengine;CloudService;CustomIPTransport;DataSnapClient;DataSnapCommon;DataSnapConnectors;DatasnapConnectorsFreePascal;DataSnapIndy10ServerTransport;DataSnapProviderClient;DataSnapServer;dbexpress;dbrtl;dbxcds;DbxClientDriver;DbxCommonDriver;DBXDb2Driver;DBXFirebirdDriver;DBXInformixDriver;DBXInterBaseDriver;DBXMSSQLDriver;DBXMySQLDriver;DBXOdbcDriver;DBXOracleDriver;DBXSqliteDriver;DBXSybaseASADriver;DBXSybaseASEDriver;dsnap;dsnapcon;fmx;fmxase;fmxdae;fmxobj;FMXTee;FmxTeeUI;ibxpress;IndyCore;IndyIPClient;IndyIPCommon;IndyIPServer;IndyProtocols;IndySystem;inet;inetdb;inetdbxpress;Intraweb;MetropolisUILiveTile;rtl;soaprtl;Tee;TeeDB;TeeUI;vcl;vclactnband;vcldb;vcldsnap;vclib;vclie;vclimg;vclribbon;VclSmp;vcltouch;vclx;webdsnap;xmlrtl;$(PackageImports)</PackageImports>
         <IncludePath>$(BDSINCLUDE)\windows\vcl;$(IncludePath)</IncludePath>
-        <BCC_PCHName_Clang>..\v2\v2iewx++PCH1.h</BCC_PCHName_Clang>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
@@ -103,8 +107,11 @@
         <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\debug\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <VerInfo_Keys>CompanyName=DarkEra Software;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <Icon_MainIcon>..\..\RAD Studio\Projects\v2iewx\v2iewx_Icon.ico</Icon_MainIcon>
+        <VerInfo_MajorVer>2014</VerInfo_MajorVer>
+        <VerInfo_MinorVer>6</VerInfo_MinorVer>
+        <VerInfo_Release>8</VerInfo_Release>
+        <VerInfo_Keys>CompanyName=DarkEra Software;FileDescription=v2iewx the image viewer;FileVersion=2014.6.8.0;InternalName=;LegalCopyright=Copyright 2007 - 2014 793 ◆7BJkZFw08A / DarkEra Software;LegalTrademarks=;OriginalFilename=v2iewx.exe;ProductName=v2iewx;ProductVersion=2014.6.8.0;Comments=</VerInfo_Keys>
+        <Icon_MainIcon>..\..\..\GitHub\v2iewx\v2iewx_Icon.ico</Icon_MainIcon>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <LinkPackageStatics>rtl.lib;vcl.lib;GdViewerPro4.lib;vclx.lib</LinkPackageStatics>
@@ -115,6 +122,10 @@
         <TASM_Debugging>None</TASM_Debugging>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <LinkPackageStatics>rtl.lib;vcl.lib;GdViewerPro4.lib;vclx.lib</LinkPackageStatics>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <Icon_MainIcon>..\..\..\GitHub\v2iewx\v2iewx_Icon.ico</Icon_MainIcon>
+        <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
     </PropertyGroup>
     <ItemGroup>
@@ -127,12 +138,6 @@
         <CppCompile Include="func.cpp">
             <DependentOn>func.h</DependentOn>
             <BuildOrder>5</BuildOrder>
-        </CppCompile>
-        <CppCompile Include="info.cpp">
-            <Form>Form3</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>info.h</DependentOn>
-            <BuildOrder>6</BuildOrder>
         </CppCompile>
         <CppCompile Include="inifile.cpp">
             <DependentOn>inifile.h</DependentOn>
@@ -147,12 +152,8 @@
         <CppCompile Include="v2iewx.cpp">
             <BuildOrder>0</BuildOrder>
         </CppCompile>
-        <PCHCompile Include="..\v2\v2iewx++PCH1.h">
-            <BuildOrder>1</BuildOrder>
-        </PCHCompile>
         <FormResources Include="main.dfm"/>
         <FormResources Include="about.dfm"/>
-        <FormResources Include="info.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

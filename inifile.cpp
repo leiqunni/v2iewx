@@ -6,12 +6,13 @@
 
 #pragma region "IniFile"
 
-// ---------------------------------------------------------------------------
-// INIファイル読込
 
 #pragma region "LoadIni"
 
-void __fastcall TForm1::LoadIni() {
+// ---------------------------------------------------------------------------
+// Ini File Loading
+void __fastcall TForm1::LoadIni()
+{
 	TMemIniFile *ini = new TMemIniFile(IniFile);
 
 	// Window section
@@ -51,13 +52,14 @@ void __fastcall TForm1::LoadIni() {
 	}
 
 	// Function section
-	conf.MouseGesture = ini->ReadBool("Function", "UseMouseGesture", true);
-	fn_KeepRot(ini->ReadBool("Function", "KeepRot", false));
+	conf.KeepListWhenFileOpen = ini->ReadBool(L"Function", "KeepListWhenFileOpen", false);
+	conf.MouseGesture = ini->ReadBool("Function", "MouseGesture", true);
+	fn_KeepRot(ini->ReadBool("Function", "KeepRotation", false));
 	fn_Sort(ini->ReadInteger("Function", "SortOrder", 0), ini->ReadBool("Function", "SortAsc", true));
 	fn_ZoomMode(ini->ReadInteger("Function", "ZoomMode", 2));
 
 	Timer->Interval = ini->ReadInteger("Function", "SlideShow", 3000);
-	conf.TitleText = ini->ReadString("Function", "Title", "%_filename_ext% [%_position%/%_total%] - viewx++ %_isspi%");
+	conf.TitleText = ini->ReadString("Function", "Title", "%_filename_ext% [%_position%/%_total%] - v2iewx %_isspi%");
 	conf.StatusText = ini->ReadString("Function", "Status", "大きさ: %_width% x %_height% 更新日時: %_last_modified% サイズ: %_filesize_kb% KB 拡大率: %_zoom% %");
 	conf.Ext = ini->ReadString("Function", "Ext", "\\.bmp$|\\.gif$|\\.ico$|\\.jpe$|\\.jpeg$|\\.jpg$|\\.pcx$|\\.png$|\\.tif$|\\.tiff$|\\.wmf$|\\.jp2$|\\.j2k$");
 	// conf.rot = ini->ReadInteger("Function", "Rot", 0);
@@ -136,7 +138,7 @@ void __fastcall TForm1::LoadGdvProperties(TGdViewer *gdv, TMemIniFile *ini) {
 #pragma region "LoadLang"
 
 // ---------------------------------------------------------------------------
-// Lang.ini ファイル読込
+// lang.ini loading
 void __fastcall TForm1::LoadLang() {
 	if (TFile::Exists(LangFile)) {
 		TStringList *sect = new TStringList();
@@ -176,8 +178,9 @@ void __fastcall TForm1::LoadLang() {
 #pragma region "SaveIni"
 
 // ---------------------------------------------------------------------------
-// INIファイル書込み
-void __fastcall TForm1::SaveIni() {
+// Ini File Saving
+void __fastcall TForm1::SaveIni()
+{
 	TMemIniFile *ini = new TMemIniFile(IniFile);
 
 	// Window section

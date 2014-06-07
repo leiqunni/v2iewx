@@ -12,21 +12,19 @@
 TForm1 *Form1;
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
-	: TForm(Owner)
+	: TForm(Owner), IniFile(L"v2iewx.ini"), KeyFile(L"key.ini"), LangFile(L"lang.ini")
 {
-	DragAcceptFiles(Handle, true); // ドラッグ&ドロップを有効にする
+	DragAcceptFiles(Handle, true); // Enable D&D
 
 	Gdv1->LicenseKEY = WideString(L"6223560888372426056441256");
 
-	IniFile = TPath::Combine(ExtractFilePath(Application->ExeName), "viewx++.ini");
-	KeyFile = TPath::Combine(ExtractFilePath(Application->ExeName), "key.ini");
-	LangFile = TPath::Combine(ExtractFilePath(Application->ExeName), "lang.ini");
+//	IniFile = TPath::Combine(ExtractFilePath(Application->ExeName), "v2iewx.ini");
+//	KeyFile = TPath::Combine(ExtractFilePath(Application->ExeName), "key.ini");
+//	LangFile = TPath::Combine(ExtractFilePath(Application->ExeName), "lang.ini");
 
 	hSPI = new TObjectList();
-	fileList = new TObjectList();
+	flst = new TObjectList();
 	paramStr = new TStringList();
-
-    gFI = new TFI();
 
 	LoadLang();
 	LoadIni();
@@ -36,7 +34,7 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 		for (int i = 1; i <= ParamCount(); ++i) {
 			paramStr->Add(ParamStr(i));
 		}
-		fn_ParseCmdLine(paramStr);
+		fn_ParseFiles(paramStr);
 	}
 }
 //---------------------------------------------------------------------------
@@ -44,7 +42,7 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 void __fastcall TForm1::FormDestroy(TObject *Sender) {
 	delete KeyConf;
 	delete hSPI;
-	delete fileList;
+	delete flst;
 	delete paramStr;
 	SaveIni();
 }
@@ -63,9 +61,8 @@ void __fastcall TForm1::AddFile(String dir, TSearchRec sr) {
 	fi->Name = sr.Name;
 	fi->Ext = ExtractFileExt(sr.Name);
 	fi->Size = sr.Size;
-	// fi->Time = sr.Time;
 	fi->Date = sr.TimeStamp;
-	fileList->Add((TObject*)fi);
+	flst->Add((TObject*)fi);
 }
 // ---------------------------------------------------------------------------
 //
@@ -81,52 +78,12 @@ void __fastcall TForm1::FindDir(String dir, String name) {
 	}
 	FindClose(sr);
 }
-// ---------------------------------------------------------------------------
-//
-void __fastcall TForm1::LoadFiles(TStringList *list) {
-	fileList->Clear();
 
-	for (int i = 0; i < list->Count; ++i) {
-		if (DirectoryExists(list->Strings[i])) {
-			FindDir(list->Strings[i], "*.*");
-		} else {
-			FindDir(IncludeTrailingPathDelimiter(ExtractFileDir(list->Strings[i])), list->Strings[i]);
-		}
-	}
-
-	if (fileList->Count > 0) {
-		fn_Sort(conf.order, conf.asc);
-		ScrollBar->Max = fileList->Count;
-		ScrollBar->Position = 1;
-		ScrollBarChange(NULL);
-	}
-}
-// ---------------------------------------------------------------------------
-//
-void __fastcall TForm1::LoadFiles(String path) {
-	fileList->Clear();
-
-	FindDir(IncludeTrailingPathDelimiter(ExtractFileDir(path)), L"*.*");
-
-	if (fileList->Count > 0) {
-		fn_Sort(conf.order, conf.asc);
-		ScrollBar->Max = fileList->Count;
-		for (int i = 0; i < fileList->Count; ++i) {
-			if (((TFI*)(fileList->Items[i]))->FullName == path) {
-				ScrollBar->Position = i + 1;
-				if (ScrollBar->Position == 1) {
-					ScrollBarChange(NULL);
-				}
-				break;
-			}
-		}
-	}
-}
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::ScrollBarChange(TObject *Sender) {
-	if (fileList->Count == 0) return;
-	LoadImage(Gdv1, (TFI*)fileList->Items[ScrollBar->Position - 1]);
+	if (flst->Count == 0) return;
+	LoadImage(Gdv1, (TFI*)flst->Items[ScrollBar->Position - 1]);
 }
 // ---------------------------------------------------------------------------
 // 画像表示
@@ -189,7 +146,7 @@ void __fastcall TForm1::DropFiles(TWMDropFiles Msg) {
 		list->Add(String(fn));
 	}
 
-	fn_ParseCmdLine(list);
+	fn_ParseFiles(list);
 
 	delete[]fn;
 	delete list;
@@ -205,29 +162,28 @@ void __fastcall TForm1::mnuFileNewWindowClick(TObject *Sender) {
 	fn_NewWindow();
 }
 // ---------------------------------------------------------------------------
-// [ファイル]-[開く...]
-void __fastcall TForm1::mnuFileOpenClick(TObject *Sender) {
-	fn_FileOpenDialog();
+// [File]-[Open File...]
+void __fastcall TForm1::mnuFileOpenFileClick(TObject *Sender) {
+	fn_FileOpenDialogEx(false);
 }
 // ---------------------------------------------------------------------------
-// [ファイル]-[削除]
+// [File]-[Open Folder...]
+void __fastcall TForm1::mnuFileOpenFolderClick(TObject *Sender)
+{
+	fn_FileOpenDialogEx(true);
+}
+// ---------------------------------------------------------------------------
+// [File]-[Delete]
 void __fastcall TForm1::mnuFileDeleteClick(TObject *Sender) {
 	fn_DeleteFile(FOF_ALLOWUNDO);
 }
 // ---------------------------------------------------------------------------
-//
-void __fastcall TForm1::mnuFilePropertyClick(TObject *Sender) {
-//	Form3->Show();
-	HINSTANCE rtn = ShellExecute(this->Handle, L"properties", FullPath.w_str(), L"explorer.exe", NULL, SW_SHOWNORMAL);
-	ShowMessage((int)rtn);
-}
-// ---------------------------------------------------------------------------
-// [ファイル]-[スライド ショー]
+// [File]-[スライド ショー]
 void __fastcall TForm1::mnuPlaySlideShowClick(TObject *Sender) {
 	fn_SlideShow();
 }
 // ---------------------------------------------------------------------------
-// [ファイル]-[終了]
+// [File]-[Exit]
 void __fastcall TForm1::mnuFileExitClick(TObject *Sender) {
 	exit(0);
 }
@@ -526,7 +482,7 @@ HBITMAP __fastcall TForm1::SPI_LoadImage(String fileName) {
 			continue;
 		}
 
-		// ファイル内容をロードする
+		// File内容をロードする
 		HANDLE handle; // = NULL;
 
 		if ((handle = CreateFile_Read(fileName.w_str())) == INVALID_HANDLE_VALUE) {
@@ -598,10 +554,9 @@ void __fastcall TForm1::FormMouseWheel(TObject *Sender, TShiftState Shift, int W
 	}
 	Handled = true;
 }
-////---------------------------------------------------------------------------
-////
-// void __fastcall TForm1::Gdv1MouseWheelControl(TObject *Sender, short UpDown)
+//---------------------------------------------------------------------------
 //
+// void __fastcall TForm1::Gdv1MouseWheelControl(TObject *Sender, short UpDown)
 // {
 // if (gesture) {
 // if (UpDown > 0) Gdv1->ZoomOUT(); else Gdv1->ZoomIN();
@@ -612,7 +567,8 @@ void __fastcall TForm1::FormMouseWheel(TObject *Sender, TShiftState Shift, int W
 // }
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::Gdv1DblClickControl(TObject *Sender) {
+void __fastcall TForm1::Gdv1DblClickControl(TObject *Sender)
+{
 	if (mnuViewBestfit->Checked) {
 		fn_ZoomMode(1);
 	} else if (mnuViewActual->Checked) {
@@ -621,21 +577,23 @@ void __fastcall TForm1::Gdv1DblClickControl(TObject *Sender) {
 	fn_StatusText();
 }
 // ---------------------------------------------------------------------------
-// マウスジェスチャ
-void __fastcall TForm1::Gdv1MouseDownControl(TObject *Sender, short *Button, short *shift, float *X, float *y) {
+// Mouse Gestures
+void __fastcall TForm1::Gdv1MouseDownControl(TObject *Sender, short *Button, short *shift, float *X, float *y)
+{
 	if (conf.MouseGesture && Button[0] == 2) {
 		mg.enabled = true;
 		mg.strokes = "";
 		mg.exx = X[0];
 		mg.exy = y[0];
 	}
-	if (Button[0] == 4) { // ホイールクリック
+	if (Button[0] == 4) { // Wheel Click
 		fn_Reset();
 	}
 }
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::Gdv1MouseUpControl(TObject *Sender, short *Button, short *shift, float *X, float *y) {
+void __fastcall TForm1::Gdv1MouseUpControl(TObject *Sender, short *Button, short *shift, float *X, float *y)
+{
 	if (conf.MouseGesture && Button[0] == 2) {
 		mg.enabled = false;
 		ExecAction(KeyConf->ReadString("Mouse", mg.strokes, NULL).LowerCase());
@@ -644,7 +602,8 @@ void __fastcall TForm1::Gdv1MouseUpControl(TObject *Sender, short *Button, short
 }
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::Gdv1MouseMoveControl(TObject *Sender, short *Button, short *shift, float *X, float *y) {
+void __fastcall TForm1::Gdv1MouseMoveControl(TObject *Sender, short *Button, short *shift, float *X, float *y)
+{
 	if (conf.MouseGesture && mg.enabled) { // 右ボタンクリック中なら
 		int dirX, dirY, absX, absY;
 		float pente;
@@ -698,18 +657,27 @@ void __fastcall TForm1::Gdv1MouseMoveControl(TObject *Sender, short *Button, sho
 
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift) {
-	ExecAction(KeyConf->ReadString(L"key", Format("%.1d%.3d", OPENARRAY(TVarRec, (Shift.ToInt(), Key))), NULL).LowerCase());
+void __fastcall TForm1::FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift)
+{
+	String code;
+	code = code.sprintf(L"%1x%02x", Shift.ToInt(), Key);
+	ExecAction(KeyConf->ReadString(L"key", code, NULL).LowerCase());
 	Key = NULL;
 }
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::ExecAction(String value) {
-	// StatusBar->Panels->Items[0]->Text = value;
+void __fastcall TForm1::ExecAction(String value)
+{
 	if (value == "exit") {
 		exit(0);
-	} else if (value == "fileopen") {
-		fn_FileOpenDialog();
+	} else if (value == "openfile") {
+		fn_FileOpenDialogEx(false);
+	}
+	else if (value == "openfolder") {
+		fn_FileOpenDialogEx(true);
+	}
+	else if (value == "exit") {
+		exit(0);
 	}
 	// else if (value == "alwaysontop")
 	// fn_AlwaysOnTop(!mnuViewAlwaysOnTop->Checked);
@@ -745,9 +713,9 @@ void __fastcall TForm1::ExecAction(String value) {
 	} else if (value == "prevframe") {
 		fn_PrevFrame();
 	} else if (value == "first") {
-		LoadImage(Gdv1, (TFI*)fileList->Items[0]);
+		LoadImage(Gdv1, (TFI*)flst->Items[0]);
 	} else if (value == "last") {
-		LoadImage(Gdv1, (TFI*)fileList->Items[ScrollBar->Max - 1]);
+		LoadImage(Gdv1, (TFI*)flst->Items[ScrollBar->Max - 1]);
 	}
 
 	else if (value == "zoomin") {
@@ -763,7 +731,7 @@ void __fastcall TForm1::ExecAction(String value) {
 	} else if (value == "windowminimize") {
 		fn_WindowMinimize();
 	} else if (value == "fileopendialog") {
-		fn_FileOpenDialog();
+		fn_FileOpenDialog(fdoAllowMultiSelect|fdoPathMustExist|fdoFileMustExist);
 	} else if (value == "keeprot") {
 		fn_KeepRot(!mnuViewKeepRot->Checked);
 	} else if (value == "bestfit") {
@@ -820,7 +788,6 @@ void __fastcall TForm1::DisplayFromFile(TGdViewer *object, String sFilePath) {
 	delete fs;
 	delete[]buf;
 }
-// ---------------------------------------------------------------------------
 
-
+//---------------------------------------------------------------------------
 
