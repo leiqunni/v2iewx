@@ -1,0 +1,14 @@
+#################
+## C++Builder
+#################
+
+# User-specific files
+*.obj
+*.ilc
+*.ild
+*_ilf
+*.ils
+*.tds
+*.pch
+*.map
+*.#*
