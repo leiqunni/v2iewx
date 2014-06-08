@@ -21,7 +21,7 @@ void __fastcall TForm1::LoadIni()
 	Form1->Width = ini->ReadInteger("Window", "Width", 480);
 	Form1->Height = ini->ReadInteger("Window", "Height", 270);
 
-	if (ini->ReadBool("Window", "KeepPos", false)) {
+	if (ini->ReadBool("Window", "KeepPosition", false)) {
 		Form1->Top = ini->ReadInteger("Window", "Top", 0);
 		Form1->Left = ini->ReadInteger("Window", "Left", 0);
 	}
@@ -38,7 +38,7 @@ void __fastcall TForm1::LoadIni()
 		Gdv1->BackColor = StringToColor(ini->ReadString("GdViewer", "BackColor", L"0xffffff"));
 	}
 
-	Form1->ScreenSnap = ini->ReadBool("Window", "ScreenSnap", false);
+	Form1->ScreenSnap = ini->ReadBool("Window", "Snap", false);
 
 	// GdViewer section
 	fn_QualityAuto(ini->ReadBool("GdViewer", "QualityAuto", true));

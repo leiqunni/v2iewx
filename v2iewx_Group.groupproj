@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{ADE535BE-20C0-482A-BECE-864A185C0157}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="..\..\RAD Studio\Projects\v2iewx\v2iewx.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="c2onfig.cbproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="v2iewx">
+        <MSBuild Projects="..\..\RAD Studio\Projects\v2iewx\v2iewx.cbproj"/>
+    </Target>
+    <Target Name="v2iewx:Clean">
+        <MSBuild Projects="..\..\RAD Studio\Projects\v2iewx\v2iewx.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="v2iewx:Make">
+        <MSBuild Projects="..\..\RAD Studio\Projects\v2iewx\v2iewx.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="c2onfig">
+        <MSBuild Projects="c2onfig.cbproj"/>
+    </Target>
+    <Target Name="c2onfig:Clean">
+        <MSBuild Projects="c2onfig.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="c2onfig:Make">
+        <MSBuild Projects="c2onfig.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="v2iewx;c2onfig"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="v2iewx:Clean;c2onfig:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="v2iewx:Make;c2onfig:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

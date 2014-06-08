@@ -81,6 +81,7 @@ object Form1: TForm1
     Width = 641
     Height = 20
     Panels = <>
+    ParentColor = True
     PopupMenu = pumMain
     SimplePanel = True
   end
