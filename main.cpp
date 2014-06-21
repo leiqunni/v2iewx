@@ -17,6 +17,7 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 	DragAcceptFiles(Handle, true); // Enable D&D
 
 	Gdv1->LicenseKEY = WideString(L"6223560888372426056441256");
+	Gdv2->LicenseKEY = WideString(L"6223560888372426056441256");
 
 //	IniFile = TPath::Combine(ExtractFilePath(Application->ExeName), "v2iewx.ini");
 //	KeyFile = TPath::Combine(ExtractFilePath(Application->ExeName), "key.ini");
@@ -39,7 +40,8 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 }
 //---------------------------------------------------------------------------
 //
-void __fastcall TForm1::FormDestroy(TObject *Sender) {
+void __fastcall TForm1::FormDestroy(TObject *Sender)
+{
 	delete KeyConf;
 	delete hSPI;
 	delete flst;
@@ -48,7 +50,11 @@ void __fastcall TForm1::FormDestroy(TObject *Sender) {
 }
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::FormResize(TObject *Sender) {
+void __fastcall TForm1::FormResize(TObject *Sender)
+{
+	if (Panel2->Visible) {
+		Panel2->Width = (Form1->ClientWidth - Splitter->Width) / 2;
+	}
 	if (ToolBar->Visible) {
 		ToolBar->Indent = (ToolBar->Width - 359) / 2;
 	}
@@ -223,10 +229,30 @@ void __fastcall TForm1::mnuViewToolBarClick(TObject *Sender) {
 	fn_ToolBar(!ToolBar->Visible);
 }
 // ---------------------------------------------------------------------------
-// [表示]-[ステータス バー]
-void __fastcall TForm1::mnuViewStatusBarClick(TObject *Sender) {
+// [View]-[Status Bar]
+void __fastcall TForm1::mnuViewStatusBarClick(TObject *Sender)
+{
 	fn_StatusBar(!StatusBar->Visible);
 }
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::mnuViewSpreadViewNoneClick(TObject *Sender)
+{
+	fn_Spread(0);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::mnuViewSpreadViewRightClick(TObject *Sender)
+{
+	fn_Spread(1);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::mnuViewSpreadViewLeftClick(TObject *Sender)
+{
+	fn_Spread(2);
+}
+
 // ---------------------------------------------------------------------------
 // [表示]-[左回りに回転]
 void __fastcall TForm1::mnuViewRotateLeftClick(TObject *Sender) {
@@ -789,5 +815,21 @@ void __fastcall TForm1::DisplayFromFile(TGdViewer *object, String sFilePath) {
 	delete[]buf;
 }
 
+//---------------------------------------------------------------------------
+//
+void __fastcall TForm1::tbtnSpreadViewClick(TObject *Sender)
+{
+	switch (conf.spread) {
+	case 0:
+		fn_Spread(1);
+		break;
+	case 1:
+		fn_Spread(2);
+		break;
+	case 2:
+		fn_Spread(0);
+		break;
+	}
+}
 //---------------------------------------------------------------------------
 

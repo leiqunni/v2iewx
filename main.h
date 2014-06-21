@@ -139,6 +139,15 @@ __published:	// IDE-managed Components
 	TFileOpenDialog *FileOpenDialog;
 	TMenuItem *mnuFileOpenFolder;
 	TMenuItem *N1;
+	TPanel *Panel2;
+	TSplitter *Splitter;
+	TGdViewer *Gdv2;
+	TMenuItem *mnuViewSpreadView;
+	TMenuItem *N2;
+	TMenuItem *mnuViewSpreadViewNone;
+	TMenuItem *mnuViewSpreadViewRight;
+	TMenuItem *mnuViewSpreadViewLeft;
+	TToolButton *tbtnSpreadView;
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall FormResize(TObject *Sender);
 	void __fastcall ScrollBarChange(TObject *Sender);
@@ -206,6 +215,10 @@ __published:	// IDE-managed Components
 	void __fastcall Gdv1MouseMoveControl(TObject *Sender, short *Button, short *shift,
           float *X, float *Y);
 	void __fastcall mnuFileOpenFolderClick(TObject *Sender);
+	void __fastcall mnuViewSpreadViewNoneClick(TObject *Sender);
+	void __fastcall mnuViewSpreadViewRightClick(TObject *Sender);
+	void __fastcall mnuViewSpreadViewLeftClick(TObject *Sender);
+	void __fastcall tbtnSpreadViewClick(TObject *Sender);
 private:	// User declarations
 
 	enum SortOrder {
@@ -230,6 +243,7 @@ private:	// User declarations
 		String TitleText;
 		String StatusText;
 		String Ext;
+int spread;
 	} conf;
 
 	struct { // Mouse gestures
@@ -325,7 +339,7 @@ private:	// User declarations
 	void __fastcall fn_ScrollBar(bool);
 	void __fastcall fn_SlideShow();
 	void __fastcall fn_Sort(SortOrder, bool);
-
+void __fastcall TForm1::fn_Spread(int value);
 	void __fastcall fn_SpreadView(int);
 	void __fastcall fn_StatusBar(bool);
 	void __fastcall fn_StatusText();

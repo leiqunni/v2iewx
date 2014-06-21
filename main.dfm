@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 0
   Caption = 'v2iewx'
   ClientHeight = 290
-  ClientWidth = 641
+  ClientWidth = 638
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,20 +19,27 @@ object Form1: TForm1
   OnResize = FormResize
   PixelsPerInch = 96
   TextHeight = 13
+  object Splitter: TSplitter
+    Left = 312
+    Top = 16
+    Width = 4
+    Height = 228
+    Align = alRight
+    ExplicitLeft = 313
+  end
   object Panel1: TPanel
     Left = 0
     Top = 16
-    Width = 641
+    Width = 312
     Height = 228
     Align = alClient
     BevelOuter = bvNone
-    BevelWidth = 2
     ShowCaption = False
     TabOrder = 0
     object Gdv1: TGdViewer
       Left = 0
       Top = 0
-      Width = 641
+      Width = 312
       Height = 228
       TabStop = False
       Align = alClient
@@ -41,11 +48,10 @@ object Form1: TForm1
       OnDblClickControl = Gdv1DblClickControl
       OnMouseDownControl = Gdv1MouseDownControl
       OnMouseUpControl = Gdv1MouseUpControl
-      ExplicitTop = -3
-      ExplicitHeight = 226
+      ExplicitWidth = 339
       ControlData = {
         93B2000088010000030008000BF25747200000005F0065007800740065006E00
-        7400780040420000030008000AF25747200000005F0065007800740065006E00
+        740078003F200000030008000AF25747200000005F0065007800740065006E00
         74007900911700000B000A00A9D2B51C240000007300630072006F006C006C00
         6200610072007300000000000B000A002F18E5962400000065006E0061006200
         6C0065006D0065006E007500000000000B0010001EFB760D3000000065006E00
@@ -62,7 +68,7 @@ object Form1: TForm1
   object ScrollBar: TScrollBar
     Left = 0
     Top = 0
-    Width = 641
+    Width = 638
     Height = 16
     Align = alTop
     LargeChange = 10
@@ -78,7 +84,7 @@ object Form1: TForm1
   object StatusBar: TStatusBar
     Left = 0
     Top = 270
-    Width = 641
+    Width = 638
     Height = 20
     Panels = <>
     ParentColor = True
@@ -89,7 +95,7 @@ object Form1: TForm1
     AlignWithMargins = True
     Left = 2
     Top = 246
-    Width = 637
+    Width = 634
     Height = 22
     Margins.Left = 2
     Margins.Top = 2
@@ -169,15 +175,22 @@ object Form1: TForm1
       Style = tbsCheck
       OnClick = tbtnSpreadClick
     end
-    object tbtnSep_5: TToolButton
+    object tbtnSpreadView: TToolButton
       Left = 144
+      Top = 0
+      Caption = 'tbtnSpreadView'
+      ImageIndex = 16
+      OnClick = tbtnSpreadViewClick
+    end
+    object tbtnSep_5: TToolButton
+      Left = 167
       Top = 0
       Width = 8
       ImageIndex = 12
       Style = tbsSeparator
     end
     object tbtnSlideShow: TToolButton
-      Left = 152
+      Left = 175
       Top = 0
       Hint = 'SlideShow Start'
       ImageIndex = 6
@@ -187,14 +200,14 @@ object Form1: TForm1
       OnClick = tbtnSlideShowClick
     end
     object tbtnSep_2: TToolButton
-      Left = 175
+      Left = 198
       Top = 0
       Width = 8
       ImageIndex = 2
       Style = tbsSeparator
     end
     object tbtnZoomIn: TToolButton
-      Left = 183
+      Left = 206
       Top = 0
       Hint = 'Zoom In'
       ImageIndex = 7
@@ -203,7 +216,7 @@ object Form1: TForm1
       OnClick = tbtnZoomInClick
     end
     object tbtnZoomOut: TToolButton
-      Left = 206
+      Left = 229
       Top = 0
       Hint = 'Zoom Out'
       ImageIndex = 8
@@ -212,14 +225,14 @@ object Form1: TForm1
       OnClick = tbtnZoomOutClick
     end
     object tbtnSep_3: TToolButton
-      Left = 229
+      Left = 252
       Top = 0
       Width = 8
       ImageIndex = 8
       Style = tbsSeparator
     end
     object tbtnRotateLeft: TToolButton
-      Left = 237
+      Left = 260
       Top = 0
       Hint = 'Rotate Left'
       ImageIndex = 9
@@ -228,7 +241,7 @@ object Form1: TForm1
       OnClick = tbtnRotateLeftClick
     end
     object tbtnRotateRight: TToolButton
-      Left = 260
+      Left = 283
       Top = 0
       Hint = 'Rotate Right'
       ImageIndex = 10
@@ -237,7 +250,7 @@ object Form1: TForm1
       OnClick = tbtnRotateRightClick
     end
     object tbtnKeepRot: TToolButton
-      Left = 283
+      Left = 306
       Top = 0
       Hint = 'Keep Rotate'
       ImageIndex = 12
@@ -246,20 +259,58 @@ object Form1: TForm1
       OnClick = tbtnKeepRotClick
     end
     object tbtnSep_4: TToolButton
-      Left = 306
+      Left = 329
       Top = 0
       Width = 8
       ImageIndex = 10
       Style = tbsSeparator
     end
     object tbtnDelete: TToolButton
-      Left = 314
+      Left = 337
       Top = 0
       Hint = 'Delete'
       ImageIndex = 11
       ParentShowHint = False
       ShowHint = True
       OnClick = tbtnDeleteClick
+    end
+  end
+  object Panel2: TPanel
+    Left = 316
+    Top = 16
+    Width = 322
+    Height = 228
+    Align = alRight
+    BevelOuter = bvNone
+    ShowCaption = False
+    TabOrder = 4
+    object Gdv2: TGdViewer
+      Left = 0
+      Top = 0
+      Width = 322
+      Height = 228
+      TabStop = False
+      Align = alClient
+      TabOrder = 0
+      OnMouseMoveControl = Gdv1MouseMoveControl
+      OnDblClickControl = Gdv1DblClickControl
+      OnMouseDownControl = Gdv1MouseDownControl
+      OnMouseUpControl = Gdv1MouseUpControl
+      ExplicitWidth = 312
+      ControlData = {
+        93B2000088010000030008000BF25747200000005F0065007800740065006E00
+        7400780048210000030008000AF25747200000005F0065007800740065006E00
+        74007900911700000B000A00A9D2B51C240000007300630072006F006C006C00
+        6200610072007300000000000B000A002F18E5962400000065006E0061006200
+        6C0065006D0065006E007500000000000B0010001EFB760D3000000065006E00
+        610062006C0065006D006F0075007300650077006800650065006C0000000000
+        0B000A00263C76DF2400000061006E0069006D00610074006500670069006600
+        FFFF000002000B000B89C4CE2400000062006F00720064006500720073007400
+        79006C006500000002000A002560153324000000610070007000650061007200
+        61006E00630065000000000003000900267525BE240000006200610063006B00
+        63006F006C006F007200FFFFFF0000000B00140000599D2AB8FEFFFF6F007000
+        740069006D0069007A006500640072006100770069006E006700730070006500
+        65006400FFFF0000}
     end
   end
   object ImageList: TImageList
@@ -1116,6 +1167,31 @@ object Form1: TForm1
       object mnuViewKeepRot: TMenuItem
         Caption = '&Keep Rotation'
         OnClick = mnuViewKeepRotClick
+      end
+      object N2: TMenuItem
+        Caption = '-'
+      end
+      object mnuViewSpreadView: TMenuItem
+        Caption = 'Spread View'
+        GroupIndex = 10
+        object mnuViewSpreadViewNone: TMenuItem
+          Caption = 'None'
+          GroupIndex = 35
+          RadioItem = True
+          OnClick = mnuViewSpreadViewNoneClick
+        end
+        object mnuViewSpreadViewRight: TMenuItem
+          Caption = 'Right to Left'
+          GroupIndex = 35
+          RadioItem = True
+          OnClick = mnuViewSpreadViewRightClick
+        end
+        object mnuViewSpreadViewLeft: TMenuItem
+          Caption = 'Left to Right'
+          GroupIndex = 35
+          RadioItem = True
+          OnClick = mnuViewSpreadViewLeftClick
+        end
       end
       object mnuView_5: TMenuItem
         Caption = '-'

@@ -286,6 +286,37 @@ void __fastcall TForm1::fn_Reset() {
 	conf.rot = 0;
 	fn_ZoomMode(Gdv1->ZoomMode);
 }
+//---------------------------------------------------------------------------
+// []
+void __fastcall TForm1::fn_Spread(int value)
+{
+	conf.spread = value;
+
+	switch (value) {
+	case 0:
+		Splitter->Visible = false;
+		Panel2->Visible = false;
+		mnuViewSpreadViewNone->Checked = true;
+		tbtnSpreadView->Down = false;
+		tbtnSpreadView->ImageIndex = 16;
+		return;
+		break;
+	case 1:
+		mnuViewSpreadViewRight->Checked = true;
+		tbtnSpreadView->ImageIndex = 17;
+		break;
+	case 2:
+		mnuViewSpreadViewLeft->Checked = true;
+		tbtnSpreadView->ImageIndex = 18;
+		break;
+	}
+
+	Panel2->Visible = true;
+	Splitter->Visible = true;
+//	Panel2->Visible = true;
+	tbtnSpreadView->Down = true;
+	Panel2->Width = (Form1->ClientWidth - Splitter->Width) / 2;
+}
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_RotateRight() {
