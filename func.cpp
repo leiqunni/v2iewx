@@ -288,9 +288,9 @@ void __fastcall TForm1::fn_Reset() {
 }
 //---------------------------------------------------------------------------
 // []
-void __fastcall TForm1::fn_Spread(int value)
+void __fastcall TForm1::fn_SpreadView(int value)
 {
-	conf.spread = value;
+	conf.SpreadView = value;
 
 	switch (value) {
 	case 0:

@@ -54,6 +54,7 @@ void __fastcall TForm1::LoadIni()
 	// Function section
 	conf.KeepListWhenFileOpen = ini->ReadBool(L"Function", "KeepListWhenFileOpen", false);
 	conf.MouseGesture = ini->ReadBool("Function", "MouseGesture", true);
+	fn_SpreadView(ini->ReadInteger("Function", "SpreadView", 0));
 	fn_KeepRot(ini->ReadBool("Function", "KeepRotation", false));
 	fn_Sort(ini->ReadInteger("Function", "SortOrder", 0), ini->ReadBool("Function", "SortAsc", true));
 	fn_ZoomMode(ini->ReadInteger("Function", "ZoomMode", 2));
@@ -206,6 +207,7 @@ void __fastcall TForm1::SaveIni()
 	ini->WriteBool("GdViewer", "OptimizeDrawingSpeed", Gdv1->OptimizeDrawingSpeed);
 
 	// Function section
+	ini->WriteInteger("Function", "SpreadView", conf.SpreadView);
 	ini->WriteBool("Function", "KeepRot", mnuViewKeepRot->Checked);
 	ini->WriteBool("Function", "SortAsc", conf.asc);
 	ini->WriteInteger("Function", "SortOrder", conf.order);

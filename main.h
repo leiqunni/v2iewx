@@ -243,7 +243,7 @@ private:	// User declarations
 		String TitleText;
 		String StatusText;
 		String Ext;
-int spread;
+		int SpreadView;
 	} conf;
 
 	struct { // Mouse gestures
@@ -339,7 +339,6 @@ int spread;
 	void __fastcall fn_ScrollBar(bool);
 	void __fastcall fn_SlideShow();
 	void __fastcall fn_Sort(SortOrder, bool);
-void __fastcall TForm1::fn_Spread(int value);
 	void __fastcall fn_SpreadView(int);
 	void __fastcall fn_StatusBar(bool);
 	void __fastcall fn_StatusText();

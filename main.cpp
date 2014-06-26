@@ -238,19 +238,19 @@ void __fastcall TForm1::mnuViewStatusBarClick(TObject *Sender)
 
 void __fastcall TForm1::mnuViewSpreadViewNoneClick(TObject *Sender)
 {
-	fn_Spread(0);
+	fn_SpreadView(0);
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::mnuViewSpreadViewRightClick(TObject *Sender)
 {
-	fn_Spread(1);
+	fn_SpreadView(1);
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::mnuViewSpreadViewLeftClick(TObject *Sender)
 {
-	fn_Spread(2);
+	fn_SpreadView(2);
 }
 
 // ---------------------------------------------------------------------------
@@ -821,13 +821,13 @@ void __fastcall TForm1::tbtnSpreadViewClick(TObject *Sender)
 {
 	switch (conf.spread) {
 	case 0:
-		fn_Spread(1);
+		fn_SpreadView(1);
 		break;
 	case 1:
-		fn_Spread(2);
+		fn_SpreadView(2);
 		break;
 	case 2:
-		fn_Spread(0);
+		fn_SpreadView(0);
 		break;
 	}
 }
