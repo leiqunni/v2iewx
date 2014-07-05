@@ -19,10 +19,6 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 	Gdv1->LicenseKEY = WideString(L"6223560888372426056441256");
 	Gdv2->LicenseKEY = WideString(L"6223560888372426056441256");
 
-//	IniFile = TPath::Combine(ExtractFilePath(Application->ExeName), "v2iewx.ini");
-//	KeyFile = TPath::Combine(ExtractFilePath(Application->ExeName), "key.ini");
-//	LangFile = TPath::Combine(ExtractFilePath(Application->ExeName), "lang.ini");
-
 	hSPI = new TObjectList();
 	flst = new TObjectList();
 	paramStr = new TStringList();
@@ -37,6 +33,8 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 		}
 		fn_ParseFiles(paramStr);
 	}
+
+FormResize(Owner);
 }
 //---------------------------------------------------------------------------
 //
@@ -56,7 +54,11 @@ void __fastcall TForm1::FormResize(TObject *Sender)
 		Panel2->Width = (Form1->ClientWidth - Splitter->Width) / 2;
 	}
 	if (ToolBar->Visible) {
-		ToolBar->Indent = (ToolBar->Width - 359) / 2;
+		int indent = 0;
+		for (int i = 0; i < ToolBar->ButtonCount; ++i) {
+			indent += ToolBar->Buttons[i]->Width;
+		}
+		ToolBar->Indent = (ToolBar->Width - indent) / 2;
 	}
 }
 // ---------------------------------------------------------------------------
@@ -87,9 +89,16 @@ void __fastcall TForm1::FindDir(String dir, String name) {
 
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::ScrollBarChange(TObject *Sender) {
+void __fastcall TForm1::ScrollBarChange(TObject *Sender)
+{
 	if (flst->Count == 0) return;
-	LoadImage(Gdv1, (TFI*)flst->Items[ScrollBar->Position - 1]);
+
+	if (mnuViewSpreadViewNone->Checked) { // 見開きでない
+		LoadImage(Gdv1, (TFI*)flst->Items[ScrollBar->Position - 1]);
+	} else {
+		LoadImage(Gdv1, (TFI*)flst->Items[ScrollBar->Position - (int)(mnuViewSpreadViewLeft->Checked ? 1 : 0)]);
+		LoadImage(Gdv2, (TFI*)flst->Items[ScrollBar->Position - (int)(mnuViewSpreadViewRight->Checked ? 1 : 0)]);
+	}
 }
 // ---------------------------------------------------------------------------
 // 画像表示
@@ -435,7 +444,8 @@ void __fastcall TForm1::tbtnInWindowClick(TObject *Sender) {
 }
 // ---------------------------------------------------------------------------
 // [ツール バー]-[原寸大]
-void __fastcall TForm1::tbtnActualClick(TObject *Sender) {
+void __fastcall TForm1::tbtnActualClick(TObject *Sender)
+{
 	fn_ZoomMode(1);
 }
 // ---------------------------------------------------------------------------
@@ -819,7 +829,7 @@ void __fastcall TForm1::DisplayFromFile(TGdViewer *object, String sFilePath) {
 //
 void __fastcall TForm1::tbtnSpreadViewClick(TObject *Sender)
 {
-	switch (conf.spread) {
+	switch (conf.SpreadView) {
 	case 0:
 		fn_SpreadView(1);
 		break;
@@ -832,4 +842,3 @@ void __fastcall TForm1::tbtnSpreadViewClick(TObject *Sender)
 	}
 }
 //---------------------------------------------------------------------------
-

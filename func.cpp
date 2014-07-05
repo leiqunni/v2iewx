@@ -78,28 +78,42 @@ void __fastcall TForm1::RunProcess(String path, String argv) {
 }
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::fn_Next() {
-	if (flst->Count == 0) {
-		return;
-	}
+void __fastcall TForm1::fn_Next()
+{
+	if (flst->Count == 0) return;
 
-	if (ScrollBar->Position >= flst->Count) {
-		ScrollBar->Position = 1;
+	if (mnuViewSpreadViewNone->Checked) { // Not Spread View
+		if (ScrollBar->Position >= flst->Count) {
+			ScrollBar->Position = 1;
+		} else {
+			ScrollBar->Position += 1;
+		}
 	} else {
-		ScrollBar->Position += 1;
+		if (ScrollBar->Position >= flst->Count - 2) {
+			ScrollBar->Position = 1;
+		} else {
+			ScrollBar->Position += 2;
+		}
 	}
 }
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::fn_Prev() {
-	if (flst->Count == 0) {
-		return;
-	}
+void __fastcall TForm1::fn_Prev()
+{
+	if (flst->Count == 0) return;
 
-	if (ScrollBar->Position <= 1) {
-		ScrollBar->Position = flst->Count;
+	if (mnuViewSpreadViewNone->Checked) {
+		if (ScrollBar->Position <= 1) {
+			ScrollBar->Position = flst->Count;
+		} else {
+			ScrollBar->Position -= 1;
+		}
 	} else {
-		ScrollBar->Position -= 1;
+		if (ScrollBar->Position <= 0) {
+			ScrollBar->Position = flst->Count - 2;
+		} else {
+			ScrollBar->Position -= 2;
+		}
 	}
 }
 // ---------------------------------------------------------------------------
@@ -347,18 +361,24 @@ void __fastcall TForm1::fn_ZoomMode(int value) {
 	switch (value) {
 	case 1: // []
 		Gdv1->ZoomMode = 1;
+		Gdv2->ZoomMode = 1;
+
 		mnuViewActual->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = true;
 		tbtnActual->Down = true;
 		break;
 	case 2: // []
 		Gdv1->ZoomMode = 2;
+		Gdv2->ZoomMode = 2;
+
 		mnuViewBestfit->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = false;
 		tbtnBestfit->Down = true;
 		break;
 	case 6: // []
 		Gdv1->ZoomMode = 6;
+		Gdv2->ZoomMode = 6;
+
 		mnuViewSpread->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = false;
 		tbtnSpread->Down = true;
