@@ -36,7 +36,7 @@ void __fastcall TForm2::FormShow(TObject *Sender)
 		"　　　　 l　.　　:　　 　 :. .:!|　　 !！　 /ｲ￣　/　　 j_,. -亠'¨⌒ヽ:_ﾉ\r\n"
 		"　　 　 ! {　　:　　:.　 |:.:,! !　　|　｀ｰ'´ ヽ.__,,.. -‐'´\r\n"
 		"　　　　}.:}.　 :.l　 :.:　.!:.i ｒ' ,　､〉\r\n"
-		"　　(_,ノ_;{:...:.:.:!: .:.:. .ﾊ:{_｀T~＾i  viewx++ version 2014.7.5.0\r\n";
+		"　　(_,ノ_;{:...:.:.:!: .:.:. .ﾊ:{_｀T~＾i  viewx++ version 2014.6.8.0\r\n";
 
 	String aa2 =
 		" 　 　 f彡Y:.:.}:|:.!:.:!:{:ｲ'`　|　 !          with GdViewer Pro ver. %GDVER%\r\n";
@@ -44,13 +44,13 @@ void __fastcall TForm2::FormShow(TObject *Sender)
 	aa2 = ReplaceStr(aa2, "%GDVER%", FloatToStr(Form1->Gdv1->GetVersion()));
 
 	String aa3 =
-		"　　　　⌒j,ｨ:.{:!:ﾊ:|:!{{| 　 j　 !        date: 2014/07/05\r\n"
+		"　　　　⌒j,ｨ:.{:!:ﾊ:|:!{{| 　 j　 !        date: 2014/06/08\r\n"
 		"　　　　　　,ﾚ＾ﾄ! }川`ｰ/,.　 {         author: 793 ◆7BJkZFw08A / DarkEra Software\r\n"
 		"　　　　　　　　　　　　 }n.n r}        email: leiqunni@yahoo.co.jp\r\n"
 		"　　　　　　　 　 　 　 　 ´ ﾞ           web: http://www.geocities.co.jp/SiliconValley/7773/software/\r\n\r\n\r";
 
 	aa = aa + aa2 + aa3 +
-		"かわいいよー\r\n\r\n"
+		"かわいいよー\r\n"
 		"-----BEGIN PGP MESSAGE-----\r\n"
 		"Version: GnuPG v2.0.14 (GNU/Linux)\r\n"
 		"\r\n"

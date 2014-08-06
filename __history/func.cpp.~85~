@@ -78,38 +78,16 @@ void __fastcall TForm1::RunProcess(String path, String argv) {
 }
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::fn_Next()
-{
-	if (flst->Count == 0) return;
-
-	if (mnuViewSpreadViewNone->Checked) { // 見開きでない
-		if (ScrollBar->Position >= flst->Count) {
-			ScrollBar->Position = 1;
-		} else {
-			ScrollBar->Position += 1;
-		}
-//		LoadImageFile(GdViewer0, vec[ScrollBar->Position - 1]);
-	} else {
-		if (ScrollBar->Position >= flst->Count - 2) {
-			ScrollBar->Position = 1;
-		} else {
-			ScrollBar->Position += 2;
-		}
-//		LoadImageFile(GdViewer0, vec[ScrollBar->Position - (int)mnuViewSpreadLeft->Checked]);
-//		LoadImageFile(GdViewer1, vec[ScrollBar->Position - (int)mnuViewSpreadRight->Checked]);
-//		readPictureFile1(vec[ScrollBar->Position - (int)mnuViewSpreadLeft->Checked]);
-//		readPictureFile2(vec[ScrollBar->Position - (int)mnuViewSpreadRight->Checked]);
+void __fastcall TForm1::fn_Next() {
+	if (flst->Count == 0) {
+		return;
 	}
 
-//	if (flst->Count == 0) {
-//		return;
-//	}
-//
-//	if (ScrollBar->Position >= flst->Count) {
-//		ScrollBar->Position = 1;
-//	} else {
-//		ScrollBar->Position += 1;
-//	}
+	if (ScrollBar->Position >= flst->Count) {
+		ScrollBar->Position = 1;
+	} else {
+		ScrollBar->Position += 1;
+	}
 }
 // ---------------------------------------------------------------------------
 //
@@ -310,14 +288,14 @@ void __fastcall TForm1::fn_Reset() {
 }
 //---------------------------------------------------------------------------
 // []
-void __fastcall TForm1::fn_SpreadView(int value)
+void __fastcall TForm1::fn_Spread(int value)
 {
-	conf.SpreadView = value;
+	conf.spread = value;
 
 	switch (value) {
 	case 0:
-		Splitter->Visible = false;
 		Panel2->Visible = false;
+		Splitter->Visible = false;
 		mnuViewSpreadViewNone->Checked = true;
 		tbtnSpreadView->Down = false;
 		tbtnSpreadView->ImageIndex = 16;
@@ -333,9 +311,8 @@ void __fastcall TForm1::fn_SpreadView(int value)
 		break;
 	}
 
-	Panel2->Visible = true;
 	Splitter->Visible = true;
-//	Panel2->Visible = true;
+	Panel2->Visible = true;
 	tbtnSpreadView->Down = true;
 	Panel2->Width = (Form1->ClientWidth - Splitter->Width) / 2;
 }

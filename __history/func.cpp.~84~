@@ -78,69 +78,29 @@ void __fastcall TForm1::RunProcess(String path, String argv) {
 }
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::fn_Next()
-{
-	if (flst->Count == 0) return;
-
-	if (mnuViewSpreadViewNone->Checked) { // 見開きでない
-		if (ScrollBar->Position >= flst->Count) {
-			ScrollBar->Position = 1;
-		} else {
-			ScrollBar->Position += 1;
-		}
-		LoadImage(Gdv1, (TFI*)flst->Items[ScrollBar->Position - 1]);
-	} else {
-		if (ScrollBar->Position >= flst->Count - 2) {
-			ScrollBar->Position = 1;
-		} else {
-			ScrollBar->Position += 2;
-		}
-		LoadImage(Gdv1, (TFI*)flst->Items[ScrollBar->Position - mnuViewSpreadViewLeft->Checked ? 1 : 0]);
-		LoadImage(Gdv2, (TFI*)flst->Items[ScrollBar->Position - mnuViewSpreadViewRight->Checked ? 1 : 0]);
+void __fastcall TForm1::fn_Next() {
+	if (flst->Count == 0) {
+		return;
 	}
-//	if (flst->Count == 0) {
-//		return;
-//	}
-//
-//	if (ScrollBar->Position >= flst->Count) {
-//		ScrollBar->Position = 1;
-//	} else {
-//		ScrollBar->Position += 1;
-//	}
+
+	if (ScrollBar->Position >= flst->Count) {
+		ScrollBar->Position = 1;
+	} else {
+		ScrollBar->Position += 1;
+	}
 }
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::fn_Prev()
-{
-	if (flst->Count == 0) return;
-
-	if (mnuViewSpreadViewNone->Checked) {
-		if (ScrollBar->Position <= 1) {
-			ScrollBar->Position = flst->Count;
-		} else {
-			ScrollBar->Position -= 1;
-		}
-		LoadImage(Gdv1, (TFI*)flst->Items[ScrollBar->Position - 1]);
-	} else {
-		if (ScrollBar->Position <= 0) {
-			ScrollBar->Position = flst->Count - 2;
-		} else {
-			ScrollBar->Position -= 2;
-		}
-		LoadImage(Gdv1, (TFI*)flst->Items[ScrollBar->Position - mnuViewSpreadViewLeft->Checked ? 1 : 0]);
-		LoadImage(Gdv2, (TFI*)flst->Items[ScrollBar->Position - mnuViewSpreadViewRight->Checked ? 1 : 0]);
-//		readPictureFile1(vec[ScrollBar->Position - (int)mnuViewSpreadLeft->Checked]);
-//		readPictureFile2(vec[ScrollBar->Position - (int)mnuViewSpreadRight->Checked]);
+void __fastcall TForm1::fn_Prev() {
+	if (flst->Count == 0) {
+		return;
 	}
-//	if (flst->Count == 0) {
-//		return;
-//	}
-//
-//	if (ScrollBar->Position <= 1) {
-//		ScrollBar->Position = flst->Count;
-//	} else {
-//		ScrollBar->Position -= 1;
-//	}
+
+	if (ScrollBar->Position <= 1) {
+		ScrollBar->Position = flst->Count;
+	} else {
+		ScrollBar->Position -= 1;
+	}
 }
 // ---------------------------------------------------------------------------
 //
@@ -328,19 +288,18 @@ void __fastcall TForm1::fn_Reset() {
 }
 //---------------------------------------------------------------------------
 // []
-void __fastcall TForm1::fn_SpreadView(int value)
+void __fastcall TForm1::fn_Spread(int value)
 {
-	conf.SpreadView = value;
+	conf.spread = value;
 
 	switch (value) {
 	case 0:
-		Splitter->Visible = false;
 		Panel2->Visible = false;
+		Splitter->Visible = false;
 		mnuViewSpreadViewNone->Checked = true;
 		tbtnSpreadView->Down = false;
 		tbtnSpreadView->ImageIndex = 16;
 		return;
-		break;
 	case 1:
 		mnuViewSpreadViewRight->Checked = true;
 		tbtnSpreadView->ImageIndex = 17;
@@ -351,9 +310,8 @@ void __fastcall TForm1::fn_SpreadView(int value)
 		break;
 	}
 
-	Panel2->Visible = true;
 	Splitter->Visible = true;
-//	Panel2->Visible = true;
+	Panel2->Visible = true;
 	tbtnSpreadView->Down = true;
 	Panel2->Width = (Form1->ClientWidth - Splitter->Width) / 2;
 }
@@ -387,24 +345,18 @@ void __fastcall TForm1::fn_ZoomMode(int value) {
 	switch (value) {
 	case 1: // []
 		Gdv1->ZoomMode = 1;
-		Gdv2->ZoomMode = 1;
-
 		mnuViewActual->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = true;
 		tbtnActual->Down = true;
 		break;
 	case 2: // []
 		Gdv1->ZoomMode = 2;
-		Gdv2->ZoomMode = 2;
-
 		mnuViewBestfit->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = false;
 		tbtnBestfit->Down = true;
 		break;
 	case 6: // []
 		Gdv1->ZoomMode = 6;
-		Gdv2->ZoomMode = 6;
-
 		mnuViewSpread->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = false;
 		tbtnSpread->Down = true;
