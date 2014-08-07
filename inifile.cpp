@@ -27,7 +27,7 @@ void __fastcall TForm1::LoadIni()
 	}
 
 	fn_MainMenu(ini->ReadBool("Window", "MainMenu", true));
-	fn_ScrollBar(ini->ReadBool("Window", "ScrollBar", false));
+	fn_ScrollBar(ini->ReadBool("Window", "ScrollBar", true));
 	fn_ToolBar(ini->ReadBool("Window", "ToolBar", true));
 	fn_StatusBar(ini->ReadBool("Window", "StatusBar", false));
 

@@ -819,7 +819,7 @@ void __fastcall TForm1::DisplayFromFile(TGdViewer *object, String sFilePath) {
 //
 void __fastcall TForm1::tbtnSpreadViewClick(TObject *Sender)
 {
-	switch (conf.spread) {
+	switch (conf.SpreadView) {
 	case 0:
 		fn_SpreadView(1);
 		break;
