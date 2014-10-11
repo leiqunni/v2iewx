@@ -12,24 +12,29 @@
 TForm1 *Form1;
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
-	: TForm(Owner), IniFile(L"v2iewx.ini"), KeyFile(L"key.ini"), LangFile(L"lang.ini")
+	: TForm(Owner)
 {
 	DragAcceptFiles(Handle, true); // Enable D&D
 
 	Gdv1->LicenseKEY = WideString(L"6223560888372426056441256");
 	Gdv2->LicenseKEY = WideString(L"6223560888372426056441256");
 
-//	IniFile = TPath::Combine(ExtractFilePath(Application->ExeName), "v2iewx.ini");
-//	KeyFile = TPath::Combine(ExtractFilePath(Application->ExeName), "key.ini");
-//	LangFile = TPath::Combine(ExtractFilePath(Application->ExeName), "lang.ini");
+	IniFile = TPath::Combine(ExtractFilePath(Application->ExeName), "v2iewx.ini");
+	KeyFile = TPath::Combine(ExtractFilePath(Application->ExeName), "key.ini");
+	LangFile = TPath::Combine(ExtractFilePath(Application->ExeName), "lang.ini");
+	RecentFile  = TPath::Combine(ExtractFilePath(Application->ExeName), "recent.ini");
 
 	hSPI = new TObjectList();
 	flst = new TObjectList();
 	paramStr = new TStringList();
+	RecentList = new TStringList();
 
-	LoadLang();
-	LoadIni();
+	fn_LoadLang();
+	fn_LoadIni();
+	fn_LoadRecent();
+
 	KeyConf = new TMemIniFile(KeyFile);
+	Recent = new TMemIniFile(RecentFile);
 
 	if (ParamCount() > 0) {
 		for (int i = 1; i <= ParamCount(); ++i) {
@@ -46,7 +51,7 @@ void __fastcall TForm1::FormDestroy(TObject *Sender)
 	delete hSPI;
 	delete flst;
 	delete paramStr;
-	SaveIni();
+	fn_SaveIni();
 }
 // ---------------------------------------------------------------------------
 //
@@ -61,30 +66,33 @@ void __fastcall TForm1::FormResize(TObject *Sender)
 }
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::AddFile(String dir, TSearchRec sr) {
-	TFI *fi = new TFI;
-	fi->FullName = TPath::Combine(dir, sr.Name);
-	fi->Name = sr.Name;
-	fi->Ext = ExtractFileExt(sr.Name);
-	fi->Size = sr.Size;
-	fi->Date = sr.TimeStamp;
-	flst->Add((TObject*)fi);
-}
-// ---------------------------------------------------------------------------
-//
-void __fastcall TForm1::FindDir(String dir, String name) {
+void __fastcall TForm1::FindDir(String dir, String name)
+{
 	TSearchRec sr;
-	if (FindFirst(TPath::Combine(dir, name), 0, sr) == 0) {
+
+	if (FindFirst(TPath::Combine(dir, name), faAnyFile, sr) == 0) {
 		do {
+			if (sr.Name == "." || sr.Name == "..") continue;
 			if (TRegEx::IsMatch(sr.Name, conf.Ext, TRegExOptions() << roIgnoreCase)) {
-				AddFile(dir, sr);
+				TFI *fi = new TFI;
+				fi->FullName = TPath::Combine(dir, sr.Name);
+				fi->Name = sr.Name;
+				fi->Ext = ExtractFileExt(sr.Name);
+				fi->Size = sr.Size;
+				fi->Date = sr.TimeStamp;
+				flst->Add((TObject*)fi);
 			}
-		}
-		while (!FindNext(sr));
+			// Load Sub Directries.
+			if (mnuFileLoadSubdirectry->Checked) {
+				if (DirectoryExists(TPath::Combine(dir, sr.Name))) {
+					FindDir(TPath::Combine(dir, sr.Name), "*.*");
+				}
+			}
+		} while (!FindNext(sr));
 	}
+
 	FindClose(sr);
 }
-
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::ScrollBarChange(TObject *Sender) {
@@ -131,6 +139,8 @@ void __fastcall TForm1::LoadImage(TGdViewer *gv, TFI *fi) {
 	if (mnuViewInWindow->Checked) {
 		fn_ZoomMode(99);
 	}
+
+  	Recent->WriteString("Recent", fi->FullName, fi->Name);
 
 	gv->PlayGif();
 
@@ -688,7 +698,7 @@ void __fastcall TForm1::FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shif
 	String code;
 	code = code.sprintf(L"%1x%02x", Shift.ToInt(), Key);
 	ExecAction(KeyConf->ReadString(L"key", code, NULL).LowerCase());
-	Key = NULL;
+//	Key = NULL;
 }
 // ---------------------------------------------------------------------------
 //
@@ -830,6 +840,12 @@ void __fastcall TForm1::tbtnSpreadViewClick(TObject *Sender)
 		fn_SpreadView(0);
 		break;
 	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::mnuViewStatusBarLeftClick(TObject *Sender)
+{
+	StatusBar->Align = alLeft;
 }
 //---------------------------------------------------------------------------
 

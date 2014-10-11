@@ -11,7 +11,7 @@
 
 // ---------------------------------------------------------------------------
 // Ini File Loading
-void __fastcall TForm1::LoadIni()
+void __fastcall TForm1::fn_LoadIni()
 {
 	TMemIniFile *ini = new TMemIniFile(IniFile);
 
@@ -48,10 +48,11 @@ void __fastcall TForm1::LoadIni()
 	Gdv1->MouseMode = ini->ReadInteger("GdViewer", "MouseMode", 2);
 
 	if (ini->ReadBool("GdViewer", "Properties", false)) {
-		LoadGdvProperties(Gdv1, ini);
+		fn_LoadGdvProperties(Gdv1, ini);
 	}
 
 	// Function section
+	mnuFileLoadSubdirectry->Checked = ini->ReadBool("Function", "LoadSubdirectry", false);
 	conf.KeepListWhenFileOpen = ini->ReadBool(L"Function", "KeepListWhenFileOpen", false);
 	conf.MouseGesture = ini->ReadBool("Function", "MouseGesture", true);
 	fn_SpreadView(ini->ReadInteger("Function", "SpreadView", 0));
@@ -81,7 +82,8 @@ void __fastcall TForm1::LoadIni()
 
 // ---------------------------------------------------------------------------
 // Load Raw GdViewer
-void __fastcall TForm1::LoadGdvProperties(TGdViewer *gdv, TMemIniFile *ini) {
+void __fastcall TForm1::fn_LoadGdvProperties(TGdViewer *gdv, TMemIniFile *ini)
+{
 	gdv->AnimateGIF = ini->ReadBool("GdViewer", "AnimateGIF", true);
 	gdv->Appearance = ini->ReadInteger("GdViewer", "Appearance", 0);
 	gdv->BackColor = fn_IntToColor(ini->ReadInteger("GdViewer", "BackColor", 0xffffff));
@@ -140,7 +142,7 @@ void __fastcall TForm1::LoadGdvProperties(TGdViewer *gdv, TMemIniFile *ini) {
 
 // ---------------------------------------------------------------------------
 // lang.ini loading
-void __fastcall TForm1::LoadLang() {
+void __fastcall TForm1::fn_LoadLang() {
 	if (TFile::Exists(LangFile)) {
 		TStringList *sect = new TStringList();
 		TMemIniFile *ini = new TMemIniFile(LangFile);
@@ -180,7 +182,7 @@ void __fastcall TForm1::LoadLang() {
 
 // ---------------------------------------------------------------------------
 // Ini File Saving
-void __fastcall TForm1::SaveIni()
+void __fastcall TForm1::fn_SaveIni()
 {
 	TMemIniFile *ini = new TMemIniFile(IniFile);
 
@@ -207,6 +209,7 @@ void __fastcall TForm1::SaveIni()
 	ini->WriteBool("GdViewer", "OptimizeDrawingSpeed", Gdv1->OptimizeDrawingSpeed);
 
 	// Function section
+	ini->WriteBool("Function", "LoadSubdirectry", mnuFileLoadSubdirectry->Checked);
 	ini->WriteInteger("Function", "SpreadView", conf.SpreadView);
 	ini->WriteBool("Function", "KeepRot", mnuViewKeepRot->Checked);
 	ini->WriteBool("Function", "SortAsc", conf.asc);

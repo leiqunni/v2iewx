@@ -610,3 +610,20 @@ double __fastcall TForm1::fn_GetVer()
 	GetVersionEx(&OSver);
 	return OSver.dwMajorVersion + OSver.dwMinorVersion * 0.1;
 }
+// ---------------------------------------------------------------------------
+// [Delete File]
+void __fastcall TForm1::fn_LoadRecent()
+{
+	TStringList *sect = new TStringList();
+
+//	ini->ReadSectionValues("Recent", sect);
+
+	for (int i = 0; i < sect->Count; ++i) {
+		String key = sect->Names[i];
+		String val = sect->Values[key];
+		TMenuItem *item = new TMenuItem(mnuFileRecentFiles);
+		item->Caption = val;
+		mnuFileRecentFiles->Add(item);
+	}
+}
+

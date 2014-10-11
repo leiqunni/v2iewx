@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{49DD30B5-DB2A-43E1-8B75-E889111D6CAE}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="v2iewx.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\GradientLabel.cbproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="v2iewx">
+        <MSBuild Projects="v2iewx.cbproj"/>
+    </Target>
+    <Target Name="v2iewx:Clean">
+        <MSBuild Projects="v2iewx.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="v2iewx:Make">
+        <MSBuild Projects="v2iewx.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="GradientLabel">
+        <MSBuild Projects="..\GradientLabel.cbproj"/>
+    </Target>
+    <Target Name="GradientLabel:Clean">
+        <MSBuild Projects="..\GradientLabel.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GradientLabel:Make">
+        <MSBuild Projects="..\GradientLabel.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="v2iewx;GradientLabel"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="v2iewx:Clean;GradientLabel:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="v2iewx:Make;GradientLabel:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

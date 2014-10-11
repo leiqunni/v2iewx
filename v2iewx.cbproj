@@ -50,7 +50,6 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Release>8</VerInfo_Release>
         <VerInfo_MajorVer>2014</VerInfo_MajorVer>
-        <RunBCCOutOfProcess>true</RunBCCOutOfProcess>
         <VerInfo_Locale>1041</VerInfo_Locale>
         <_TCHARMapping>wchar_t</_TCHARMapping>
         <ProjectType>CppVCLApplication</ProjectType>
@@ -109,7 +108,10 @@
         <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\debug\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <VerInfo_Keys>CompanyName=DarkEra Software;FileDescription=v2iewx the image viewer;FileVersion=2014.6.8.0;InternalName=;LegalCopyright=Copyright 2007 - 2014 793 ◆7BJkZFw08A / DarkEra Software;LegalTrademarks=;OriginalFilename=v2iewx.exe;ProductName=v2iewx;ProductVersion=2014.6.8.0;Comments=</VerInfo_Keys>
+        <VerInfo_Release>0</VerInfo_Release>
+        <VerInfo_MajorVer>1</VerInfo_MajorVer>
+        <VerInfo_MinorVer>0</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=DarkEra Software;FileDescription=v2iewx the image viewer;FileVersion=1.0.0.0;InternalName=;LegalCopyright=Copyright 2007 - 2014 793 ◆7BJkZFw08A / DarkEra Software;LegalTrademarks=;OriginalFilename=v2iewx.exe;ProductName=v2iewx;ProductVersion=2014.6.8.0;Comments=</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <LinkPackageStatics>rtl.lib;vcl.lib;GdViewerPro4.lib;vclx.lib</LinkPackageStatics>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
@@ -119,9 +121,11 @@
         <TASM_Debugging>None</TASM_Debugging>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <VerInfo_MinorVer>0</VerInfo_MinorVer>
+        <VerInfo_MajorVer>1</VerInfo_MajorVer>
+        <VerInfo_Release>0</VerInfo_Release>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <LinkPackageStatics>rtl.lib;vcl.lib;GdViewerPro4.lib;vclx.lib</LinkPackageStatics>
-        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <Icon_MainIcon>..\..\..\GitHub\v2iewx\v2iewx_Icon.ico</Icon_MainIcon>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
     </PropertyGroup>

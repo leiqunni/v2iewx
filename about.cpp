@@ -36,7 +36,7 @@ void __fastcall TForm2::FormShow(TObject *Sender)
 		"　　　　 l　.　　:　　 　 :. .:!|　　 !！　 /ｲ￣　/　　 j_,. -亠'¨⌒ヽ:_ﾉ\r\n"
 		"　　 　 ! {　　:　　:.　 |:.:,! !　　|　｀ｰ'´ ヽ.__,,.. -‐'´\r\n"
 		"　　　　}.:}.　 :.l　 :.:　.!:.i ｒ' ,　､〉\r\n"
-		"　　(_,ノ_;{:...:.:.:!: .:.:. .ﾊ:{_｀T~＾i  viewx++ version 2014.6.8.0\r\n";
+		"　　(_,ノ_;{:...:.:.:!: .:.:. .ﾊ:{_｀T~＾i  viewx++ version 2014.10.11.0\r\n";
 
 	String aa2 =
 		" 　 　 f彡Y:.:.}:|:.!:.:!:{:ｲ'`　|　 !          with GdViewer Pro ver. %GDVER%\r\n";

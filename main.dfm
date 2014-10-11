@@ -319,7 +319,7 @@ object Form1: TForm1
     Left = 136
     Top = 32
     Bitmap = {
-      494C010114001900080010001000FFFFFFFF2000FFFFFFFFFFFFFFFF424D3600
+      494C0101140019002C0010001000FFFFFFFF2000FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1109,6 +1109,13 @@ object Form1: TForm1
         Caption = 'Open Fo&lder...'
         OnClick = mnuFileOpenFolderClick
       end
+      object N4: TMenuItem
+        Caption = '-'
+      end
+      object mnuFileLoadSubdirectry: TMenuItem
+        AutoCheck = True
+        Caption = 'Load Subdirectry'
+      end
       object mnuFile_0: TMenuItem
         Caption = '-'
       end
@@ -1117,6 +1124,12 @@ object Form1: TForm1
         OnClick = mnuFileDeleteClick
       end
       object mnuFile_2: TMenuItem
+        Caption = '-'
+      end
+      object mnuFileRecentFiles: TMenuItem
+        Caption = 'Recent Files'
+      end
+      object N3: TMenuItem
         Caption = '-'
       end
       object mnuFileExit: TMenuItem

@@ -148,6 +148,11 @@ __published:	// IDE-managed Components
 	TMenuItem *mnuViewSpreadViewRight;
 	TMenuItem *mnuViewSpreadViewLeft;
 	TToolButton *tbtnSpreadView;
+	TMenuItem *mnuFileRecentFiles;
+	TMenuItem *N3;
+	TMenuItem *N4;
+	TMenuItem *mnuFileLoadSubdirectry;
+
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall FormResize(TObject *Sender);
 	void __fastcall ScrollBarChange(TObject *Sender);
@@ -219,6 +224,10 @@ __published:	// IDE-managed Components
 	void __fastcall mnuViewSpreadViewRightClick(TObject *Sender);
 	void __fastcall mnuViewSpreadViewLeftClick(TObject *Sender);
 	void __fastcall tbtnSpreadViewClick(TObject *Sender);
+	void __fastcall mnuViewStatusBarLeftClick(TObject *Sender);
+
+
+
 private:	// User declarations
 
 	enum SortOrder {
@@ -260,7 +269,6 @@ private:	// User declarations
 		String Ext;
 		TDateTime Date;
 		int Size;
-//		int Time;
 	};
 
 	// Susie Plug-in
@@ -273,9 +281,11 @@ private:	// User declarations
 	TStringList *paramStr;
 
 	// Inifile's path
-	String IniFile, KeyFile, LangFile;
+	String IniFile, KeyFile, LangFile, RecentFile;
 
-	TMemIniFile *KeyConf;
+	TMemIniFile *KeyConf, *Recent;
+
+	TStringList *RecentList;
 //	bool isSetWindowSize;
 
 #pragma region  " sortFunc "
@@ -295,35 +305,39 @@ private:	// User declarations
 
 	HBITMAP __fastcall SPI_LoadImage(String);
 	String __fastcall fn_TitleFormatting(String);
+	TColor __fastcall fn_IntToColor(int rgb);
+	double __fastcall fn_GetVer();
 	void __fastcall DisplayFromFile(TGdViewer *object, String sFilePath);
-	void __fastcall AddFile(String dir, TSearchRec sr);
 	void __fastcall DropFiles(TWMDropFiles Message);
 	void __fastcall ExecAction(String value);
 	void __fastcall FindDir(String dir, String name);
-	void __fastcall fn_LoadFiles(String);
-	void __fastcall fn_LoadFiles(TStringList*);
+	void __fastcall fn_LoadGdvProperties(TGdViewer *gdv, TMemIniFile *ini);
 	void __fastcall LoadImage(TGdViewer *gv, TFI *fi);
 	void __fastcall LoadImageSpread(TFI *fi1, TFI *fi2);
-	void __fastcall LoadIni();
-	void __fastcall LoadGdvProperties(TGdViewer *gdv, TMemIniFile *ini);
-	void __fastcall LoadLang();
+	void __fastcall fn_LoadIni();
+	void __fastcall fn_LoadLang();
 	void __fastcall RunProcess(String, String);
 	void __fastcall SPI_LoadPlugin(String);
-	void __fastcall SaveIni();
+	void __fastcall fn_SaveIni();
+	void __fastcall TForm1::fn_Glass(TGdViewer *gv, bool value);
 	void __fastcall fn_BackColor(String value);
+	void __fastcall fn_Bmp2in1(Graphics::TBitmap *bmp, String path1, String path2);
 	void __fastcall fn_DeleteFile(int);
 	void __fastcall fn_EnableMenu(bool value);
-	void __fastcall fn_OpenDialog();
 	void __fastcall fn_FileOpenDialog(bool);
+	void __fastcall fn_FileOpenDialogEx(bool);
 	void __fastcall fn_Focus(int);
 	void __fastcall fn_FullScreen();
 	void __fastcall fn_ImageCopy();
 	void __fastcall fn_KeepRot(bool);
+	void __fastcall fn_LoadFiles(String);
+	void __fastcall fn_LoadFiles(TStringList*);
 	void __fastcall fn_MainMenu(bool);
 	void __fastcall fn_MouseMode(int value);
 	void __fastcall fn_NewWindow();
 	void __fastcall fn_Next();
 	void __fastcall fn_NextFrame();
+	void __fastcall fn_OpenDialog();
 	void __fastcall fn_OptimizeDrawingSpeed(bool);
 	void __fastcall fn_OptimizeWindowSize(bool);
 	void __fastcall fn_Options();
@@ -349,12 +363,7 @@ private:	// User declarations
 	void __fastcall fn_ZoomMode(int);
 	void __fastcall fn_ZoomOut();
 	void __fastcall fn_ZoomStep(int value);
-	void __fastcall fn_Bmp2in1(Graphics::TBitmap *bmp, String path1, String path2);
-	void __fastcall TForm1::fn_Glass(TGdViewer *gv, bool value);
-	TColor __fastcall fn_IntToColor(int rgb);
-double __fastcall TForm1::fn_GetVer();
-void __fastcall TForm1::fn_FileOpenDialogEx(bool);
-
+void __fastcall TForm1::fn_LoadRecent();
 
 	BEGIN_MESSAGE_MAP
 		VCL_MESSAGE_HANDLER(WM_DROPFILES, TWMDropFiles, DropFiles)
