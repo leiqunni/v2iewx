@@ -1,0 +1,32 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+
+#pragma hdrstop
+
+#include "PopupMenu1.h"
+#pragma package(smart_init)
+//---------------------------------------------------------------------------
+// ValidCtrCheck は、作成したコンポーネントに純粋仮想関数が
+// ないことを確認するために使用します。
+//
+
+static inline void ValidCtrCheck(TPopupMenuEx *)
+{
+	new TPopupMenuEx(NULL);
+}
+//---------------------------------------------------------------------------
+__fastcall TPopupMenuEx::TPopupMenuEx(TComponent* Owner)
+	: TPopupMenu(Owner)
+{
+}
+//---------------------------------------------------------------------------
+namespace Popupmenu1
+{
+	void __fastcall PACKAGE Register()
+	{
+		TComponentClass classes[1] = {__classid(TPopupMenuEx)};
+		RegisterComponents(L"Ex", classes, 0);
+	}
+}
+//---------------------------------------------------------------------------

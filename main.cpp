@@ -15,6 +15,7 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 	: TForm(Owner)
 {
 	DragAcceptFiles(Handle, true); // Enable D&D
+	OleUninitialize();
 
 	Gdv1->LicenseKEY = WideString(L"6223560888372426056441256");
 	Gdv2->LicenseKEY = WideString(L"6223560888372426056441256");
@@ -47,6 +48,7 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 //
 void __fastcall TForm1::FormDestroy(TObject *Sender)
 {
+	OleUninitialize();
 	delete KeyConf;
 	delete hSPI;
 	delete flst;
@@ -64,91 +66,14 @@ void __fastcall TForm1::FormResize(TObject *Sender)
 		ToolBar->Indent = (ToolBar->Width - 359) / 2;
 	}
 }
-// ---------------------------------------------------------------------------
-//
-void __fastcall TForm1::FindDir(String dir, String name)
-{
-	TSearchRec sr;
 
-	if (FindFirst(TPath::Combine(dir, name), faAnyFile, sr) == 0) {
-		do {
-			if (sr.Name == "." || sr.Name == "..") continue;
-			if (TRegEx::IsMatch(sr.Name, conf.Ext, TRegExOptions() << roIgnoreCase)) {
-				TFI *fi = new TFI;
-				fi->FullName = TPath::Combine(dir, sr.Name);
-				fi->Name = sr.Name;
-				fi->Ext = ExtractFileExt(sr.Name);
-				fi->Size = sr.Size;
-				fi->Date = sr.TimeStamp;
-				flst->Add((TObject*)fi);
-			}
-			// Load Sub Directries.
-			if (mnuFileLoadSubdirectry->Checked) {
-				if (DirectoryExists(TPath::Combine(dir, sr.Name))) {
-					FindDir(TPath::Combine(dir, sr.Name), "*.*");
-				}
-			}
-		} while (!FindNext(sr));
-	}
-
-	FindClose(sr);
-}
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::ScrollBarChange(TObject *Sender) {
 	if (flst->Count == 0) return;
-	LoadImage(Gdv1, (TFI*)flst->Items[ScrollBar->Position - 1]);
+	fn_LoadImage(Gdv1, (TFI*)flst->Items[ScrollBar->Position - 1]);
 }
-// ---------------------------------------------------------------------------
-// 画像表示
-void __fastcall TForm1::LoadImage(TGdViewer *gv, TFI *fi) {
-	if (hSPI->Count > 0) { // use SPI
-		conf.isSPI = false;
-		HBITMAP bmp = SPI_LoadImage(fi->FullName.w_str());
-		if (bmp != NULL) {
-			gv->DisplayFromHBitmap((long)bmp);
-			conf.isSPI = true;
-		}
-	} else { // not use SPI
-		DisplayFromFile(gv, ((TFI*)fi)->FullName);
-	}
 
-	if (mnuViewKeepRot->Checked) {
-		switch (conf.rot) {
-		case 1:
-			gv->Rotate90();
-			break;
-		case 2:
-			gv->Rotate180();
-			break;
-		case 3:
-			gv->Rotate270();
-			break;
-		}
-	} else {
-		conf.rot = 0;
-		tbtnKeepRot->ImageIndex = 12;
-	}
-
-	// ウィンドウサイズの最適化
-	if (mnuViewOptimizeWindowSize->Checked && mnuViewActual->Checked) {
-		fn_OptimizeWindowSize(true);
-	}
-
-	// for 'In Window' of zoom mode
-	if (mnuViewInWindow->Checked) {
-		fn_ZoomMode(99);
-	}
-
-  	Recent->WriteString("Recent", fi->FullName, fi->Name);
-
-	gv->PlayGif();
-
-	this->Caption = fn_TitleFormatting(conf.TitleText);
-
-	// display text in statusbar.
-	fn_StatusText();
-}
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::DropFiles(TWMDropFiles Msg) {
@@ -574,6 +499,7 @@ HBITMAP __fastcall TForm1::SPI_LoadImage(String fileName) {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::FormMouseWheel(TObject *Sender, TShiftState Shift, int WheelDelta, TPoint &MousePos, bool &Handled) {
+
 	if (mg.enabled) {
 		if (WheelDelta > 0) {
 			fn_ZoomOut();
@@ -614,17 +540,17 @@ void __fastcall TForm1::Gdv1DblClickControl(TObject *Sender)
 }
 // ---------------------------------------------------------------------------
 // Mouse Gestures
-void __fastcall TForm1::Gdv1MouseDownControl(TObject *Sender, short *Button, short *shift, float *X, float *y)
+void __fastcall TForm1::Gdv1MouseDownControl(TObject *Sender, short *Button, short *shift, float *X, float *Y)
 {
-	if (conf.MouseGesture && Button[0] == 2) {
-		mg.enabled = true;
-		mg.strokes = "";
-		mg.exx = X[0];
-		mg.exy = y[0];
-	}
-	if (Button[0] == 4) { // Wheel Click
-		fn_Reset();
-	}
+//	if (conf.MouseGesture && Button[0] == 2) {
+//		mg.enabled = true;
+//		mg.strokes = "";
+//		mg.exx = X[0];
+//		mg.exy = Y[0];
+//	}
+//	if (Button[0] == 4) { // Wheel Click
+//		fn_Reset();
+//	}
 }
 // ---------------------------------------------------------------------------
 //
@@ -638,7 +564,7 @@ void __fastcall TForm1::Gdv1MouseUpControl(TObject *Sender, short *Button, short
 }
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::Gdv1MouseMoveControl(TObject *Sender, short *Button, short *shift, float *X, float *y)
+void __fastcall TForm1::Gdv1MouseMoveControl(TObject *Sender, short *Button, short *shift, float *X, float *Y)
 {
 	if (conf.MouseGesture && mg.enabled) { // 右ボタンクリック中なら
 		int dirX, dirY, absX, absY;
@@ -652,7 +578,7 @@ void __fastcall TForm1::Gdv1MouseMoveControl(TObject *Sender, short *Button, sho
 
 		dirX = X[0] - mg.exx;
 		absX = abs(dirX);
-		dirY = y[0] - mg.exy;
+		dirY = Y[0] - mg.exy;
 		absY = abs(dirY);
 
 		if (absX < 15 && absY < 15) {
@@ -683,7 +609,7 @@ void __fastcall TForm1::Gdv1MouseMoveControl(TObject *Sender, short *Button, sho
 			}
 		}
 		mg.exx = X[0];
-		mg.exy = y[0];
+		mg.exy = Y[0];
 	}
 }
 
@@ -749,9 +675,9 @@ void __fastcall TForm1::ExecAction(String value)
 	} else if (value == "prevframe") {
 		fn_PrevFrame();
 	} else if (value == "first") {
-		LoadImage(Gdv1, (TFI*)flst->Items[0]);
+		fn_LoadImage(Gdv1, (TFI*)flst->Items[0]);
 	} else if (value == "last") {
-		LoadImage(Gdv1, (TFI*)flst->Items[ScrollBar->Max - 1]);
+		fn_LoadImage(Gdv1, (TFI*)flst->Items[ScrollBar->Max - 1]);
 	}
 
 	else if (value == "zoomin") {
@@ -843,9 +769,16 @@ void __fastcall TForm1::tbtnSpreadViewClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TForm1::mnuViewStatusBarLeftClick(TObject *Sender)
+void __fastcall TForm1::pumCopyToDesktopClick(TObject *Sender)
 {
-	StatusBar->Align = alLeft;
+	if (flst->Count == 0) return;
+
+	TFI *fi = (TFI*)(flst->Items[ScrollBar->Position - 1]);
+
+	wchar_t buff[MAX_PATH];
+	SHGetSpecialFolderPath(NULL, buff, CSIDL_DESKTOPDIRECTORY, false);
+
+	TFile::Copy(fi->FullName, TPath::Combine(String(buff), fi->Name));
 }
 //---------------------------------------------------------------------------
 

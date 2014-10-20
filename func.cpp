@@ -23,9 +23,9 @@ void __fastcall TForm1::fn_LoadFiles(TStringList *list)
 {
 	for (int i = 0; i < list->Count; ++i) {
 		if (DirectoryExists(list->Strings[i])) {
-			FindDir(list->Strings[i], "*.*");
+			fn_FindDir(list->Strings[i], "*.*");
 		} else {
-			FindDir(IncludeTrailingPathDelimiter(ExtractFileDir(list->Strings[i])), list->Strings[i]);
+			fn_FindDir(IncludeTrailingPathDelimiter(ExtractFileDir(list->Strings[i])), list->Strings[i]);
 		}
 	}
 
@@ -40,7 +40,7 @@ void __fastcall TForm1::fn_LoadFiles(TStringList *list)
 //
 void __fastcall TForm1::fn_LoadFiles(String path)
 {
-	FindDir(IncludeTrailingPathDelimiter(ExtractFileDir(path)), L"*.*");
+	fn_FindDir(IncludeTrailingPathDelimiter(ExtractFileDir(path)), L"*.*");
 
 	if (flst->Count > 0) {
 		fn_Sort(conf.order, conf.asc);
@@ -562,7 +562,7 @@ void __fastcall TForm1::fn_DeleteFile(int flags) {
 	}
 }
 // ---------------------------------------------------------------------------
-// [ステータス バーの情報表示]
+// [Show StatusBar text.]
 void __fastcall TForm1::fn_StatusText() {
 	if (StatusBar->Visible) {
 		StatusBar->SimpleText = fn_TitleFormatting(conf.StatusText);
@@ -572,6 +572,8 @@ void __fastcall TForm1::fn_StatusText() {
 // [Title Formatting]
 String __fastcall TForm1::fn_TitleFormatting(String value)
 {
+	if (flst->Count == 0) return "";
+
 	TFI *fi = (TFI*)(flst->Items[ScrollBar->Position - 1]);
 
 	value = StringReplace(value, "%_path%", fi->FullName, TReplaceFlags() << rfReplaceAll);
@@ -626,4 +628,94 @@ void __fastcall TForm1::fn_LoadRecent()
 		mnuFileRecentFiles->Add(item);
 	}
 }
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::fn_FindDir(String dir, String name)
+{
+	TSearchRec sr;
 
+	if (FindFirst(TPath::Combine(dir, name), faAnyFile, sr) == 0) {
+		do {
+			if (sr.Name == "." || sr.Name == "..") continue;
+			if (TRegEx::IsMatch(sr.Name, conf.Ext, TRegExOptions() << roIgnoreCase)) {
+				TFI *fi = new TFI;
+				fi->FullName = TPath::Combine(dir, sr.Name);
+				fi->Name = sr.Name;
+				fi->Ext = ExtractFileExt(sr.Name);
+				fi->Size = sr.Size;
+				fi->Date = sr.TimeStamp;
+				flst->Add((TObject*)fi);
+			}
+			// Load Sub Directries.
+			if (mnuFileLoadSubdirectry->Checked) {
+				if (DirectoryExists(TPath::Combine(dir, sr.Name))) {
+					fn_FindDir(TPath::Combine(dir, sr.Name), "*.*");
+				}
+			}
+		} while (!FindNext(sr));
+	}
+
+	FindClose(sr);
+}
+// ---------------------------------------------------------------------------
+// 画像表示
+void __fastcall TForm1::fn_LoadImage(TGdViewer *gv, TFI *fi)
+{
+	if (hSPI->Count > 0) { // use SPI
+		conf.isSPI = false;
+		HBITMAP bmp = SPI_LoadImage(fi->FullName.w_str());
+		if (bmp != NULL) {
+			gv->DisplayFromHBitmap((long)bmp);
+			conf.isSPI = true;
+		}
+	} else { // not use SPI
+		DisplayFromFile(gv, ((TFI*)fi)->FullName);
+	}
+
+	if (mnuViewKeepRot->Checked) {
+		switch (conf.rot) {
+		case 1:
+			gv->Rotate90();
+			break;
+		case 2:
+			gv->Rotate180();
+			break;
+		case 3:
+			gv->Rotate270();
+			break;
+		}
+	} else {
+		conf.rot = 0;
+		tbtnKeepRot->ImageIndex = 12;
+	}
+
+	// Optimize Window Size
+	if (mnuViewOptimizeWindowSize->Checked && mnuViewActual->Checked) {
+		fn_OptimizeWindowSize(true);
+	}
+
+	// for 'In Window' of zoom mode
+	if (mnuViewInWindow->Checked) {
+		fn_ZoomMode(99);
+	}
+
+//	Recent->WriteString("Recent", fi->FullName, fi->Name);
+
+	gv->PlayGif();
+
+	this->Caption = fn_TitleFormatting(conf.TitleText);
+
+	// display text in statusbar.
+	fn_StatusText();
+}
+// ---------------------------------------------------------------------------
+// Add to recent file list.
+void __fastcall TForm1::fn_AddRecent(String path)
+{
+	if (RecentList->Count > 40) {
+		RecentList->Delete(RecentList->Count - 1);
+	}
+
+	RecentList->Add(path);
+
+}
