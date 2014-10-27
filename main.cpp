@@ -15,10 +15,9 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 	: TForm(Owner)
 {
 	DragAcceptFiles(Handle, true); // Enable D&D
-	OleUninitialize();
 
+	Gdv0->LicenseKEY = WideString(L"6223560888372426056441256");
 	Gdv1->LicenseKEY = WideString(L"6223560888372426056441256");
-	Gdv2->LicenseKEY = WideString(L"6223560888372426056441256");
 
 	IniFile = TPath::Combine(ExtractFilePath(Application->ExeName), "v2iewx.ini");
 	KeyFile = TPath::Combine(ExtractFilePath(Application->ExeName), "key.ini");
@@ -48,7 +47,6 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 //
 void __fastcall TForm1::FormDestroy(TObject *Sender)
 {
-	OleUninitialize();
 	delete KeyConf;
 	delete hSPI;
 	delete flst;
@@ -59,21 +57,25 @@ void __fastcall TForm1::FormDestroy(TObject *Sender)
 //
 void __fastcall TForm1::FormResize(TObject *Sender)
 {
-	if (Panel2->Visible) {
-		Panel2->Width = (Form1->ClientWidth - Splitter->Width) / 2;
+	if (Panel1->Visible) {
+		Panel1->Width = (Form1->ClientWidth - Splitter->Width) / 2;
 	}
 	if (ToolBar->Visible) {
 		ToolBar->Indent = (ToolBar->Width - 359) / 2;
 	}
 }
-
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::ScrollBarChange(TObject *Sender) {
 	if (flst->Count == 0) return;
-	fn_LoadImage(Gdv1, (TFI*)flst->Items[ScrollBar->Position - 1]);
-}
 
+	if (mnuViewSpreadViewNone->Checked) { // not spread view
+		fn_LoadImage(Gdv0, (TFI*)flst->Items[ScrollBar->Position - 1]);
+	} else {
+		fn_LoadImage(Gdv0, (TFI*)flst->Items[ScrollBar->Position - 1 + (int)(mnuViewSpreadViewRight->Checked ? 1 : 0)]);
+		fn_LoadImage(Gdv1, (TFI*)flst->Items[ScrollBar->Position - 1 + (int)(mnuViewSpreadViewLeft->Checked ? 1 : 0)]);
+	}
+}
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::DropFiles(TWMDropFiles Msg) {
@@ -261,7 +263,7 @@ void __fastcall TForm1::mnuViewOrderDescClick(TObject *Sender) {
 // ---------------------------------------------------------------------------
 // [表示]-[画質]-[自動]
 void __fastcall TForm1::mnuViewQualityAutoClick(TObject *Sender) {
-	fn_QualityAuto(!Gdv1->ViewerQualityAuto);
+	fn_QualityAuto(!Gdv0->ViewerQualityAuto);
 }
 // ---------------------------------------------------------------------------
 // [表示]-[画質]-[低]
@@ -291,7 +293,7 @@ void __fastcall TForm1::mnuViewQualityBicubicHQClick(TObject *Sender) {
 // ---------------------------------------------------------------------------
 // [表示]-[描画速度の最適化]
 void __fastcall TForm1::mnuViewOptimizeDrawingSpeedClick(TObject *Sender) {
-	fn_OptimizeDrawingSpeed(!Gdv1->OptimizeDrawingSpeed);
+	fn_OptimizeDrawingSpeed(!Gdv0->OptimizeDrawingSpeed);
 }
 // ---------------------------------------------------------------------------
 // [表示]-[全画面表示]
@@ -377,6 +379,22 @@ void __fastcall TForm1::tbtnActualClick(TObject *Sender) {
 // [ツール バー]-[ウィンドウに広げる]
 void __fastcall TForm1::tbtnSpreadClick(TObject *Sender) {
 	fn_ZoomMode(6);
+}
+//---------------------------------------------------------------------------
+//
+void __fastcall TForm1::tbtnSpreadViewClick(TObject *Sender)
+{
+	switch (conf.SpreadView) {
+	case 0:
+		fn_SpreadView(1);
+		break;
+	case 1:
+		fn_SpreadView(2);
+		break;
+	case 2:
+		fn_SpreadView(0);
+		break;
+	}
 }
 // ---------------------------------------------------------------------------
 // [ツール バー]-[スライド ショー]
@@ -499,7 +517,6 @@ HBITMAP __fastcall TForm1::SPI_LoadImage(String fileName) {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::FormMouseWheel(TObject *Sender, TShiftState Shift, int WheelDelta, TPoint &MousePos, bool &Handled) {
-
 	if (mg.enabled) {
 		if (WheelDelta > 0) {
 			fn_ZoomOut();
@@ -516,32 +533,36 @@ void __fastcall TForm1::FormMouseWheel(TObject *Sender, TShiftState Shift, int W
 	}
 	Handled = true;
 }
-//---------------------------------------------------------------------------
-//
-// void __fastcall TForm1::Gdv1MouseWheelControl(TObject *Sender, short UpDown)
-// {
-// if (gesture) {
-// if (UpDown > 0) Gdv1->ZoomOUT(); else Gdv1->ZoomIN();
-// StatusBar->SimpleText = "拡大率: " + FloatToStr(Gdv1->ZOOM * 100) + "%";
-// } else {
-// if (UpDown > 0) fn_Prev(); else fn_Next();
-// }
-// }
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::Gdv1DblClickControl(TObject *Sender)
+void __fastcall TForm1::Gdv0DblClickControl(TObject *Sender)
 {
 	if (mnuViewBestfit->Checked) {
-		fn_ZoomMode(1);
+		fn_ZoomMode(Gdv0, 1);
 	} else if (mnuViewActual->Checked) {
-		fn_ZoomMode(2);
+		fn_ZoomMode(Gdv0, 2);
 	}
 	fn_StatusText();
 }
 // ---------------------------------------------------------------------------
 // Mouse Gestures
-void __fastcall TForm1::Gdv1MouseDownControl(TObject *Sender, short *Button, short *shift, float *X, float *Y)
+void __fastcall TForm1::Gdv0MouseDownControl(TObject *Sender, short *Button, short *shift, float *X, float *Y)
 {
+	if (conf.MouseGesture && Button[0] == 2) {
+		mg.enabled = true;
+	}
+	if (Button[0] == 1) {
+		if (Panel0->BevelOuter != bvNone) {
+			Panel0->BevelOuter = bvNone;
+			conf.CurGdv += 1;
+		} else {
+			Panel0->BevelOuter = bvLowered;
+			conf.CurGdv -= 1;
+		}
+	}
+	if (Button[0] == 4) {
+		fn_Reset(Gdv0);
+	}
 //	if (conf.MouseGesture && Button[0] == 2) {
 //		mg.enabled = true;
 //		mg.strokes = "";
@@ -554,7 +575,7 @@ void __fastcall TForm1::Gdv1MouseDownControl(TObject *Sender, short *Button, sho
 }
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::Gdv1MouseUpControl(TObject *Sender, short *Button, short *shift, float *X, float *y)
+void __fastcall TForm1::Gdv0MouseUpControl(TObject *Sender, short *Button, short *shift, float *X, float *y)
 {
 	if (conf.MouseGesture && Button[0] == 2) {
 		mg.enabled = false;
@@ -564,7 +585,7 @@ void __fastcall TForm1::Gdv1MouseUpControl(TObject *Sender, short *Button, short
 }
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::Gdv1MouseMoveControl(TObject *Sender, short *Button, short *shift, float *X, float *Y)
+void __fastcall TForm1::Gdv0MouseMoveControl(TObject *Sender, short *Button, short *shift, float *X, float *Y)
 {
 	if (conf.MouseGesture && mg.enabled) { // 右ボタンクリック中なら
 		int dirX, dirY, absX, absY;
@@ -611,6 +632,51 @@ void __fastcall TForm1::Gdv1MouseMoveControl(TObject *Sender, short *Button, sho
 		mg.exx = X[0];
 		mg.exy = Y[0];
 	}
+}
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::Gdv1DblClickControl(TObject *Sender)
+{
+	if (mnuViewBestfit->Checked) {
+		fn_ZoomMode(Gdv1, 1);
+	} else if (mnuViewActual->Checked) {
+		fn_ZoomMode(Gdv1, 2);
+	}
+	fn_StatusText();
+}
+// ---------------------------------------------------------------------------
+// Mouse Gestures
+void __fastcall TForm1::Gdv1MouseDownControl(TObject *Sender, short *Button, short *shift, float *X, float *Y)
+{
+	if (conf.MouseGesture && Button[0] == 2) {
+		mg.enabled = true;
+	}
+	if (Button[0] == 1) {
+		if (Panel1->BevelOuter != bvNone) {
+			Panel1->BevelOuter = bvNone;
+			conf.CurGdv += 1;
+		} else {
+			Panel1->BevelOuter = bvLowered;
+			conf.CurGdv -= 1;
+		}
+	}
+	if (Button[0] == 4) {
+		fn_Reset(Gdv1);
+	}
+}
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::Gdv1MouseUpControl(TObject *Sender, short *Button, short *shift, float *X, float *y)
+{
+	if (conf.MouseGesture && Button[0] == 2) {
+		mg.enabled = false;
+	}
+}
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::Gdv1MouseMoveControl(TObject *Sender, short *Button, short *shift, float *X, float *Y)
+{
+//
 }
 
 #pragma end_region
@@ -675,9 +741,9 @@ void __fastcall TForm1::ExecAction(String value)
 	} else if (value == "prevframe") {
 		fn_PrevFrame();
 	} else if (value == "first") {
-		fn_LoadImage(Gdv1, (TFI*)flst->Items[0]);
+		fn_LoadImage(Gdv0, (TFI*)flst->Items[0]);
 	} else if (value == "last") {
-		fn_LoadImage(Gdv1, (TFI*)flst->Items[ScrollBar->Max - 1]);
+		fn_LoadImage(Gdv0, (TFI*)flst->Items[ScrollBar->Max - 1]);
 	}
 
 	else if (value == "zoomin") {
@@ -723,9 +789,9 @@ void __fastcall TForm1::ExecAction(String value)
 	} else if (value == "filetotrash_noconfirmation") {
 		fn_DeleteFile(FOF_ALLOWUNDO | FOF_NOCONFIRMATION);
 	} else if (value == "optimizedrawingspeed") {
-		fn_OptimizeDrawingSpeed(!Gdv1->OptimizeDrawingSpeed);
+		fn_OptimizeDrawingSpeed(!Gdv0->OptimizeDrawingSpeed);
 	} else if (value == "quality_auto") {
-		fn_QualityAuto(!Gdv1->ViewerQualityAuto);
+		fn_QualityAuto(!Gdv0->ViewerQualityAuto);
 	}
 	// else if (value == "properties")
 	// fn_properties();
@@ -750,23 +816,6 @@ void __fastcall TForm1::DisplayFromFile(TGdViewer *object, String sFilePath) {
 	delete fs;
 	delete[]buf;
 }
-
-//---------------------------------------------------------------------------
-//
-void __fastcall TForm1::tbtnSpreadViewClick(TObject *Sender)
-{
-	switch (conf.SpreadView) {
-	case 0:
-		fn_SpreadView(1);
-		break;
-	case 1:
-		fn_SpreadView(2);
-		break;
-	case 2:
-		fn_SpreadView(0);
-		break;
-	}
-}
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::pumCopyToDesktopClick(TObject *Sender)
@@ -780,5 +829,6 @@ void __fastcall TForm1::pumCopyToDesktopClick(TObject *Sender)
 
 	TFile::Copy(fi->FullName, TPath::Combine(String(buff), fi->Name));
 }
+
 //---------------------------------------------------------------------------
 

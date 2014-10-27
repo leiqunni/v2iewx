@@ -79,27 +79,39 @@ void __fastcall TForm1::RunProcess(String path, String argv) {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_Next() {
-	if (flst->Count == 0) {
-		return;
-	}
+	if (flst->Count == 0) return;
 
-	if (ScrollBar->Position >= flst->Count) {
-		ScrollBar->Position = 1;
+	if (mnuViewSpreadViewNone->Checked) { // Not Spread View
+		if (ScrollBar->Position >= flst->Count) {
+			ScrollBar->Position = 1;
+		} else {
+			ScrollBar->Position += 1;
+		}
 	} else {
-		ScrollBar->Position += 1;
+		if (ScrollBar->Position >= flst->Count - 2) {
+			ScrollBar->Position = 1;
+		} else {
+			ScrollBar->Position += 2;
+		}
 	}
 }
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_Prev() {
-	if (flst->Count == 0) {
-		return;
-	}
+	if (flst->Count == 0) return;
 
-	if (ScrollBar->Position <= 1) {
-		ScrollBar->Position = flst->Count;
+	if (mnuViewSpreadViewNone->Checked) {
+		if (ScrollBar->Position <= 1) {
+			ScrollBar->Position = flst->Count;
+		} else {
+			ScrollBar->Position -= 1;
+		}
 	} else {
-		ScrollBar->Position -= 1;
+		if (ScrollBar->Position <= 0) {
+			ScrollBar->Position = flst->Count - 2;
+		} else {
+			ScrollBar->Position -= 2;
+		}
 	}
 }
 // ---------------------------------------------------------------------------
@@ -175,12 +187,12 @@ void __fastcall TForm1::fn_FileOpenDialog(bool folder)
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_PrevFrame() {
-	Gdv1->DisplayPreviousFrame();
+	Gdv0->DisplayPreviousFrame();
 }
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_NextFrame() {
-	Gdv1->DisplayNextFrame();
+	Gdv0->DisplayNextFrame();
 }
 // ---------------------------------------------------------------------------
 //
@@ -205,7 +217,7 @@ void __fastcall TForm1::fn_SlideShow() {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_ImageCopy() {
-	Gdv1->Copy2Clipboard();
+	Gdv0->Copy2Clipboard();
 }
 // ---------------------------------------------------------------------------
 //
@@ -273,18 +285,36 @@ void __fastcall TForm1::fn_StatusBar(bool value) {
 void __fastcall TForm1::fn_Reset() {
 	switch (conf.rot) {
 	case 1:
-		Gdv1->Rotate270();
+		Gdv0->Rotate270();
 		break;
 	case 2:
-		Gdv1->Rotate180();
+		Gdv0->Rotate180();
 		break;
 	case 3:
-		Gdv1->Rotate90();
+		Gdv0->Rotate90();
 		break;
 	}
 
 	conf.rot = 0;
-	fn_ZoomMode(Gdv1->ZoomMode);
+	fn_ZoomMode(Gdv0->ZoomMode);
+}
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::fn_Reset(TGdViewer *gv) {
+	switch (conf.rot) {
+	case 1:
+		gv->Rotate270();
+		break;
+	case 2:
+		gv->Rotate180();
+		break;
+	case 3:
+		gv->Rotate90();
+		break;
+	}
+
+	conf.rot = 0;
+	fn_ZoomMode(gv, gv->ZoomMode);
 }
 //---------------------------------------------------------------------------
 // []
@@ -295,7 +325,7 @@ void __fastcall TForm1::fn_SpreadView(int value)
 	switch (value) {
 	case 0:
 		Splitter->Visible = false;
-		Panel2->Visible = false;
+		Panel1->Visible = false;
 		mnuViewSpreadViewNone->Checked = true;
 		tbtnSpreadView->Down = false;
 		tbtnSpreadView->ImageIndex = 16;
@@ -311,16 +341,16 @@ void __fastcall TForm1::fn_SpreadView(int value)
 		break;
 	}
 
-	Panel2->Visible = true;
+	Panel1->Visible = true;
 	Splitter->Visible = true;
-//	Panel2->Visible = true;
+//	Panel1->Visible = true;
 	tbtnSpreadView->Down = true;
-	Panel2->Width = (Form1->ClientWidth - Splitter->Width) / 2;
+	Panel1->Width = (Form1->ClientWidth - Splitter->Width) / 2;
 }
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_RotateRight() {
-	Gdv1->Rotate90();
+	Gdv0->Rotate90();
 	if (++conf.rot == 4) {
 		conf.rot = 0;
 	}
@@ -329,7 +359,7 @@ void __fastcall TForm1::fn_RotateRight() {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_RotateLeft() {
-	Gdv1->Rotate270();
+	Gdv0->Rotate270();
 	if (--conf.rot == -1) {
 		conf.rot = 3;
 	}
@@ -346,28 +376,62 @@ void __fastcall TForm1::fn_KeepRot(bool value) {
 void __fastcall TForm1::fn_ZoomMode(int value) {
 	switch (value) {
 	case 1: // []
-		Gdv1->ZoomMode = 1;
+		Gdv0->ZoomMode = 1;
 		mnuViewActual->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = true;
 		tbtnActual->Down = true;
 		break;
 	case 2: // []
-		Gdv1->ZoomMode = 2;
+		Gdv0->ZoomMode = 2;
 		mnuViewBestfit->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = false;
 		tbtnBestfit->Down = true;
 		break;
 	case 6: // []
-		Gdv1->ZoomMode = 6;
+		Gdv0->ZoomMode = 6;
 		mnuViewSpread->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = false;
 		tbtnSpread->Down = true;
 		break;
 	case 99:
-		if (Gdv1->Width > Gdv1->ImageWidth && Gdv1->Height > Gdv1->ImageHeight) {
-			Gdv1->ZoomMode = 1;
+		if (Gdv0->Width > Gdv0->ImageWidth && Gdv0->Height > Gdv0->ImageHeight) {
+			Gdv0->ZoomMode = 1;
 		} else {
-			Gdv1->ZoomMode = 2;
+			Gdv0->ZoomMode = 2;
+		}
+		mnuViewInWindow->Checked = true;
+		mnuViewOptimizeWindowSize->Enabled = false;
+		tbtnInWindow->Down = true;
+		break;
+	}
+}
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::fn_ZoomMode(TGdViewer *gv, int value) {
+	switch (value) {
+	case 1: // []
+		gv->ZoomMode = 1;
+		mnuViewActual->Checked = true;
+		mnuViewOptimizeWindowSize->Enabled = true;
+		tbtnActual->Down = true;
+		break;
+	case 2: // []
+		gv->ZoomMode = 2;
+		mnuViewBestfit->Checked = true;
+		mnuViewOptimizeWindowSize->Enabled = false;
+		tbtnBestfit->Down = true;
+		break;
+	case 6: // []
+		gv->ZoomMode = 6;
+		mnuViewSpread->Checked = true;
+		mnuViewOptimizeWindowSize->Enabled = false;
+		tbtnSpread->Down = true;
+		break;
+	case 99:
+		if (gv->Width > gv->ImageWidth && gv->Height > gv->ImageHeight) {
+			gv->ZoomMode = 1;
+		} else {
+			gv->ZoomMode = 2;
 		}
 		mnuViewInWindow->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = false;
@@ -378,8 +442,8 @@ void __fastcall TForm1::fn_ZoomMode(int value) {
 // ---------------------------------------------------------------------------
 // []
 void __fastcall TForm1::fn_OptimizeWindowSize(bool value) {
-	this->ClientWidth = Gdv1->ImageWidth;
-	this->ClientHeight = Gdv1->ImageHeight - (ScrollBar->Visible ? ScrollBar->Height : 0) - (ToolBar->Visible ? ToolBar->Height : 0) -
+	this->ClientWidth = Gdv0->ImageWidth;
+	this->ClientHeight = Gdv0->ImageHeight - (ScrollBar->Visible ? ScrollBar->Height : 0) - (ToolBar->Visible ? ToolBar->Height : 0) -
 		(StatusBar->Visible ? StatusBar->Height : 0);
 	mnuViewOptimizeWindowSize->Checked = value;
 }
@@ -441,13 +505,13 @@ void __fastcall TForm1::fn_Sort(SortOrder order, bool asc) {
 // ---------------------------------------------------------------------------
 // [表示]-[画質]-[自動]
 void __fastcall TForm1::fn_QualityAuto(bool value) {
-	Gdv1->ViewerQualityAuto = value;
+	Gdv0->ViewerQualityAuto = value;
 	mnuViewQualityAuto->Checked = value;
 }
 // ---------------------------------------------------------------------------
 // [表示]-[画質]-[低]
 void __fastcall TForm1::fn_Quality(int value) {
-	Gdv1->ViewerQuality = value;
+	Gdv0->ViewerQuality = value;
 	switch (value) {
 	case 0: // 低
 		mnuViewQualityLow->Checked = true;
@@ -469,7 +533,7 @@ void __fastcall TForm1::fn_Quality(int value) {
 // ---------------------------------------------------------------------------
 // [描画時間の最適化]
 void __fastcall TForm1::fn_OptimizeDrawingSpeed(bool value) {
-	Gdv1->OptimizeDrawingSpeed = value;
+	Gdv0->OptimizeDrawingSpeed = value;
 	mnuViewOptimizeDrawingSpeed->Checked = value;
 }
 // ---------------------------------------------------------------------------
@@ -507,25 +571,47 @@ void __fastcall TForm1::fn_FullScreen() {
 // [Zoom In]
 void __fastcall TForm1::fn_ZoomIn()
 {
-	Gdv1->ZoomIN();
+	if (Panel0->BevelOuter != bvNone) {
+		fn_ZoomIn(Gdv0);
+	}
+	if (Panel1->BevelOuter != bvNone) {
+		fn_ZoomIn(Gdv1);
+	}
+}
+// ---------------------------------------------------------------------------
+// [Zoom In]
+void __fastcall TForm1::fn_ZoomOut()
+{
+	if (Panel0->BevelOuter != bvNone) {
+		fn_ZoomOut(Gdv0);
+	}
+	if (Panel1->BevelOuter != bvNone) {
+		fn_ZoomOut(Gdv1);
+	}
+}
+// ---------------------------------------------------------------------------
+// [Zoom In]
+void __fastcall TForm1::fn_ZoomIn(TGdViewer* gv)
+{
+	gv->ZoomIN();
 	fn_StatusText();
 }
 // ---------------------------------------------------------------------------
 // [Zoom Out]
-void __fastcall TForm1::fn_ZoomOut()
+void __fastcall TForm1::fn_ZoomOut(TGdViewer* gv)
 {
-	Gdv1->ZoomOUT();
+	gv->ZoomOUT();
 	fn_StatusText();
 }
 // ---------------------------------------------------------------------------
 // [Zoom Step]
 void __fastcall TForm1::fn_ZoomStep(int value)
 {
-	Gdv1->ZoomStep = value;
+	Gdv0->ZoomStep = value;
 }
 // ---------------------------------------------------------------------------
 // [Aero Glass???]
-void __fastcall TForm1::fn_Glass(TGdViewer *gv, bool value) {
+void __fastcall TForm1::fn_Glass(TGdViewer* gv, bool value) {
 	if (value) {
 		gv->BackColor = clBlack; // StringToColor(L"000000");
 		Form1->GlassFrame->Enabled = true;
@@ -581,16 +667,16 @@ String __fastcall TForm1::fn_TitleFormatting(String value)
 	value = StringReplace(value, "%_filesize%", fi->Size, TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_filesize_kb%", fi->Size / 1024, TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_filesize_mb%", fi->Size / 1048576, TReplaceFlags() << rfReplaceAll);
-	value = StringReplace(value, "%_width%", Gdv1->ImageWidth, TReplaceFlags() << rfReplaceAll);
-	value = StringReplace(value, "%_height%", Gdv1->ImageHeight, TReplaceFlags() << rfReplaceAll);
-	value = StringReplace(value, "%_zoom%", int(Gdv1->ZOOM * 100), TReplaceFlags() << rfReplaceAll);
+	value = StringReplace(value, "%_width%", Gdv0->ImageWidth, TReplaceFlags() << rfReplaceAll);
+	value = StringReplace(value, "%_height%", Gdv0->ImageHeight, TReplaceFlags() << rfReplaceAll);
+	value = StringReplace(value, "%_zoom%", int(Gdv0->ZOOM * 100), TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_last_modified%", (fi->Date).DateTimeString(), TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_position%", ScrollBar->Position, TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_total%", flst->Count, TReplaceFlags() << rfReplaceAll);
-	value = StringReplace(value, "%_codec%", Gdv1->GetImageFormat(), TReplaceFlags() << rfReplaceAll);
+	value = StringReplace(value, "%_codec%", Gdv0->GetImageFormat(), TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_isspi%", conf.isSPI ? "SPI" : "GD", TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_errorcode%", IntToStr(conf.errorcode), TReplaceFlags() << rfReplaceAll);
-	value = StringReplace(value, "%_pagecount%", IntToStr(Gdv1->PageCount), TReplaceFlags() << rfReplaceAll);
+	value = StringReplace(value, "%_pagecount%", IntToStr(Gdv0->PageCount), TReplaceFlags() << rfReplaceAll);
 
 	return (value);
 }

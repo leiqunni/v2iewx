@@ -33,9 +33,9 @@ void __fastcall TForm1::fn_LoadIni()
 
 	conf.Glass = ini->ReadBool("Window", "Glass", false);
 	if (conf.Glass) {
-		fn_Glass(Gdv1, conf.Glass);
+		fn_Glass(Gdv0, conf.Glass);
 	} else {
-		Gdv1->BackColor = StringToColor(ini->ReadString("GdViewer", "BackColor", L"0xffffff"));
+		Gdv0->BackColor = StringToColor(ini->ReadString("GdViewer", "BackColor", L"0xffffff"));
 	}
 
 	Form1->ScreenSnap = ini->ReadBool("Window", "Snap", false);
@@ -45,10 +45,10 @@ void __fastcall TForm1::fn_LoadIni()
 	fn_Quality(ini->ReadInteger("GdViewer", "Quality", 4));
 	fn_OptimizeDrawingSpeed(ini->ReadBool("GdViewer", "OptimizeDrawingSpeed", true));
 	fn_ZoomStep(ini->ReadInteger("GdViewer", "ZoomStep", 10));
-	Gdv1->MouseMode = ini->ReadInteger("GdViewer", "MouseMode", 2);
+	Gdv0->MouseMode = ini->ReadInteger("GdViewer", "MouseMode", 2);
 
 	if (ini->ReadBool("GdViewer", "Properties", false)) {
-		fn_LoadGdvProperties(Gdv1, ini);
+		fn_LoadGdvProperties(Gdv0, ini);
 	}
 
 	// Function section
@@ -204,9 +204,9 @@ void __fastcall TForm1::fn_SaveIni()
 	ini->WriteBool("Window", "StatusBar", StatusBar->Visible);
 
 	// GdViewer section
-	ini->WriteBool("GdViewer", "QualityAuto", Gdv1->ViewerQualityAuto);
-	ini->WriteInteger("GdViewer", "Quality", Gdv1->ViewerQuality);
-	ini->WriteBool("GdViewer", "OptimizeDrawingSpeed", Gdv1->OptimizeDrawingSpeed);
+	ini->WriteBool("GdViewer", "QualityAuto", Gdv0->ViewerQualityAuto);
+	ini->WriteInteger("GdViewer", "Quality", Gdv0->ViewerQuality);
+	ini->WriteBool("GdViewer", "OptimizeDrawingSpeed", Gdv0->OptimizeDrawingSpeed);
 
 	// Function section
 	ini->WriteBool("Function", "LoadSubdirectry", mnuFileLoadSubdirectry->Checked);
@@ -218,7 +218,7 @@ void __fastcall TForm1::fn_SaveIni()
 	if (mnuViewInWindow->Checked) {
 		ini->WriteInteger("Function", "ZoomMode", 99);
 	} else {
-		ini->WriteInteger("Function", "ZoomMode", Gdv1->ZoomMode);
+		ini->WriteInteger("Function", "ZoomMode", Gdv0->ZoomMode);
 	}
 
 	ini->UpdateFile();

@@ -38,12 +38,12 @@ void __fastcall TForm3::FormShow(TObject *Sender)
 
 	AddListItem("File Name", ExtractFileName(Form1->FullPath));
 	AddListItem("File Path", Form1->FullPath);
-	AddListItem("File Format", Form1->Gdv1->GetImageFormat());
+	AddListItem("File Format", Form1->Gdv0->GetImageFormat());
 	AddListItem("File Size", sr.Size);
 	//
-//	AddListItem("File Format", Form1->Gdv1->GetImageFormat()));
+//	AddListItem("File Format", Form1->Gdv0->GetImageFormat()));
 //
-//	AddListItem("File Format", Form1->Gdv1->GetImageFormat()));
+//	AddListItem("File Format", Form1->Gdv0->GetImageFormat()));
 
 
 

@@ -41,7 +41,7 @@ void __fastcall TForm2::FormShow(TObject *Sender)
 	String aa2 =
 		" 　 　 f彡Y:.:.}:|:.!:.:!:{:ｲ'`　|　 !          with GdViewer Pro ver. %GDVER%\r\n";
 
-	aa2 = ReplaceStr(aa2, "%GDVER%", FloatToStr(Form1->Gdv1->GetVersion()));
+	aa2 = ReplaceStr(aa2, "%GDVER%", FloatToStr(Form1->Gdv0->GetVersion()));
 
 	String aa3 =
 		"　　　　⌒j,ｨ:.{:!:ﾊ:|:!{{| 　 j　 !        date: 2014/06/08\r\n"
