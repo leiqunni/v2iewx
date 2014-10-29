@@ -51,6 +51,7 @@ __published: // IDE-managed Components
 
 	TFileOpenDialog *FileOpenDialog;
 	TGdViewer *Gdv0;
+	TGdViewer *Gdv1;
 	TImageList *ImageList;
 	TMainMenu *MainMenu;
 	TMenuItem *N1;
@@ -153,25 +154,21 @@ __published: // IDE-managed Components
 	TToolButton *tbtnSpreadView;
 	TToolButton *tbtnZoomIn;
 	TToolButton *tbtnZoomOut;
-	TGdViewer *Gdv1;
 
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
 	void __fastcall FormMouseWheel(TObject *Sender, TShiftState Shift, 	int WheelDelta, TPoint &MousePos, bool &Handled);
 	void __fastcall FormResize(TObject *Sender);
-
-
+	void __fastcall Gdv0ClickControl(TObject *Sender);
 	void __fastcall Gdv0MouseDownControl(TObject *Sender, short *Button, short *shift, float *X, float *Y);
 	void __fastcall Gdv0MouseMoveControl(TObject *Sender, short *Button, short *shift, float *X, float *Y);
 	void __fastcall Gdv0MouseUpControl(TObject *Sender, short *Button, short *shift, float *X, float *Y);
 	void __fastcall Gdv0DblClickControl(TObject *Sender);
-
+	void __fastcall Gdv1ClickControl(TObject *Sender);
 	void __fastcall Gdv1MouseDownControl(TObject *Sender, short *Button, short *shift, float *X, float *Y);
 	void __fastcall Gdv1MouseMoveControl(TObject *Sender, short *Button, short *shift, float *X, float *Y);
 	void __fastcall Gdv1MouseUpControl(TObject *Sender, short *Button, short *shift, float *X, float *Y);
 	void __fastcall Gdv1DblClickControl(TObject *Sender);
-
-
 	void __fastcall ScrollBarChange(TObject *Sender);
 	void __fastcall TimerTimer(TObject *Sender);
 	void __fastcall mnuEditCopyClick(TObject *Sender);
@@ -234,10 +231,15 @@ __published: // IDE-managed Components
 	void __fastcall tbtnZoomOutClick(TObject *Sender);
 
 
+
 private: // User declarations
 
 	enum SortOrder {
-		kByName, kByNameNum, kByTime, kByType, kBySize
+		kByName,
+		kByNameNum,
+		kByTime,
+		kByType,
+		kBySize
 	};
 
 	struct { // Config structure
@@ -401,7 +403,7 @@ private: // User declarations
 	void __fastcall fn_ZoomIn();
 	void __fastcall fn_ZoomIn(TGdViewer* gv);
 	void __fastcall fn_ZoomMode(int);
-	void __fastcall fn_ZoomMode(TGdViewer *gv, int value);
+	void __fastcall fn_ZoomMode(TGdViewer* gv, int value);
 	void __fastcall fn_ZoomOut();
 	void __fastcall fn_ZoomOut(TGdViewer* gv);
 	void __fastcall fn_ZoomStep(int value);

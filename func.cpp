@@ -17,10 +17,10 @@ void __fastcall TForm1::fn_ParseFiles(TStringList *list) {
 		fn_LoadFiles(list);
 	}
 }
+
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::fn_LoadFiles(TStringList *list)
-{
+void __fastcall TForm1::fn_LoadFiles(TStringList *list) {
 	for (int i = 0; i < list->Count; ++i) {
 		if (DirectoryExists(list->Strings[i])) {
 			fn_FindDir(list->Strings[i], "*.*");
@@ -36,10 +36,10 @@ void __fastcall TForm1::fn_LoadFiles(TStringList *list)
 		ScrollBarChange(NULL);
 	}
 }
+
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::fn_LoadFiles(String path)
-{
+void __fastcall TForm1::fn_LoadFiles(String path) {
 	fn_FindDir(IncludeTrailingPathDelimiter(ExtractFileDir(path)), L"*.*");
 
 	if (flst->Count > 0) {
@@ -56,11 +56,13 @@ void __fastcall TForm1::fn_LoadFiles(String path)
 		}
 	}
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_NewWindow() {
 	RunProcess(Application->ExeName, NULL);
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::RunProcess(String path, String argv) {
@@ -76,10 +78,12 @@ void __fastcall TForm1::RunProcess(String path, String argv) {
 	CloseHandle(pi.hProcess);
 	CloseHandle(pi.hThread);
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_Next() {
-	if (flst->Count == 0) return;
+	if (flst->Count == 0)
+		return;
 
 	if (mnuViewSpreadViewNone->Checked) { // Not Spread View
 		if (ScrollBar->Position >= flst->Count) {
@@ -95,10 +99,12 @@ void __fastcall TForm1::fn_Next() {
 		}
 	}
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_Prev() {
-	if (flst->Count == 0) return;
+	if (flst->Count == 0)
+		return;
 
 	if (mnuViewSpreadViewNone->Checked) {
 		if (ScrollBar->Position <= 1) {
@@ -114,20 +120,20 @@ void __fastcall TForm1::fn_Prev() {
 		}
 	}
 }
+
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::fn_FileOpenDialogEx(bool folder)
-{
+void __fastcall TForm1::fn_FileOpenDialogEx(bool folder) {
 	if (fn_GetVer() < 6.0) {
 		fn_OpenDialog();
 	} else {
 		fn_FileOpenDialog(folder);
 	}
 }
+
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::fn_OpenDialog()
-{
+void __fastcall TForm1::fn_OpenDialog() {
 	TStringBuilder *sb = new TStringBuilder();
 
 	TMatchCollection m = TRegEx::Matches(conf.Ext, "\\.(.+?)\\$");
@@ -141,19 +147,19 @@ void __fastcall TForm1::fn_OpenDialog()
 	delete sb;
 
 	if (OpenDialog->Execute() == true) {
-		fn_LoadFiles((TStringList*)FileOpenDialog->Files);
+		fn_LoadFiles((TStringList *)FileOpenDialog->Files);
 	}
 }
+
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::fn_FileOpenDialog(bool folder)
-{
+void __fastcall TForm1::fn_FileOpenDialog(bool folder) {
 	TStringBuilder *sb = new TStringBuilder();
 
 	TMatchCollection m = TRegEx::Matches(conf.Ext, "\\.(.+?)\\$");
 
 	for (int i = 0; i < m.Count; ++i) {
-		sb->Append( "*." + m.Item[i].Groups[1].Value + ";");
+		sb->Append("*." + m.Item[i].Groups[1].Value + ";");
 	}
 
 	TFileTypeItem *item;
@@ -161,7 +167,6 @@ void __fastcall TForm1::fn_FileOpenDialog(bool folder)
 	item = FileOpenDialog->FileTypes->Add();
 	item->DisplayName = "All Image Types";
 	item->FileMask = sb->ToString();
-
 
 	for (int i = 0; i < m.Count; ++i) {
 		item = FileOpenDialog->FileTypes->Add();
@@ -173,32 +178,35 @@ void __fastcall TForm1::fn_FileOpenDialog(bool folder)
 	item->DisplayName = "All Files";
 	item->FileMask = "*.*";
 
-
 	if (folder) {
-		FileOpenDialog->Options = TFileDialogOptions()<<fdoPickFolders<<fdoAllowMultiSelect<<fdoPathMustExist<<fdoFileMustExist;
+		FileOpenDialog->Options = TFileDialogOptions() << fdoPickFolders << fdoAllowMultiSelect << fdoPathMustExist << fdoFileMustExist;
 	} else {
-		FileOpenDialog->Options = TFileDialogOptions()<<fdoAllowMultiSelect<<fdoPathMustExist<<fdoFileMustExist;
+		FileOpenDialog->Options = TFileDialogOptions() << fdoAllowMultiSelect << fdoPathMustExist << fdoFileMustExist;
 	}
 
 	if (FileOpenDialog->Execute() == true) {
-		fn_ParseFiles((TStringList*)FileOpenDialog->Files);
+		fn_ParseFiles((TStringList *)FileOpenDialog->Files);
 	}
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_PrevFrame() {
 	Gdv0->DisplayPreviousFrame();
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_NextFrame() {
 	Gdv0->DisplayNextFrame();
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_Options() {
 	RunProcess(L"config++.exe", NULL);
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_SlideShow() {
@@ -214,16 +222,19 @@ void __fastcall TForm1::fn_SlideShow() {
 		tbtnSlideShow->Hint = SlideShowStop;
 	}
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_ImageCopy() {
 	Gdv0->Copy2Clipboard();
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_PathCopy() {
 	Clipboard()->AsText = ((TFI*)(flst->Items[ScrollBar->Position - 1]))->FullName;
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_MainMenu(bool value) {
@@ -261,18 +272,21 @@ void __fastcall TForm1::fn_MainMenu(bool value) {
 		pumMain->Items->Add(mnuHelp);
 	}
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_ScrollBar(bool value) {
 	ScrollBar->Visible = value;
 	mnuViewScrollBar->Checked = value;
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_ToolBar(bool value) {
 	ToolBar->Visible = value;
 	mnuViewToolBar->Checked = value;
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_StatusBar(bool value) {
@@ -280,6 +294,7 @@ void __fastcall TForm1::fn_StatusBar(bool value) {
 	StatusBar->Visible = value;
 	mnuViewStatusBar->Checked = value;
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_Reset() {
@@ -298,6 +313,7 @@ void __fastcall TForm1::fn_Reset() {
 	conf.rot = 0;
 	fn_ZoomMode(Gdv0->ZoomMode);
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_Reset(TGdViewer *gv) {
@@ -316,10 +332,10 @@ void __fastcall TForm1::fn_Reset(TGdViewer *gv) {
 	conf.rot = 0;
 	fn_ZoomMode(gv, gv->ZoomMode);
 }
-//---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
 // []
-void __fastcall TForm1::fn_SpreadView(int value)
-{
+void __fastcall TForm1::fn_SpreadView(int value) {
 	conf.SpreadView = value;
 
 	switch (value) {
@@ -343,10 +359,11 @@ void __fastcall TForm1::fn_SpreadView(int value)
 
 	Panel1->Visible = true;
 	Splitter->Visible = true;
-//	Panel1->Visible = true;
+	// Panel1->Visible = true;
 	tbtnSpreadView->Down = true;
 	Panel1->Width = (Form1->ClientWidth - Splitter->Width) / 2;
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_RotateRight() {
@@ -356,6 +373,7 @@ void __fastcall TForm1::fn_RotateRight() {
 	}
 	tbtnKeepRot->ImageIndex = 12 + conf.rot;
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_RotateLeft() {
@@ -365,30 +383,35 @@ void __fastcall TForm1::fn_RotateLeft() {
 	}
 	tbtnKeepRot->ImageIndex = 12 + conf.rot;
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_KeepRot(bool value) {
 	mnuViewKeepRot->Checked = value;
 	tbtnKeepRot->Down = value;
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_ZoomMode(int value) {
 	switch (value) {
 	case 1: // []
 		Gdv0->ZoomMode = 1;
+		Gdv1->ZoomMode = 1;
 		mnuViewActual->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = true;
 		tbtnActual->Down = true;
 		break;
 	case 2: // []
 		Gdv0->ZoomMode = 2;
+		Gdv1->ZoomMode = 2;
 		mnuViewBestfit->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = false;
 		tbtnBestfit->Down = true;
 		break;
 	case 6: // []
 		Gdv0->ZoomMode = 6;
+		Gdv1->ZoomMode = 6;
 		mnuViewSpread->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = false;
 		tbtnSpread->Down = true;
@@ -399,12 +422,18 @@ void __fastcall TForm1::fn_ZoomMode(int value) {
 		} else {
 			Gdv0->ZoomMode = 2;
 		}
+		if (Gdv1->Width > Gdv1->ImageWidth && Gdv1->Height > Gdv1->ImageHeight) {
+			Gdv1->ZoomMode = 1;
+		} else {
+			Gdv1->ZoomMode = 2;
+		}
 		mnuViewInWindow->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = false;
 		tbtnInWindow->Down = true;
 		break;
 	}
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_ZoomMode(TGdViewer *gv, int value) {
@@ -439,6 +468,7 @@ void __fastcall TForm1::fn_ZoomMode(TGdViewer *gv, int value) {
 		break;
 	}
 }
+
 // ---------------------------------------------------------------------------
 // []
 void __fastcall TForm1::fn_OptimizeWindowSize(bool value) {
@@ -447,6 +477,7 @@ void __fastcall TForm1::fn_OptimizeWindowSize(bool value) {
 		(StatusBar->Visible ? StatusBar->Height : 0);
 	mnuViewOptimizeWindowSize->Checked = value;
 }
+
 // ---------------------------------------------------------------------------
 // Sort
 void __fastcall TForm1::fn_Sort(SortOrder order, bool asc) {
@@ -502,16 +533,20 @@ void __fastcall TForm1::fn_Sort(SortOrder order, bool asc) {
 		break;
 	}
 }
+
 // ---------------------------------------------------------------------------
 // [表示]-[画質]-[自動]
 void __fastcall TForm1::fn_QualityAuto(bool value) {
 	Gdv0->ViewerQualityAuto = value;
+	Gdv1->ViewerQualityAuto = value;
 	mnuViewQualityAuto->Checked = value;
 }
+
 // ---------------------------------------------------------------------------
 // [表示]-[画質]-[低]
 void __fastcall TForm1::fn_Quality(int value) {
 	Gdv0->ViewerQuality = value;
+	Gdv1->ViewerQuality = value;
 	switch (value) {
 	case 0: // 低
 		mnuViewQualityLow->Checked = true;
@@ -525,17 +560,20 @@ void __fastcall TForm1::fn_Quality(int value) {
 	case 3: // バイリニアHQ
 		mnuViewQualityBilinearHQ->Checked = true;
 		break;
-	case 4: // バイキュービックHQ
+	case 4: // BicubicHQ
 		mnuViewQualityBicubicHQ->Checked = true;
 		break;
 	}
 }
+
 // ---------------------------------------------------------------------------
 // [描画時間の最適化]
 void __fastcall TForm1::fn_OptimizeDrawingSpeed(bool value) {
 	Gdv0->OptimizeDrawingSpeed = value;
+	Gdv1->OptimizeDrawingSpeed = value;
 	mnuViewOptimizeDrawingSpeed->Checked = value;
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_WindowMaximize() {
@@ -545,6 +583,7 @@ void __fastcall TForm1::fn_WindowMaximize() {
 		this->WindowState = wsNormal;
 	}
 }
+
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_WindowMinimize() {
@@ -554,6 +593,7 @@ void __fastcall TForm1::fn_WindowMinimize() {
 		this->WindowState = wsNormal;
 	}
 }
+
 // ---------------------------------------------------------------------------
 // [Full Screen]
 void __fastcall TForm1::fn_FullScreen() {
@@ -567,10 +607,10 @@ void __fastcall TForm1::fn_FullScreen() {
 		mnuViewFullScreen->Checked = true;
 	}
 }
+
 // ---------------------------------------------------------------------------
 // [Zoom In]
-void __fastcall TForm1::fn_ZoomIn()
-{
+void __fastcall TForm1::fn_ZoomIn() {
 	if (Panel0->BevelOuter != bvNone) {
 		fn_ZoomIn(Gdv0);
 	}
@@ -578,10 +618,10 @@ void __fastcall TForm1::fn_ZoomIn()
 		fn_ZoomIn(Gdv1);
 	}
 }
+
 // ---------------------------------------------------------------------------
 // [Zoom In]
-void __fastcall TForm1::fn_ZoomOut()
-{
+void __fastcall TForm1::fn_ZoomOut() {
 	if (Panel0->BevelOuter != bvNone) {
 		fn_ZoomOut(Gdv0);
 	}
@@ -589,29 +629,31 @@ void __fastcall TForm1::fn_ZoomOut()
 		fn_ZoomOut(Gdv1);
 	}
 }
+
 // ---------------------------------------------------------------------------
 // [Zoom In]
-void __fastcall TForm1::fn_ZoomIn(TGdViewer* gv)
-{
+void __fastcall TForm1::fn_ZoomIn(TGdViewer *gv) {
 	gv->ZoomIN();
 	fn_StatusText();
 }
+
 // ---------------------------------------------------------------------------
 // [Zoom Out]
-void __fastcall TForm1::fn_ZoomOut(TGdViewer* gv)
-{
+void __fastcall TForm1::fn_ZoomOut(TGdViewer *gv) {
 	gv->ZoomOUT();
 	fn_StatusText();
 }
+
 // ---------------------------------------------------------------------------
 // [Zoom Step]
-void __fastcall TForm1::fn_ZoomStep(int value)
-{
+void __fastcall TForm1::fn_ZoomStep(int value) {
 	Gdv0->ZoomStep = value;
+	Gdv1->ZoomStep = value;
 }
+
 // ---------------------------------------------------------------------------
 // [Aero Glass???]
-void __fastcall TForm1::fn_Glass(TGdViewer* gv, bool value) {
+void __fastcall TForm1::fn_Glass(TGdViewer *gv, bool value) {
 	if (value) {
 		gv->BackColor = clBlack; // StringToColor(L"000000");
 		Form1->GlassFrame->Enabled = true;
@@ -622,6 +664,7 @@ void __fastcall TForm1::fn_Glass(TGdViewer* gv, bool value) {
 		Form1->GlassFrame->SheetOfGlass = false;
 	}
 }
+
 // ---------------------------------------------------------------------------
 // [Delete File]
 void __fastcall TForm1::fn_DeleteFile(int flags) {
@@ -647,6 +690,7 @@ void __fastcall TForm1::fn_DeleteFile(int flags) {
 		fn_Next();
 	}
 }
+
 // ---------------------------------------------------------------------------
 // [Show StatusBar text.]
 void __fastcall TForm1::fn_StatusText() {
@@ -654,11 +698,12 @@ void __fastcall TForm1::fn_StatusText() {
 		StatusBar->SimpleText = fn_TitleFormatting(conf.StatusText);
 	}
 }
+
 // ---------------------------------------------------------------------------
 // [Title Formatting]
-String __fastcall TForm1::fn_TitleFormatting(String value)
-{
-	if (flst->Count == 0) return "";
+String __fastcall TForm1::fn_TitleFormatting(String value) {
+	if (flst->Count == 0)
+		return "";
 
 	TFI *fi = (TFI*)(flst->Items[ScrollBar->Position - 1]);
 
@@ -680,31 +725,31 @@ String __fastcall TForm1::fn_TitleFormatting(String value)
 
 	return (value);
 }
+
 // ---------------------------------------------------------------------------
 //
-TColor __fastcall TForm1::fn_IntToColor(int rgb)
-{
+TColor __fastcall TForm1::fn_IntToColor(int rgb) {
 	int r = 255 - (rgb % 256);
 	int g = 255 - ((rgb / 256) % 256);
 	int b = 255 - (rgb / 65536);
 	return RGB(r, g, b);
 }
+
 // ---------------------------------------------------------------------------
 //
-double __fastcall TForm1::fn_GetVer()
-{
+double __fastcall TForm1::fn_GetVer() {
 	OSVERSIONINFO OSver;
 	OSver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 	GetVersionEx(&OSver);
 	return OSver.dwMajorVersion + OSver.dwMinorVersion * 0.1;
 }
+
 // ---------------------------------------------------------------------------
 // [Delete File]
-void __fastcall TForm1::fn_LoadRecent()
-{
+void __fastcall TForm1::fn_LoadRecent() {
 	TStringList *sect = new TStringList();
 
-//	ini->ReadSectionValues("Recent", sect);
+	// ini->ReadSectionValues("Recent", sect);
 
 	for (int i = 0; i < sect->Count; ++i) {
 		String key = sect->Names[i];
@@ -714,15 +759,16 @@ void __fastcall TForm1::fn_LoadRecent()
 		mnuFileRecentFiles->Add(item);
 	}
 }
+
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::fn_FindDir(String dir, String name)
-{
+void __fastcall TForm1::fn_FindDir(String dir, String name) {
 	TSearchRec sr;
 
 	if (FindFirst(TPath::Combine(dir, name), faAnyFile, sr) == 0) {
 		do {
-			if (sr.Name == "." || sr.Name == "..") continue;
+			if (sr.Name == "." || sr.Name == "..")
+				continue;
 			if (TRegEx::IsMatch(sr.Name, conf.Ext, TRegExOptions() << roIgnoreCase)) {
 				TFI *fi = new TFI;
 				fi->FullName = TPath::Combine(dir, sr.Name);
@@ -730,7 +776,7 @@ void __fastcall TForm1::fn_FindDir(String dir, String name)
 				fi->Ext = ExtractFileExt(sr.Name);
 				fi->Size = sr.Size;
 				fi->Date = sr.TimeStamp;
-				flst->Add((TObject*)fi);
+				flst->Add((TObject *)fi);
 			}
 			// Load Sub Directries.
 			if (mnuFileLoadSubdirectry->Checked) {
@@ -738,15 +784,16 @@ void __fastcall TForm1::fn_FindDir(String dir, String name)
 					fn_FindDir(TPath::Combine(dir, sr.Name), "*.*");
 				}
 			}
-		} while (!FindNext(sr));
+		}
+		while (!FindNext(sr));
 	}
 
 	FindClose(sr);
 }
+
 // ---------------------------------------------------------------------------
 // 画像表示
-void __fastcall TForm1::fn_LoadImage(TGdViewer *gv, TFI *fi)
-{
+void __fastcall TForm1::fn_LoadImage(TGdViewer *gv, TFI *fi) {
 	if (hSPI->Count > 0) { // use SPI
 		conf.isSPI = false;
 		HBITMAP bmp = SPI_LoadImage(fi->FullName.w_str());
@@ -755,7 +802,7 @@ void __fastcall TForm1::fn_LoadImage(TGdViewer *gv, TFI *fi)
 			conf.isSPI = true;
 		}
 	} else { // not use SPI
-		DisplayFromFile(gv, ((TFI*)fi)->FullName);
+		DisplayFromFile(gv, ((TFI *)fi)->FullName);
 	}
 
 	if (mnuViewKeepRot->Checked) {
@@ -785,7 +832,7 @@ void __fastcall TForm1::fn_LoadImage(TGdViewer *gv, TFI *fi)
 		fn_ZoomMode(99);
 	}
 
-//	Recent->WriteString("Recent", fi->FullName, fi->Name);
+	// Recent->WriteString("Recent", fi->FullName, fi->Name);
 
 	gv->PlayGif();
 
@@ -794,10 +841,10 @@ void __fastcall TForm1::fn_LoadImage(TGdViewer *gv, TFI *fi)
 	// display text in statusbar.
 	fn_StatusText();
 }
+
 // ---------------------------------------------------------------------------
 // Add to recent file list.
-void __fastcall TForm1::fn_AddRecent(String path)
-{
+void __fastcall TForm1::fn_AddRecent(String path) {
 	if (RecentList->Count > 40) {
 		RecentList->Delete(RecentList->Count - 1);
 	}

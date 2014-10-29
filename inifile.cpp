@@ -45,7 +45,9 @@ void __fastcall TForm1::fn_LoadIni()
 	fn_Quality(ini->ReadInteger("GdViewer", "Quality", 4));
 	fn_OptimizeDrawingSpeed(ini->ReadBool("GdViewer", "OptimizeDrawingSpeed", true));
 	fn_ZoomStep(ini->ReadInteger("GdViewer", "ZoomStep", 10));
+
 	Gdv0->MouseMode = ini->ReadInteger("GdViewer", "MouseMode", 2);
+	Gdv1->MouseMode = ini->ReadInteger("GdViewer", "MouseMode", 2);
 
 	if (ini->ReadBool("GdViewer", "Properties", false)) {
 		fn_LoadGdvProperties(Gdv0, ini);

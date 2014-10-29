@@ -46,6 +46,8 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <ILINK_LibraryPath>..\FreeImage\Wrapper\Delphi\src\;..\FreeImage\Dist\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>..\FreeImage\Dist\;..\FreeImage\Wrapper\Delphi\src\;$(IncludePath)</IncludePath>
         <VerInfo_MinorVer>6</VerInfo_MinorVer>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Release>8</VerInfo_Release>
@@ -69,6 +71,7 @@
         <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\release\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <ILINK_LibraryPath>C:\Users\inu\Documents\RAD Studio\Projects\FreeImage\Dist\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <BCC_WindowsVersionDefines>NTDDI_VERSION=NTDDI_WIN2K;_WIN32_WINNT=_WIN32_WINNT_WIN2K</BCC_WindowsVersionDefines>
         <VerInfo_MajorVer>1</VerInfo_MajorVer>
         <ILINK_DisableIncrementalLinking>true</ILINK_DisableIncrementalLinking>

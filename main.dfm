@@ -35,7 +35,7 @@ object Form1: TForm1
     Height = 228
     Align = alClient
     BevelOuter = bvNone
-    BevelWidth = 3
+    BevelWidth = 2
     ShowCaption = False
     TabOrder = 0
     object Gdv0: TGdViewer
@@ -47,11 +47,13 @@ object Form1: TForm1
       Align = alClient
       TabOrder = 0
       OnMouseMoveControl = Gdv0MouseMoveControl
+      OnClickControl = Gdv0ClickControl
       OnDblClickControl = Gdv0DblClickControl
       OnMouseDownControl = Gdv0MouseDownControl
       OnMouseUpControl = Gdv0MouseUpControl
       ExplicitLeft = -2
       ExplicitTop = -3
+      ExplicitWidth = 202
       ControlData = {
         93B2000088010000030008000BF25747200000005F0065007800740065006E00
         740078003F200000030008000AF25747200000005F0065007800740065006E00
@@ -75,7 +77,7 @@ object Form1: TForm1
     Height = 228
     Align = alRight
     BevelOuter = bvNone
-    BevelWidth = 3
+    BevelWidth = 2
     ShowCaption = False
     TabOrder = 4
     object Gdv1: TGdViewer
@@ -87,6 +89,7 @@ object Form1: TForm1
       Align = alClient
       TabOrder = 0
       OnMouseMoveControl = Gdv1MouseMoveControl
+      OnClickControl = Gdv1ClickControl
       OnDblClickControl = Gdv1DblClickControl
       OnMouseDownControl = Gdv1MouseDownControl
       OnMouseUpControl = Gdv1MouseUpControl
@@ -324,7 +327,7 @@ object Form1: TForm1
     Left = 136
     Top = 32
     Bitmap = {
-      494C0101140019006C0010001000FFFFFFFF2000FFFFFFFFFFFFFFFF424D3600
+      494C0101140019007C0010001000FFFFFFFF2000FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
