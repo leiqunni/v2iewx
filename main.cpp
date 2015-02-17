@@ -72,8 +72,10 @@ void __fastcall TForm1::ScrollBarChange(TObject *Sender) {
 
 	if (mnuViewSpreadViewNone->Checked) { // not spread view
 		fn_LoadImage(Gdv0, (TFI *)flst->Items[ScrollBar->Position - 1]);
-	} else {
-		fn_LoadImage(Gdv0, (TFI *)flst->Items[ScrollBar->Position - 1 + (int)(mnuViewSpreadViewRight->Checked ? 1 : 0)]);
+	}
+	else {
+		fn_LoadImage(Gdv0, (TFI *)flst->Items[ScrollBar->Position - 1 + (int)(mnuViewSpreadViewRight->Checked ?
+			1 : 0)]);
 		fn_LoadImage(Gdv1, (TFI *)flst->Items[ScrollBar->Position - 1 + (int)(mnuViewSpreadViewLeft->Checked ? 1 : 0)]);
 	}
 }
@@ -559,18 +561,22 @@ HBITMAP __fastcall TForm1::SPI_LoadImage(String fileName) {
 
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::FormMouseWheel(TObject *Sender, TShiftState Shift, int WheelDelta, TPoint &MousePos, bool &Handled) {
+void __fastcall TForm1::FormMouseWheel(TObject *Sender, TShiftState Shift, int WheelDelta, TPoint &MousePos,
+	bool &Handled) {
 	if (mg.enabled) {
 		if (WheelDelta > 0) {
 			fn_ZoomOut();
-		} else {
+		}
+		else {
 			fn_ZoomIn();
 		}
 		fn_StatusText();
-	} else {
+	}
+	else {
 		if (WheelDelta > 0) {
 			fn_Prev();
-		} else {
+		}
+		else {
 			fn_Next();
 		}
 	}
@@ -579,19 +585,20 @@ void __fastcall TForm1::FormMouseWheel(TObject *Sender, TShiftState Shift, int W
 // ---------------------------------------------------------------------------
 
 void __fastcall TForm1::Gdv0ClickControl(TObject *Sender) {
-//	TPoint pt;
-//	GetCursorPos(&pt);
-//	pt = Panel0->ScreenToClient(pt);
-//
-//	if (Panel0->Width / 2 > pt.X) {
-//		fn_Prev();
-//	} else {
-//		fn_Next();
-//	}
+	// TPoint pt;
+	// GetCursorPos(&pt);
+	// pt = Panel0->ScreenToClient(pt);
+	//
+	// if (Panel0->Width / 2 > pt.X) {
+	// fn_Prev();
+	// } else {
+	// fn_Next();
+	// }
 	if (Panel0->BevelOuter != bvNone) {
 		Panel0->BevelOuter = bvNone;
 		conf.CurGdv += 1;
-	} else {
+	}
+	else {
 		Panel0->BevelOuter = bvLowered;
 		conf.CurGdv -= 1;
 	}
@@ -602,7 +609,8 @@ void __fastcall TForm1::Gdv0ClickControl(TObject *Sender) {
 void __fastcall TForm1::Gdv0DblClickControl(TObject *Sender) {
 	if (mnuViewBestfit->Checked) {
 		fn_ZoomMode(Gdv0, 1);
-	} else if (mnuViewActual->Checked) {
+	}
+	else if (mnuViewActual->Checked) {
 		fn_ZoomMode(Gdv0, 2);
 	}
 	fn_StatusText();
@@ -637,18 +645,19 @@ void __fastcall TForm1::Gdv0MouseUpControl(TObject *Sender, short *Button, short
 // ---------------------------------------------------------------------------
 
 void __fastcall TForm1::Gdv1ClickControl(TObject *Sender) {
-//	TPoint pt;
-//	GetCursorPos(&pt);
-//	pt = Panel1->ScreenToClient(pt);
-//
-//	if (Panel1->Width / 2 < pt.X) {
-//		fn_Prev();
-//	} else {
-//		fn_Next();
-//	}
+	// TPoint pt;
+	// GetCursorPos(&pt);
+	// pt = Panel1->ScreenToClient(pt);
+	//
+	// if (Panel1->Width / 2 < pt.X) {
+	// fn_Prev();
+	// } else {
+	// fn_Next();
+	// }
 	if (Panel1->BevelOuter != bvNone) {
 		Panel1->BevelOuter = bvNone;
-	} else {
+	}
+	else {
 		Panel1->BevelOuter = bvLowered;
 	}
 }
@@ -658,7 +667,8 @@ void __fastcall TForm1::Gdv1ClickControl(TObject *Sender) {
 void __fastcall TForm1::Gdv1DblClickControl(TObject *Sender) {
 	if (mnuViewBestfit->Checked) {
 		fn_ZoomMode(Gdv1, 1);
-	} else if (mnuViewActual->Checked) {
+	}
+	else if (mnuViewActual->Checked) {
 		fn_ZoomMode(Gdv1, 2);
 	}
 	fn_StatusText();
@@ -681,7 +691,7 @@ void __fastcall TForm1::Gdv1MouseMoveControl(TObject *Sender, short *Button, sho
 	TPoint pt;
 	GetCursorPos(&pt);
 	pt = Panel1->ScreenToClient(pt);
-//	pt = Panel1->ScreenToClient(pt);
+	// pt = Panel1->ScreenToClient(pt);
 	this->Caption = ::IntToStr((int)pt.X) + ", " + ::IntToStr((int)pt.Y);
 }
 
@@ -711,11 +721,14 @@ void __fastcall TForm1::FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shif
 void __fastcall TForm1::ExecAction(String value) {
 	if (value == "exit") {
 		exit(0);
-	} else if (value == "openfile") {
+	}
+	else if (value == "openfile") {
 		fn_FileOpenDialogEx(false);
-	} else if (value == "openfolder") {
+	}
+	else if (value == "openfolder") {
 		fn_FileOpenDialogEx(true);
-	} else if (value == "exit") {
+	}
+	else if (value == "exit") {
 		exit(0);
 	}
 	// else if (value == "alwaysontop")
@@ -727,81 +740,109 @@ void __fastcall TForm1::ExecAction(String value) {
 	// fn_FullScreen(false);
 	else if (value == "options") {
 		fn_Options();
-	} else if (value == "slideshow") {
+	}
+	else if (value == "slideshow") {
 		fn_SlideShow();
-	} else if (value == "mainmenu") {
+	}
+	else if (value == "mainmenu") {
 		fn_MainMenu(!MainMenu->Tag);
-	} else if (value == "scrollbar") {
+	}
+	else if (value == "scrollbar") {
 		fn_ScrollBar(!ScrollBar->Visible);
-	} else if (value == "toolbar") {
+	}
+	else if (value == "toolbar") {
 		fn_ToolBar(!ToolBar->Visible);
-	} else if (value == "statusbar") {
+	}
+	else if (value == "statusbar") {
 		fn_StatusBar(!StatusBar->Visible);
-	} else if (value == "reset") {
+	}
+	else if (value == "reset") {
 		fn_Reset();
 	}
 
 	else if (value == "next") {
 		fn_Next();
-	} else if (value == "prev") {
+	}
+	else if (value == "prev") {
 		fn_Prev();
 	}
 
 	else if (value == "nextframe") {
 		fn_NextFrame();
-	} else if (value == "prevframe") {
+	}
+	else if (value == "prevframe") {
 		fn_PrevFrame();
-	} else if (value == "first") {
+	}
+	else if (value == "first") {
 		fn_LoadImage(Gdv0, (TFI *)flst->Items[0]);
-	} else if (value == "last") {
+	}
+	else if (value == "last") {
 		fn_LoadImage(Gdv0, (TFI *)flst->Items[ScrollBar->Max - 1]);
 	}
 
 	else if (value == "zoomin") {
 		fn_ZoomIn();
-	} else if (value == "zoomout") {
+	}
+	else if (value == "zoomout") {
 		fn_ZoomOut();
-	} else if (value == "rotateright") {
+	}
+	else if (value == "rotateright") {
 		fn_RotateRight();
-	} else if (value == "rotateleft") {
+	}
+	else if (value == "rotateleft") {
 		fn_RotateLeft();
-	} else if (value == "windowmaximize") {
+	}
+	else if (value == "windowmaximize") {
 		fn_WindowMaximize();
-	} else if (value == "windowminimize") {
+	}
+	else if (value == "windowminimize") {
 		fn_WindowMinimize();
-	} else if (value == "fileopendialog") {
+	}
+	else if (value == "fileopendialog") {
 		fn_FileOpenDialog(fdoAllowMultiSelect | fdoPathMustExist | fdoFileMustExist);
-	} else if (value == "keeprot") {
+	}
+	else if (value == "keeprot") {
 		fn_KeepRot(!mnuViewKeepRot->Checked);
-	} else if (value == "bestfit") {
+	}
+	else if (value == "bestfit") {
 		fn_ZoomMode(2);
-	} else if (value == "spread") {
+	}
+	else if (value == "spread") {
 		fn_ZoomMode(6);
-	} else if (value == "inwindow") {
+	}
+	else if (value == "inwindow") {
 		fn_ZoomMode(99);
-	} else if (value == "actual") {
+	}
+	else if (value == "actual") {
 		fn_ZoomMode(1);
 	}
 
 	else if (value == "quality_low") {
 		fn_Quality(0);
-	} else if (value == "quality_bilinear") {
+	}
+	else if (value == "quality_bilinear") {
 		fn_Quality(1);
-	} else if (value == "quality_bicubic") {
+	}
+	else if (value == "quality_bicubic") {
 		fn_Quality(2);
-	} else if (value == "quality_bilinearhq") {
+	}
+	else if (value == "quality_bilinearhq") {
 		fn_Quality(3);
-	} else if (value == "quality_bicubichq") {
+	}
+	else if (value == "quality_bicubichq") {
 		fn_Quality(4);
 	}
 
 	else if (value == "filetotrash") {
 		fn_DeleteFile(FOF_ALLOWUNDO);
-	} else if (value == "filetotrash_noconfirmation") {
+	}
+	else if (value == "filetotrash_noconfirmation") {
 		fn_DeleteFile(FOF_ALLOWUNDO | FOF_NOCONFIRMATION);
-	} else if (value == "optimizedrawingspeed") {
+	}
+	else if (value == "optimizedrawingspeed") {
 		fn_OptimizeDrawingSpeed(!Gdv0->OptimizeDrawingSpeed);
-	} else if (value == "quality_auto") {
+	}
+	else if (value == "quality_auto") {
 		fn_QualityAuto(!Gdv0->ViewerQualityAuto);
 	}
 	// else if (value == "properties")

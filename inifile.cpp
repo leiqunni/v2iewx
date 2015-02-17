@@ -6,13 +6,11 @@
 
 #pragma region "IniFile"
 
-
 #pragma region "LoadIni"
 
 // ---------------------------------------------------------------------------
 // Ini File Loading
-void __fastcall TForm1::fn_LoadIni()
-{
+void __fastcall TForm1::fn_LoadIni() {
 	TMemIniFile *ini = new TMemIniFile(IniFile);
 
 	// Window section
@@ -34,7 +32,8 @@ void __fastcall TForm1::fn_LoadIni()
 	conf.Glass = ini->ReadBool("Window", "Glass", false);
 	if (conf.Glass) {
 		fn_Glass(Gdv0, conf.Glass);
-	} else {
+	}
+	else {
 		Gdv0->BackColor = StringToColor(ini->ReadString("GdViewer", "BackColor", L"0xffffff"));
 	}
 
@@ -84,8 +83,7 @@ void __fastcall TForm1::fn_LoadIni()
 
 // ---------------------------------------------------------------------------
 // Load Raw GdViewer
-void __fastcall TForm1::fn_LoadGdvProperties(TGdViewer *gdv, TMemIniFile *ini)
-{
+void __fastcall TForm1::fn_LoadGdvProperties(TGdViewer *gdv, TMemIniFile *ini) {
 	gdv->AnimateGIF = ini->ReadBool("GdViewer", "AnimateGIF", true);
 	gdv->Appearance = ini->ReadInteger("GdViewer", "Appearance", 0);
 	gdv->BackColor = fn_IntToColor(ini->ReadInteger("GdViewer", "BackColor", 0xffffff));
@@ -184,8 +182,7 @@ void __fastcall TForm1::fn_LoadLang() {
 
 // ---------------------------------------------------------------------------
 // Ini File Saving
-void __fastcall TForm1::fn_SaveIni()
-{
+void __fastcall TForm1::fn_SaveIni() {
 	TMemIniFile *ini = new TMemIniFile(IniFile);
 
 	// Window section
@@ -219,7 +216,8 @@ void __fastcall TForm1::fn_SaveIni()
 
 	if (mnuViewInWindow->Checked) {
 		ini->WriteInteger("Function", "ZoomMode", 99);
-	} else {
+	}
+	else {
 		ini->WriteInteger("Function", "ZoomMode", Gdv0->ZoomMode);
 	}
 

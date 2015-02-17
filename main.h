@@ -157,7 +157,7 @@ __published: // IDE-managed Components
 
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
-	void __fastcall FormMouseWheel(TObject *Sender, TShiftState Shift, 	int WheelDelta, TPoint &MousePos, bool &Handled);
+	void __fastcall FormMouseWheel(TObject *Sender, TShiftState Shift, int WheelDelta, TPoint &MousePos, bool &Handled);
 	void __fastcall FormResize(TObject *Sender);
 	void __fastcall Gdv0ClickControl(TObject *Sender);
 	void __fastcall Gdv0MouseDownControl(TObject *Sender, short *Button, short *shift, float *X, float *Y);
@@ -230,16 +230,10 @@ __published: // IDE-managed Components
 	void __fastcall tbtnZoomInClick(TObject *Sender);
 	void __fastcall tbtnZoomOutClick(TObject *Sender);
 
-
-
 private: // User declarations
 
 	enum SortOrder {
-		kByName,
-		kByNameNum,
-		kByTime,
-		kByType,
-		kBySize
+		kByName, kByNameNum, kByTime, kByType, kBySize
 	};
 
 	struct { // Config structure
@@ -308,13 +302,11 @@ private: // User declarations
 	};
 
 	int __fastcall static cmpNameNumAsc(void* left, void* right) {
-		return StrCmpLogicalW(((TFI*)left)->Name.w_str(),
-			((TFI*)right)->Name.w_str());
+		return StrCmpLogicalW(((TFI*)left)->Name.w_str(), ((TFI*)right)->Name.w_str());
 	};
 
 	int __fastcall static cmpNameNumDesc(void* right, void* left) {
-		return StrCmpLogicalW(((TFI*)left)->Name.w_str(),
-			((TFI*)right)->Name.w_str());
+		return StrCmpLogicalW(((TFI*)left)->Name.w_str(), ((TFI*)right)->Name.w_str());
 	};
 
 	int __fastcall static cmpTimeAsc(void* left, void* right) {
@@ -408,11 +400,9 @@ private: // User declarations
 	void __fastcall fn_ZoomOut(TGdViewer* gv);
 	void __fastcall fn_ZoomStep(int value);
 	void __fastcall TForm1::fn_LoadRecent();
-void __fastcall TForm1::fn_AddRecent(String path);
+	void __fastcall TForm1::fn_AddRecent(String path);
 
-
-	BEGIN_MESSAGE_MAP VCL_MESSAGE_HANDLER(WM_DROPFILES, TWMDropFiles, DropFiles)
-		END_MESSAGE_MAP(TForm)
+	BEGIN_MESSAGE_MAP VCL_MESSAGE_HANDLER(WM_DROPFILES, TWMDropFiles, DropFiles) END_MESSAGE_MAP(TForm)
 
 		public : // User declarations
 		__fastcall TForm1(TComponent* Owner);
