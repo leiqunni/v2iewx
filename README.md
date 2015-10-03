@@ -1,15 +1,8 @@
 # v2iewx
 v2iewx is image viewer with GdPicture.
 
-Name    |   Age
---------|------
-Fred    |   29
-Jim     |   47
-Harry   |   32
-
 ## Supported formats
-|Format|Description
-:-|:-
+Format|Description
 Animated GIF|Graphics Interchange Format
 BMP|Standard Windows Bitmap Format
 CUR|Microsoft Windows Cursor
@@ -63,8 +56,7 @@ XPM|X Pixmap Format
 *|Susie Plug-in|
 
 ## Supported raw camera image formats
-|Format|Description
-:-|:-
+Format|Description
 bay|Casio Digital Camera Raw File Format.
 bmq|NuCore Raw Image File.
 cr2|Canon Digital Camera RAW Image Format version 2.0. These images are based on the TIFF image standard.
@@ -106,7 +98,3 @@ ptx|Pentax Digital Camera Raw Image Format.
 cap|Phase One Digital Camera Raw Image Format.
 iiq|Phase One Digital Camera Raw Image Format.
 rwz|Rawzor Digital Camera Raw Image Format|
-<<<<<<< HEAD
-=======
-|
->>>>>>> origin/master
