@@ -1,6 +1,12 @@
 # v2iewx
 v2iewx is image viewer with GdPicture.
 
+## System requirements
+Windows 98 later 32bit and 64bit.
+
+## Usage
+In first, install GdPicturePro ActiveX plug-in (include this repogitry gdviewerpro.zip).
+
 ## Supported formats
 Format|Description
 ----|----
