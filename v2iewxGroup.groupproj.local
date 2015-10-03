@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2014/10/18 03:58:18.000.890,C:\Users\inu\Documents\RAD Studio\Projects\v2iewx\ProjectGroup1.groupproj=C:\Users\inu\Documents\RAD Studio\Projects\ProjectGroup1.groupproj</Transaction>
+    <Transaction>2015/10/04 04:45:11.476,C:\Users\leiqunni\Documents\Embarcadero\Studio\Projects\v2iewx\ProjectGroup.groupproj=C:\Users\leiqunni\Documents\Embarcadero\Studio\Projects\v2iewx\ProjectGroup1.groupproj</Transaction>
+    <Transaction>2015/10/04 04:45:25.617,C:\Users\leiqunni\Documents\Embarcadero\Studio\Projects\v2iewx\v2iewxGroup.groupproj=C:\Users\leiqunni\Documents\Embarcadero\Studio\Projects\v2iewx\ProjectGroup.groupproj</Transaction>
+  </Transactions>
+	<Default.Personality>
+		<Projects ActiveProject="C:\Users\leiqunni\Documents\Embarcadero\Studio\Projects\v2iewx\c2onfig.cbproj"/>
+	</Default.Personality>
+</BorlandProject>

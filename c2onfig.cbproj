@@ -1,7 +1,7 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{405189D4-3CA4-496D-A2DA-2FF8155BA88C}</ProjectGuid>
-        <ProjectVersion>14.6</ProjectVersion>
+        <ProjectVersion>15.4</ProjectVersion>
         <MainSource>c2onfig.cpp</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
@@ -58,6 +58,7 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <SanitizedProjectName>c2onfig</SanitizedProjectName>
         <VerInfo_Locale>1041</VerInfo_Locale>
         <ILINK_LibraryPath>..\..\RAD Studio\Projects\_his\viewx++\viewx++.20130127\;..\..\..\..\..\GitHub\v2iewx\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <IncludePath>..\..\RAD Studio\Projects\_his\viewx++\viewx++.20130127\;..\..\..\..\..\GitHub\v2iewx\;$(IncludePath)</IncludePath>
@@ -109,6 +110,7 @@
         <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\debug\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <ILINK_LibraryPath>$(BDS)\lib\Win32\debug\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <Defines>_DEBUG;$(Defines)</Defines>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
@@ -128,7 +130,6 @@
             <BuildOrder>0</BuildOrder>
         </CppCompile>
         <ResFiles Include="c2onfig.res">
-            <ModuleName>c2onfig.res</ModuleName>
             <BuildOrder>1</BuildOrder>
         </ResFiles>
         <CppCompile Include="config.cpp">
@@ -190,6 +191,7 @@
                     <ProjectProperties Name="AutoShowDeps">False</ProjectProperties>
                     <ProjectProperties Name="ManagePaths">True</ProjectProperties>
                     <ProjectProperties Name="VerifyPackages">True</ProjectProperties>
+                    <ProjectProperties Name="IndexFiles">False</ProjectProperties>
                 </ProjectProperties>
                 <Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\bcboffice2k150.bpl">Embarcadero C++Builder Office 2000 サーバー パッケージ</Excluded_Packages>

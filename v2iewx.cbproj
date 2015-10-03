@@ -46,9 +46,10 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <ILINK_LibraryPath>C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <RunBCCOutOfProcess>true</RunBCCOutOfProcess>
         <SanitizedProjectName>v2iewx</SanitizedProjectName>
-        <IncludePath>C:\Users\inu\Documents\Embarcadero\Studio\14.0\Imports;$(IncludePath)</IncludePath>
+        <IncludePath>C:\Users\leiqunni\Documents\Embarcadero\Studio\14.0\Imports\;$(IncludePath)</IncludePath>
         <VerInfo_MinorVer>2</VerInfo_MinorVer>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Release>17</VerInfo_Release>
@@ -126,12 +127,8 @@
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <Icon_MainIcon>v2iewx_Icon.ico</Icon_MainIcon>
         <ILINK_LibraryPath>..\..\..\..\..\..\Public\Documents\Embarcadero\Studio\14.0\DCP\;$(BDS)\lib\win32\release\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
-        <VerInfo_MinorVer>2</VerInfo_MinorVer>
-        <VerInfo_MajorVer>2015</VerInfo_MajorVer>
-        <VerInfo_Release>17</VerInfo_Release>
         <VerInfo_Keys>CompanyName=DarkEra Software;FileDescription=;FileVersion=2015.2.17.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <LinkPackageStatics>rtl.lib;vcl.lib;GdViewerPro4.lib;vclx.lib</LinkPackageStatics>
-        <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <ItemGroup>
         <CppCompile Include="about.cpp">
