@@ -4,7 +4,8 @@ v2iewx is image viewer with GdPicture.
 ## 
 
 ## Supported formats
-|:-----------|------------:|
+|Format|Description|
+|:-|:-|
 |Animated GIF|Graphics Interchange Format|
 |BMP|Standard Windows Bitmap Format|
 |CUR|Microsoft Windows Cursor|
