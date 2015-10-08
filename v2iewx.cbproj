@@ -111,14 +111,12 @@
         <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\debug\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <Icon_MainIcon>v2iewx.ico</Icon_MainIcon>
         <ILINK_LibraryPath>..\..\..\..\..\..\Public\Documents\Embarcadero\Studio\14.0\DCP\;$(BDS)\lib\Win32\debug\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
-        <VerInfo_Release>0</VerInfo_Release>
-        <VerInfo_MajorVer>1</VerInfo_MajorVer>
-        <VerInfo_MinorVer>0</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=DarkEra Software;FileDescription=v2iewx the image viewer;FileVersion=1.0.0.0;InternalName=;LegalCopyright=Copyright 2007 - 2014 793 ◆7BJkZFw08A / DarkEra Software;LegalTrademarks=;OriginalFilename=v2iewx.exe;ProductName=v2iewx;ProductVersion=2014.6.8.0;Comments=</VerInfo_Keys>
-        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_Release>4</VerInfo_Release>
+        <VerInfo_MinorVer>10</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=DarkEra Software;FileDescription=v2iewx the image viewer;FileVersion=2015.10.4.0;InternalName=;LegalCopyright=Copyright 2007 - 2015 793 ◆7BJkZFw08A / DarkEra Software;LegalTrademarks=;OriginalFilename=v2iewx.exe;ProductName=v2iewx;ProductVersion=2015.10.4.0;Comments=</VerInfo_Keys>
         <LinkPackageStatics>rtl.lib;vcl.lib;GdViewerPro4.lib;vclx.lib</LinkPackageStatics>
-        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <Defines>NDEBUG;$(Defines)</Defines>

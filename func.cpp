@@ -719,7 +719,7 @@ String __fastcall TForm1::fn_TitleFormatting(String value) {
 	value = StringReplace(value, "%_position%", ScrollBar->Position, TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_total%", flst->Count, TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_codec%", Gdv0->GetImageFormat(), TReplaceFlags() << rfReplaceAll);
-	value = StringReplace(value, "%_isspi%", conf.isSPI ? "SPI" : "GD", TReplaceFlags() << rfReplaceAll);
+	value = StringReplace(value, "%_isspi%", conf.isSPI ? "SPI" : "GDPic", TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_errorcode%", IntToStr(conf.errorcode), TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_pagecount%", IntToStr(Gdv0->PageCount), TReplaceFlags() << rfReplaceAll);
 
