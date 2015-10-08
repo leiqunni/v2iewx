@@ -1,6 +1,12 @@
 # v2iewx
 v2iewx is image viewer with GdPicture.
 
+## Screenshot
+
+![Screenshot](image/20091113.jpg "sleeping at bridge.") 
+![Screenshot](image/2010110700.jpg "nudy in libraly.") 
+
+
 ## System requirements
 Windows 98 later 32bit and 64bit.
 
