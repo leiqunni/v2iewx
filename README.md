@@ -24,19 +24,19 @@ EXR|OpenEXR Format.
 HDR|High Dynamic Range Format.
 ICO|Icone Format.
 IFF|Interchange Format.
-"J2K| J2C"|JPEG-2000 Codestream.
-"JBG| JBIG"|Joint Bi-level Image Experts Group.
-"JIF| JFIF"|JPEG File Interchange Format.
+J2K, J2C|JPEG-2000 Codestream.
+JBG, JBIG|Joint Bi-level Image Experts Group.
+JIF, JFIF|JPEG File Interchange Format.
 JNG|JPEG Network Graphics.
 JP2|JPEG-2000 Format.
-"JPEG| JPG| JPE"|Joint Photographic Expert Group.
+JPEG, JPG, JPE|Joint Photographic Expert Group.
 KOA|KOALA Format.
 LBM|Interchange File Format-Interleaved Bitmap.
 MNG|Multiple-image Network Graphics *.
 PBM|Portable Bitmap File.
 PBM RAW|Portable Bitmap BINARY.
 PCD|Kodak Photo-CD file.
-"PCT| PICT| PIC"|Macintosh PICT Format.
+PCT, PICT, PIC|Macintosh PICT Format.
 PCX|PC Paintbrush Format.
 PDF|Portable Document Format.
 PDF Multi-page|Portable Document Format.
@@ -53,7 +53,7 @@ RAS|Sun Raster Format.
 RAW memory bits|RAW bitmap.
 RLE|Standard Windows Bitmap format.
 SGI|Silicon Graphics Image Format.
-"TGA| TARGA"|TARGA Image Format.
+TGA, TARGA|TARGA Image Format.
 TIFF Multi-page|Multi-page Tagged Image Format.
 TIFF, TIF|Tagged Image Format.
 WBMP, WAP, WBM|Wireless Bitmap.
