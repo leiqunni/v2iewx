@@ -50,14 +50,13 @@ PPM|Portable Pixmap File.
 PPM RAW|Portable Pixmap BINARY.
 PSD|Photoshop File.
 RAS|Sun Raster Format.
->>>>>>> origin/master
-RAW memory bits|RAW bitmap
+RAW memory bits|RAW bitmap.
 RLE|Standard Windows Bitmap format.
 SGI|Silicon Graphics Image Format.
 "TGA| TARGA"|TARGA Image Format.
 TIFF Multi-page|Multi-page Tagged Image Format.
-"TIFF| TIF"|Tagged Image Format.
-"WBMP| WAP| WBM"|Wireless Bitmap.
+TIFF, TIF|Tagged Image Format.
+WBMP, WAP, WBM|Wireless Bitmap.
 WMF|Standard Windows Metaformat.
 XBM|X-Bitmap Format.
 XPM|X Pixmap Format.
