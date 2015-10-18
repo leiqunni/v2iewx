@@ -1,11 +1,16 @@
 # v2iewx
 v2iewx is image viewer with GdPicture.
 
+## Summary
+This soft is image and comic viewer.  
+I were using 'Image and FAX Viewer' at Windowx XP, but Windows Vista's 'Photo Gallery' has not keyboard operation.  
+So I make myself with anger.  
+Image processing engin is <a href="http://www.gdpicture.com/">GdViewePro</a>.  
+
 ## Screenshot
 
-![Screenshot](image/20091113.jpg "sleeping at bridge.") 
-![Screenshot](image/2010110700.jpg "nudy in libraly.") 
-
+<img src="image/20091113.jpg width=120 alt="sleeping at bridge.")
+<img src="image/2010110700.jpg width=120 alt="nudy in libraly.")
 
 ## System requirements
 Windows 98 later 32bit and 64bit.
@@ -14,8 +19,24 @@ Windows 98 later 32bit and 64bit.
 
 [v2iewx ver. 2015.10.09.0](https://github.com/leiqunni/v2iewx/releases "v2iewx.2015.10.09.0")
 
+## Install
+In first, install GdPicturePro ActiveX plug-in (include this repogitry gdviewerpro.zip).  
+Next, put v2iewx.exe is anywhere you want to put, for example %USERPROFILE%\AppData\Local\DarkEra_Softwere\v2iewx\v2iewx.exe.  
+note. make ini file same excute file. so make sure writable user permittion.
+
 ## Usage
-In first, install GdPicturePro ActiveX plug-in (include this repogitry gdviewerpro.zip).
+In first, install GdPicturePro ActiveX plug-in (include this repogitry gdviewerpro.zip).  
+Associate image file to v2iewx.exe.  
+You can drag and drop files amd folders.  
+[mouse-while] is prev and next image file.  
+[mouse-rightbutton]-[mouse-while} is zoom in/out.  
+[mouse-rightbutton-dbbuleclicick] is restore zoom.  
+
+## Susie Plug-in
+[ツール]-[オプション]で開く設定画面で[Susie Plug-in を使用する]にチェックを入れ、
+その下のテキストボックスにプラグインがあるパスを指定してください。起動時に *.spi ファイルを読み込みます。  
+また、プラグインの読み込みに若干時間がかかる（と思う。コンマ何秒）ので、
+プラグインを使わない場合はチェックを外しておきましょう。
 
 ## Supported formats
 Format|Description
@@ -116,3 +137,10 @@ ptx|Pentax Digital Camera Raw Image Format.
 cap|Phase One Digital Camera Raw Image Format.
 iiq|Phase One Digital Camera Raw Image Format.
 rwz|Rawzor Digital Camera Raw Image Format.
+
+## Contact
+Gthub.
+
+## Thanks
+AeroVista icon is Mayosoft from mexixico thx a lot! 多謝  
+<a href="http://www.mayosoft.net">http://www.mayosoft.net</a>
