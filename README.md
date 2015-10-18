@@ -9,8 +9,8 @@ Image processing engin is <a href="http://www.gdpicture.com/">GdViewePro</a>.
 
 ## Screenshot
 
-<img src="image/20091113.jpg" width=120 alt="sleeping at bridge.")
-<img src="image/2010110700.jpg" width=120 alt="nudy in libraly.")
+<img src="image/20091113.jpg" width=120 alt="sleeping at bridge.">
+<img src="image/2010110700.jpg" width=120 alt="nudy in libraly.">
 
 ## System requirements
 Windows 98 later 32bit and 64bit.
