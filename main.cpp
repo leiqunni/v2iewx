@@ -6,13 +6,11 @@
 #include "main.h"
 // ---------------------------------------------------------------------------
 #pragma package(smart_init)
-#pragma link "msvcrt.lib"
 #pragma link "GdViewerPro4_OCX"
 #pragma resource "*.dfm"
 TForm1 *Form1;
 
-// ---------------------------------------------------------------------------
-__fastcall TForm1::TForm1(TComponent *Owner) : TForm(Owner) {
+_fastcall TForm1::TForm1(TComponent *Owner) : TForm(Owner) {
 	DragAcceptFiles(Handle, true); // Enable D&D
 
 	Gdv0->LicenseKEY = WideString(L"6223560888372426056441256");
@@ -42,14 +40,18 @@ __fastcall TForm1::TForm1(TComponent *Owner) : TForm(Owner) {
 		fn_ParseFiles(paramStr);
 	}
 }
-
 // ---------------------------------------------------------------------------
-//
-void __fastcall TForm1::FormDestroy(TObject *Sender) {
+__fastcall TForm1::~TForm1() {
 	delete KeyConf;
 	delete hSPI;
 	delete flst;
 	delete paramStr;
+	delete RecentList;
+}
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::FormDestroy(TObject *Sender) {
+
 	fn_SaveIni();
 }
 
@@ -486,7 +488,7 @@ void __fastcall TForm1::SPI_LoadPlugin(String path) {
 	TSearchRec sr;
 	if (FindFirst(TPath::Combine(path, L"*.spi"), 0, sr) == 0) {
 		do {
-			hSPI->Add((TObject *)LoadLibrary(TPath::Combine(path, sr.Name).w_str()));
+			hSPI->Add((TObject *)LoadLibraryW(TPath::Combine(path, sr.Name).w_str()));
 		}
 		while (!FindNext(sr));
 		// FindClose(sr);
@@ -710,8 +712,8 @@ void __fastcall TForm1::Gdv1MouseUpControl(TObject *Sender, short *Button, short
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift) {
-	String code;
-	code = code.sprintf(L"%1x%02x", Shift.ToInt(), Key);
+//	String code;
+	String code = code.sprintf(L"%1x%02x", Shift.ToInt(), Key);
 	ExecAction(KeyConf->ReadString(L"key", code, NULL).LowerCase());
 	// Key = NULL;
 }

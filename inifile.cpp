@@ -4,8 +4,6 @@
 // ---------------------------------------------------------------------------
 #pragma package(smart_init)
 
-#pragma region "IniFile"
-
 #pragma region "LoadIni"
 
 // ---------------------------------------------------------------------------
@@ -58,7 +56,7 @@ void __fastcall TForm1::fn_LoadIni() {
 	conf.MouseGesture = ini->ReadBool("Function", "MouseGesture", true);
 	fn_SpreadView(ini->ReadInteger("Function", "SpreadView", 0));
 	fn_KeepRot(ini->ReadBool("Function", "KeepRotation", false));
-	fn_Sort(ini->ReadInteger("Function", "SortOrder", 0), ini->ReadBool("Function", "SortAsc", true));
+	fn_Sort(SortOrder(ini->ReadInteger("Function", "SortOrder", 0)), ini->ReadBool("Function", "SortAsc", true));
 	fn_ZoomMode(ini->ReadInteger("Function", "ZoomMode", 2));
 
 	Timer->Interval = ini->ReadInteger("Function", "SlideShow", 3000);
@@ -228,4 +226,3 @@ void __fastcall TForm1::fn_SaveIni() {
 
 #pragma end_region
 
-#pragma end_region

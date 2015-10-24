@@ -1336,7 +1336,6 @@ object Form1: TForm1
     BevelWidth = 2
     ShowCaption = False
     TabOrder = 0
-    ExplicitHeight = 228
     object Gdv0: TGdViewer
       Left = 0
       Top = 0
@@ -1380,7 +1379,6 @@ object Form1: TForm1
     BevelWidth = 2
     ShowCaption = False
     TabOrder = 4
-    ExplicitHeight = 228
     object Gdv1: TGdViewer
       Left = 0
       Top = 0
@@ -1438,7 +1436,6 @@ object Form1: TForm1
     ParentColor = True
     PopupMenu = pumMain
     SimplePanel = True
-    ExplicitTop = 270
   end
   object ToolBar: TToolBar
     AlignWithMargins = True
@@ -1455,7 +1452,6 @@ object Form1: TForm1
     PopupMenu = pumMain
     TabOrder = 2
     Transparent = False
-    ExplicitTop = 246
     object tbtnPrev: TToolButton
       Left = 0
       Top = 0
@@ -1631,7 +1627,7 @@ object Form1: TForm1
     Left = 136
     Top = 32
     Bitmap = {
-      494C0101140019008C0010001000FFFFFFFF2000FFFFFFFFFFFFFFFF424D3600
+      494C010114001900940010001000FFFFFFFF2000FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

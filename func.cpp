@@ -60,12 +60,12 @@ void __fastcall TForm1::fn_LoadFiles(String path) {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_NewWindow() {
-	RunProcess(Application->ExeName, NULL);
+	fn_RunProcess(Application->ExeName, NULL);
 }
 
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::RunProcess(String path, String argv) {
+void __fastcall TForm1::fn_RunProcess(String path, String argv) {
 	STARTUPINFOW si;
 	PROCESS_INFORMATION pi;
 
@@ -82,8 +82,7 @@ void __fastcall TForm1::RunProcess(String path, String argv) {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_Next() {
-	if (flst->Count == 0)
-		return;
+	if (flst->Count == 0) return;
 
 	if (mnuViewSpreadViewNone->Checked) { // Not Spread View
 		if (ScrollBar->Position >= flst->Count) {
@@ -103,8 +102,7 @@ void __fastcall TForm1::fn_Next() {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_Prev() {
-	if (flst->Count == 0)
-		return;
+	if (flst->Count == 0) return;
 
 	if (mnuViewSpreadViewNone->Checked) {
 		if (ScrollBar->Position <= 1) {
@@ -184,6 +182,8 @@ void __fastcall TForm1::fn_FileOpenDialog(bool folder) {
 		FileOpenDialog->Options = TFileDialogOptions() << fdoAllowMultiSelect << fdoPathMustExist << fdoFileMustExist;
 	}
 
+	delete sb;
+
 	if (FileOpenDialog->Execute() == true) {
 		fn_ParseFiles((TStringList *)FileOpenDialog->Files);
 	}
@@ -204,7 +204,7 @@ void __fastcall TForm1::fn_NextFrame() {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_Options() {
-	RunProcess(L"config++.exe", NULL);
+	fn_RunProcess(L"config++.exe", NULL);
 }
 
 // ---------------------------------------------------------------------------
@@ -732,7 +732,7 @@ TColor __fastcall TForm1::fn_IntToColor(int rgb) {
 	int r = 255 - (rgb % 256);
 	int g = 255 - ((rgb / 256) % 256);
 	int b = 255 - (rgb / 65536);
-	return RGB(r, g, b);
+	return TColor(RGB(r, g, b));
 }
 
 // ---------------------------------------------------------------------------
@@ -758,6 +758,8 @@ void __fastcall TForm1::fn_LoadRecent() {
 		item->Caption = val;
 		mnuFileRecentFiles->Add(item);
 	}
+
+	delete sect;
 }
 
 // ---------------------------------------------------------------------------

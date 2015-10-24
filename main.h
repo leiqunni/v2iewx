@@ -233,7 +233,11 @@ __published: // IDE-managed Components
 private: // User declarations
 
 	enum SortOrder {
-		kByName, kByNameNum, kByTime, kByType, kBySize
+		kByName,
+		kByNameNum,
+		kByTime,
+		kByType,
+		kBySize
 	};
 
 	struct { // Config structure
@@ -342,28 +346,29 @@ private: // User declarations
 	void __fastcall DisplayFromFile(TGdViewer *object, String sFilePath);
 	void __fastcall DropFiles(TWMDropFiles Message);
 	void __fastcall ExecAction(String value);
-	void __fastcall fn_FindDir(String dir, String name);
-	void __fastcall fn_LoadGdvProperties(TGdViewer *gdv, TMemIniFile *ini);
-	void __fastcall fn_LoadImage(TGdViewer *gv, TFI *fi);
 	void __fastcall LoadImageSpread(TFI *fi1, TFI *fi2);
-	void __fastcall fn_LoadIni();
-	void __fastcall fn_LoadLang();
-	void __fastcall RunProcess(String, String);
+	void __fastcall fn_RunProcess(String, String);
 	void __fastcall SPI_LoadPlugin(String);
-	void __fastcall fn_SaveIni();
-	void __fastcall TForm1::fn_Glass(TGdViewer *gv, bool value);
+	void __fastcall fn_AddRecent(String path);
 	void __fastcall fn_BackColor(String value);
 	void __fastcall fn_Bmp2in1(Graphics::TBitmap *bmp, String path1, String path2);
 	void __fastcall fn_DeleteFile(int);
 	void __fastcall fn_EnableMenu(bool value);
 	void __fastcall fn_FileOpenDialog(bool);
 	void __fastcall fn_FileOpenDialogEx(bool);
+	void __fastcall fn_FindDir(String dir, String name);
 	void __fastcall fn_Focus(int);
 	void __fastcall fn_FullScreen();
+	void __fastcall fn_Glass(TGdViewer *gv, bool value);
 	void __fastcall fn_ImageCopy();
 	void __fastcall fn_KeepRot(bool);
 	void __fastcall fn_LoadFiles(String);
 	void __fastcall fn_LoadFiles(TStringList*);
+	void __fastcall fn_LoadGdvProperties(TGdViewer *gdv, TMemIniFile *ini);
+	void __fastcall fn_LoadImage(TGdViewer *gv, TFI *fi);
+	void __fastcall fn_LoadIni();
+	void __fastcall fn_LoadLang();
+	void __fastcall fn_LoadRecent();
 	void __fastcall fn_MainMenu(bool);
 	void __fastcall fn_MouseMode(int value);
 	void __fastcall fn_NewWindow();
@@ -383,6 +388,7 @@ private: // User declarations
 	void __fastcall fn_Reset(TGdViewer*);
 	void __fastcall fn_RotateLeft();
 	void __fastcall fn_RotateRight();
+	void __fastcall fn_SaveIni();
 	void __fastcall fn_ScrollBar(bool);
 	void __fastcall fn_SlideShow();
 	void __fastcall fn_Sort(SortOrder, bool);
@@ -394,23 +400,19 @@ private: // User declarations
 	void __fastcall fn_WindowMinimize();
 	void __fastcall fn_ZoomIn();
 	void __fastcall fn_ZoomIn(TGdViewer* gv);
-	void __fastcall fn_ZoomMode(int);
 	void __fastcall fn_ZoomMode(TGdViewer* gv, int value);
+	void __fastcall fn_ZoomMode(int);
 	void __fastcall fn_ZoomOut();
 	void __fastcall fn_ZoomOut(TGdViewer* gv);
 	void __fastcall fn_ZoomStep(int value);
-	void __fastcall TForm1::fn_LoadRecent();
-	void __fastcall TForm1::fn_AddRecent(String path);
 
 	BEGIN_MESSAGE_MAP VCL_MESSAGE_HANDLER(WM_DROPFILES, TWMDropFiles, DropFiles) END_MESSAGE_MAP(TForm)
 
-		public : // User declarations
-		__fastcall TForm1(TComponent* Owner);
-
-	TPoint FMouseDownPt;
+public : // User declarations
+	__fastcall TForm1(TComponent* Owner);
+	__fastcall ~TForm1();
 
 	String SlideShowStart, SlideShowStop;
-
 	String FullPath;
 };
 
