@@ -1,0 +1,232 @@
+// ---------------------------------------------------------------------------
+#pragma hdrstop
+#include "inifile.h"
+// ---------------------------------------------------------------------------
+#pragma package(smart_init)
+
+#pragma region "IniFile"
+
+#pragma region "LoadIni"
+
+// ---------------------------------------------------------------------------
+// Ini File Loading
+void __fastcall TForm1::fn_LoadIni() {
+	TMemIniFile *ini = new TMemIniFile(IniFile);
+
+	// Window section
+	conf.KeepSize = ini->ReadBool("Window", "KeepSize", true);
+
+	Form1->Width = ini->ReadInteger("Window", "Width", 480);
+	Form1->Height = ini->ReadInteger("Window", "Height", 270);
+
+//	Form1->ScrollBar->Height = ini->ReadInteger("Window", "ScrollBarHeight", 16);
+
+	if (ini->ReadBool("Window", "KeepPosition", false)) {
+		Form1->Top = ini->ReadInteger("Window", "Top", 0);
+		Form1->Left = ini->ReadInteger("Window", "Left", 0);
+	}
+
+	fn_MainMenu(ini->ReadBool("Window", "MainMenu", true));
+	fn_ScrollBar(ini->ReadBool("Window", "ScrollBar", true));
+	fn_ToolBar(ini->ReadBool("Window", "ToolBar", true));
+	fn_StatusBar(ini->ReadBool("Window", "StatusBar", false));
+
+	conf.Glass = ini->ReadBool("Window", "Glass", false);
+	if (conf.Glass) {
+		fn_Glass(Gdv0, conf.Glass);
+	}
+	else {
+		Gdv0->BackColor = StringToColor(ini->ReadString("GdViewer", "BackColor", L"0xffffff"));
+	}
+
+	Form1->ScreenSnap = ini->ReadBool("Window", "Snap", false);
+
+	// GdViewer section
+	fn_QualityAuto(ini->ReadBool("GdViewer", "QualityAuto", true));
+	fn_Quality((ViewerQuality)ini->ReadInteger("GdViewer", "Quality", 4));
+	fn_OptimizeDrawingSpeed(ini->ReadBool("GdViewer", "OptimizeDrawingSpeed", true));
+	fn_ZoomStep(ini->ReadInteger("GdViewer", "ZoomStep", 10));
+
+	Gdv0->MouseMode = ini->ReadInteger("GdViewer", "MouseMode", 2);
+
+	if (ini->ReadBool("GdViewer", "Properties", false)) {
+		fn_LoadGdvProperties(Gdv0, ini);
+	}
+
+	// Function section
+	mnuFileLoadSubdirectry->Checked = ini->ReadBool("Function", "LoadSubdirectry", false);
+	conf.KeepListWhenFileOpen = ini->ReadBool(L"Function", "KeepListWhenFileOpen", false);
+	conf.MouseGesture = ini->ReadBool("Function", "MouseGesture", true);
+	fn_SpreadView(ini->ReadInteger("Function", "SpreadView", 0));
+	fn_KeepRot(ini->ReadBool("Function", "KeepRotation", false));
+	fn_Sort((SortOrder)ini->ReadInteger("Function", "SortOrder", 0), ini->ReadBool("Function", "SortAsc", true));
+	fn_ZoomMode(ini->ReadInteger("Function", "ZoomMode", 2));
+
+	Timer->Interval = ini->ReadInteger("Function", "SlideShow", 3000);
+	conf.TitleText = ini->ReadString("Function", "Title", "%_filename_ext% [%_position%/%_total%] - v2iewx %_isspi%");
+	conf.StatusText = ini->ReadString("Function", "Status", "大きさ: %_width% x %_height% 更新日時: %_last_modified% サイズ: %_filesize_kb% KB 拡大率: %_zoom% %");
+	conf.Ext = ini->ReadString("Function", "Ext", "\\.bmp$|\\.gif$|\\.ico$|\\.jpe$|\\.jpeg$|\\.jpg$|\\.pcx$|\\.png$|\\.tif$|\\.tiff$|\\.wmf$|\\.jp2$|\\.j2k$");
+	// conf.rot = ini->ReadInteger("Function", "Rot", 0);
+
+	// SPI section
+	if (!ini->ReadString("SPI", "Path", "").IsEmpty()) {
+		SPI_LoadPlugin(ini->ReadString("SPI", "Path", ""));
+	}
+
+	delete ini;
+	//
+	// this->Caption = "viewx++";
+}
+
+#pragma end_region
+
+#pragma region "LoadGdvProperties"
+
+// ---------------------------------------------------------------------------
+// Load Raw GdViewer
+void __fastcall TForm1::fn_LoadGdvProperties(TGdViewer *gdv, TMemIniFile *ini) {
+	gdv->AnimateGIF = ini->ReadBool("GdViewer", "AnimateGIF", true);
+	gdv->Appearance = ini->ReadInteger("GdViewer", "Appearance", 0);
+	gdv->BackColor = fn_IntToColor(ini->ReadInteger("GdViewer", "BackColor", 0xffffff));
+	gdv->BackStyle = ini->ReadInteger("GdViewer", "BackStyle", true);
+	gdv->BorderStyle = ini->ReadInteger("GdViewer", "BorderStyle", 1);
+	gdv->ClipControls = ini->ReadBool("GdViewer", "ClipControls", true);
+	gdv->ContinuousViewMode = ini->ReadBool("GdViewer", "ContinuousViewMode", true);
+	gdv->CurrentPage = ini->ReadInteger("GdViewer", "CurrentPage", 0);
+	gdv->DisableAutoFocus = ini->ReadBool("GdViewer", "DisableAutoFocus", false);
+	gdv->Enabled = ini->ReadBool("GdViewer", "Enabled", true);
+	gdv->EnableMenu = ini->ReadBool("GdViewer", "EnableMenu", false);
+	gdv->EnableMouseWheel = ini->ReadBool("GdViewer", "EnableMouseWheel", false);
+	gdv->ForcePictureMode = ini->ReadBool("GdViewer", "ForcePictureMode", false);
+	gdv->ForceScrollBars = ini->ReadBool("GdViewer", "ForceScrollBars", false);
+	gdv->gamma = ini->ReadInteger("GdViewer", "gamma", 1);
+	gdv->HorizontalResolution = ini->ReadInteger("GdViewer", "HorizontalResolution", 0);
+	gdv->HScrollVisible = ini->ReadBool("GdViewer", "HScrollVisible", false);
+	gdv->ImageAlignment = ini->ReadInteger("GdViewer", "ImageAlignment", 2);
+	gdv->ImageForceTemporaryMode = ini->ReadBool("GdViewer", "ImageForceTemporaryMode", false);
+	gdv->ImageMaskColor = fn_IntToColor(ini->ReadBool("GdViewer", "ImageMaskColor", 0x000000));
+	gdv->ImagePosition = ini->ReadBool("GdViewer", "ImagePosition", 2);
+	gdv->KeepImagePosition = ini->ReadBool("GdViewer", "KeepImagePosition", false);
+	gdv->LockControl = ini->ReadBool("GdViewer", "LockControl", false);
+	gdv->MouseButtonForMouseMode = ini->ReadBool("GdViewer", "MouseButtonForMouseMode", 1);
+	gdv->MouseMode = ini->ReadInteger("GdViewer", "MouseMode", 0);
+	gdv->MousePointer = ini->ReadInteger("GdViewer", "MousePointer", 1);
+	gdv->MouseWheelMode = ini->ReadInteger("GdViewer", "MouseWheelMode", 0);
+	gdv->OptimizeDrawingSpeed = ini->ReadBool("GdViewer", "OptimizeDrawingSpeed", true);
+	gdv->PdfDisplayFormField = ini->ReadBool("GdViewer", "PdfDisplayFormField", true);
+	gdv->PdfDpiRendering = ini->ReadInteger("GdViewer", "PdfDpiRendering", 200);
+	gdv->PdfRenderingMode = ini->ReadInteger("GdViewer", "PdfRenderingMode", 2);
+	gdv->PDFShowDialogForPassword = ini->ReadBool("GdViewer", "PDFShowDialogForPassword", true);
+	gdv->RectBorderColor = fn_IntToColor(ini->ReadInteger("GdViewer", "RectBorderColor", 0x000000));
+	gdv->RectBorderSize = ini->ReadInteger("GdViewer", "RectBorderSize", 1);
+	gdv->RectBorderStyle = ini->ReadInteger("GdViewer", "RectBorderStyle", 1);
+	gdv->RectDrawMode = ini->ReadInteger("GdViewer", "RectDrawMode", 13);
+	gdv->RectIsEditable = ini->ReadBool("GdViewer", "RectIsEditable", true);
+	gdv->ScrollBars = ini->ReadBool("GdViewer", "ScrollBars", true);
+	gdv->ScrollLargeChange = ini->ReadInteger("GdViewer", "ScrollLargeChange", 50);
+	gdv->ScrollOptimization = ini->ReadBool("GdViewer", "ScrollOptimization", false);
+	gdv->ScrollSmallChange = ini->ReadInteger("GdViewer", "ScrollSmallChange", 1);
+	gdv->SilentMode = ini->ReadBool("GdViewer", "SilentMode", false);
+	gdv->SkipImageResolution = ini->ReadBool("GdViewer", "SkipImageResolution", false);
+	gdv->ViewerDrop = ini->ReadBool("GdViewer", "ViewerDrop", true);
+	gdv->ViewerQuality = ini->ReadInteger("GdViewer", "ViewerQuality", 0);
+	gdv->ViewerQualityAuto = ini->ReadBool("GdViewer", "ViewerQualityAuto", true);
+	gdv->VScrollVisible = ini->ReadBool("GdViewer", "VScrollVisible", false);
+	gdv->ZOOM = ini->ReadInteger("GdViewer", "ZOOM", 1);
+	gdv->ZoomMode = ini->ReadInteger("GdViewer", "ZoomMode", 4);
+	gdv->ZoomStep = ini->ReadInteger("GdViewer", "ZoomStep", 10);
+}
+
+#pragma end_region
+
+#pragma region "LoadLang"
+
+// ---------------------------------------------------------------------------
+// lang.ini loading
+void __fastcall TForm1::fn_LoadLang() {
+	if (TFile::Exists(LangFile)) {
+		TStringList *sect = new TStringList();
+		TMemIniFile *ini = new TMemIniFile(LangFile);
+
+		ini->ReadSectionValues("Lang.TMenuItem.Caption", sect);
+		for (int i = 0; i < sect->Count; ++i) {
+			String key = sect->Names[i];
+			String val = sect->Values[key];
+			TMenuItem *item = static_cast<TMenuItem*>(Form1->FindComponent(key));
+			if (item != NULL) {
+				item->Caption = val;
+			}
+		}
+
+		ini->ReadSectionValues("Lang.TToolButton.Hint", sect);
+		for (int i = 0; i < sect->Count; ++i) {
+			String key = sect->Names[i];
+			String val = sect->Values[key];
+			TToolButton *item = static_cast<TToolButton*>(Form1->FindComponent(key));
+			if (item != NULL) {
+				item->Hint = val;
+			}
+		}
+
+		SlideShowStart = ini->ReadString("Lang.Etc", "SlideShowStart", "Slide Show Start");
+		SlideShowStop = ini->ReadString("Lang.Etc", "SlideShowStop", "Slide Show Stop");
+		mnuPlaySlideShow->Caption = SlideShowStart;
+
+		delete ini;
+		delete sect;
+	}
+}
+
+#pragma end_region
+
+#pragma region "SaveIni"
+
+// ---------------------------------------------------------------------------
+// Ini File Saving
+void __fastcall TForm1::fn_SaveIni() {
+	TMemIniFile *ini = new TMemIniFile(IniFile);
+
+	// Window section
+	if (Form1->WindowState != wsMaximized && Form1->WindowState != wsMinimized) {
+		if (conf.KeepPos) {
+			ini->WriteInteger("Window", "Top", Form1->Top);
+			ini->WriteInteger("Window", "Left", Form1->Left);
+		}
+		if (conf.KeepSize) {
+			ini->WriteInteger("Window", "Width", Form1->Width);
+			ini->WriteInteger("Window", "Height", Form1->Height);
+		}
+	}
+
+	ini->WriteBool("Window", "MainMenu", MainMenu->Tag);
+	ini->WriteBool("Window", "ScrollBar", ScrollBar->Visible);
+	ini->WriteBool("Window", "ToolBar", ToolBar->Visible);
+	ini->WriteBool("Window", "StatusBar", StatusBar->Visible);
+
+	// GdViewer section
+	ini->WriteBool("GdViewer", "QualityAuto", Gdv0->ViewerQualityAuto);
+	ini->WriteInteger("GdViewer", "Quality", Gdv0->ViewerQuality);
+	ini->WriteBool("GdViewer", "OptimizeDrawingSpeed", Gdv0->OptimizeDrawingSpeed);
+
+	// Function section
+	ini->WriteBool("Function", "LoadSubdirectry", mnuFileLoadSubdirectry->Checked);
+	ini->WriteInteger("Function", "SpreadView", conf.SpreadView);
+	ini->WriteBool("Function", "KeepRot", mnuViewKeepRot->Checked);
+	ini->WriteBool("Function", "SortAsc", conf.asc);
+	ini->WriteInteger("Function", "SortOrder", conf.order);
+
+	if (mnuViewInWindow->Checked) {
+		ini->WriteInteger("Function", "ZoomMode", 99);
+	}
+	else {
+		ini->WriteInteger("Function", "ZoomMode", Gdv0->ZoomMode);
+	}
+
+	ini->UpdateFile();
+
+	delete ini;
+}
+
+#pragma end_region
+
+#pragma end_region

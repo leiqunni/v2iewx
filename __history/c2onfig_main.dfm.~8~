@@ -1,0 +1,147 @@
+object Form4: TForm4
+  Left = 0
+  Top = 0
+  Caption = 'Form4'
+  ClientHeight = 447
+  ClientWidth = 710
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Splitter1: TSplitter
+    Left = 177
+    Top = 0
+    Width = 4
+    Height = 447
+    ExplicitHeight = 333
+  end
+  object pnlEdit: TPanel
+    Left = 181
+    Top = 0
+    Width = 529
+    Height = 447
+    Align = alClient
+    ShowCaption = False
+    TabOrder = 0
+    ExplicitWidth = 451
+    ExplicitHeight = 367
+    object Splitter2: TSplitter
+      Left = 1
+      Top = 113
+      Width = 527
+      Height = 4
+      Cursor = crVSplit
+      Align = alTop
+      ExplicitWidth = 449
+    end
+    object grpDescription: TGroupBox
+      Left = 1
+      Top = 1
+      Width = 527
+      Height = 112
+      Align = alTop
+      Caption = 'Description'
+      TabOrder = 0
+      ExplicitWidth = 449
+      object pnlDescription: TPanel
+        Left = 2
+        Top = 15
+        Width = 523
+        Height = 95
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = 'pnlDescription'
+        ShowCaption = False
+        TabOrder = 0
+        ExplicitLeft = 5
+        ExplicitTop = 16
+        ExplicitWidth = 441
+        ExplicitHeight = 90
+      end
+    end
+    object grpValue: TGroupBox
+      Left = 1
+      Top = 117
+      Width = 527
+      Height = 289
+      Align = alClient
+      Caption = 'Value'
+      TabOrder = 1
+      ExplicitWidth = 449
+      ExplicitHeight = 209
+      DesignSize = (
+        527
+        289)
+      object edtString: TEdit
+        Left = 14
+        Top = 23
+        Width = 499
+        Height = 21
+        Anchors = [akLeft, akTop, akRight]
+        TabOrder = 0
+      end
+      object cmbBool: TComboBox
+        Left = 14
+        Top = 58
+        Width = 120
+        Height = 21
+        Style = csDropDownList
+        TabOrder = 1
+        Items.Strings = (
+          'True'
+          'False')
+      end
+    end
+    object pnlButton: TPanel
+      Left = 1
+      Top = 406
+      Width = 527
+      Height = 40
+      Align = alBottom
+      ShowCaption = False
+      TabOrder = 2
+      ExplicitTop = 326
+      ExplicitWidth = 449
+      DesignSize = (
+        527
+        40)
+      object btnApply: TButton
+        Left = 446
+        Top = 7
+        Width = 73
+        Height = 25
+        Anchors = [akRight, akBottom]
+        Caption = '&Apply'
+        TabOrder = 0
+        ExplicitLeft = 368
+      end
+    end
+  end
+  object pnlKeyTree: TPanel
+    Left = 0
+    Top = 0
+    Width = 177
+    Height = 447
+    Align = alLeft
+    Caption = 'pnlDescription'
+    ShowCaption = False
+    TabOrder = 1
+    ExplicitHeight = 367
+    object TreeView: TTreeView
+      Left = 1
+      Top = 1
+      Width = 175
+      Height = 445
+      Align = alClient
+      Indent = 19
+      TabOrder = 0
+      OnClick = TreeViewClick
+      ExplicitHeight = 365
+    end
+  end
+end

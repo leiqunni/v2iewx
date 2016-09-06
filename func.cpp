@@ -204,7 +204,7 @@ void __fastcall TForm1::fn_NextFrame() {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_Options() {
-	RunProcess(L"config++.exe", NULL);
+	RunProcess(L"c2onfig.exe", NULL);
 }
 
 // ---------------------------------------------------------------------------
@@ -338,30 +338,30 @@ void __fastcall TForm1::fn_Reset(TGdViewer *gv) {
 void __fastcall TForm1::fn_SpreadView(int value) {
 	conf.SpreadView = value;
 
-	switch (value) {
-	case 0:
-		Splitter->Visible = false;
-		Panel1->Visible = false;
+//	switch (value) {
+//	case 0:
+//		Splitter->Visible = false;
+//		Panel1->Visible = false;
 		mnuViewSpreadViewNone->Checked = true;
 		tbtnSpreadView->Down = false;
 		tbtnSpreadView->ImageIndex = 16;
 		return;
-		break;
-	case 1:
-		mnuViewSpreadViewRight->Checked = true;
-		tbtnSpreadView->ImageIndex = 17;
-		break;
-	case 2:
-		mnuViewSpreadViewLeft->Checked = true;
-		tbtnSpreadView->ImageIndex = 18;
-		break;
-	}
-
-	Panel1->Visible = true;
-	Splitter->Visible = true;
-	// Panel1->Visible = true;
-	tbtnSpreadView->Down = true;
-	Panel1->Width = (Form1->ClientWidth - Splitter->Width) / 2;
+//		break;
+//	case 1:
+//		mnuViewSpreadViewRight->Checked = true;
+//		tbtnSpreadView->ImageIndex = 17;
+//		break;
+//	case 2:
+//		mnuViewSpreadViewLeft->Checked = true;
+//		tbtnSpreadView->ImageIndex = 18;
+//		break;
+//	}
+//
+//	Panel1->Visible = true;
+//	Splitter->Visible = true;
+//	// Panel1->Visible = true;
+//	tbtnSpreadView->Down = true;
+//	Panel1->Width = (Form1->ClientWidth - Splitter->Width) / 2;
 }
 
 // ---------------------------------------------------------------------------
@@ -397,21 +397,18 @@ void __fastcall TForm1::fn_ZoomMode(int value) {
 	switch (value) {
 	case 1: // []
 		Gdv0->ZoomMode = 1;
-		Gdv1->ZoomMode = 1;
 		mnuViewActual->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = true;
 		tbtnActual->Down = true;
 		break;
 	case 2: // []
 		Gdv0->ZoomMode = 2;
-		Gdv1->ZoomMode = 2;
 		mnuViewBestfit->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = false;
 		tbtnBestfit->Down = true;
 		break;
 	case 6: // []
 		Gdv0->ZoomMode = 6;
-		Gdv1->ZoomMode = 6;
 		mnuViewSpread->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = false;
 		tbtnSpread->Down = true;
@@ -421,11 +418,6 @@ void __fastcall TForm1::fn_ZoomMode(int value) {
 			Gdv0->ZoomMode = 1;
 		} else {
 			Gdv0->ZoomMode = 2;
-		}
-		if (Gdv1->Width > Gdv1->ImageWidth && Gdv1->Height > Gdv1->ImageHeight) {
-			Gdv1->ZoomMode = 1;
-		} else {
-			Gdv1->ZoomMode = 2;
 		}
 		mnuViewInWindow->Checked = true;
 		mnuViewOptimizeWindowSize->Enabled = false;
@@ -535,32 +527,30 @@ void __fastcall TForm1::fn_Sort(SortOrder order, bool asc) {
 }
 
 // ---------------------------------------------------------------------------
-// [表示]-[画質]-[自動]
+// [View]-[Quality]-[自動]
 void __fastcall TForm1::fn_QualityAuto(bool value) {
 	Gdv0->ViewerQualityAuto = value;
-	Gdv1->ViewerQualityAuto = value;
 	mnuViewQualityAuto->Checked = value;
 }
 
 // ---------------------------------------------------------------------------
-// [表示]-[画質]-[低]
-void __fastcall TForm1::fn_Quality(int value) {
+// [View]-[Quality]
+void __fastcall TForm1::fn_Quality(ViewerQuality value) {
 	Gdv0->ViewerQuality = value;
-	Gdv1->ViewerQuality = value;
 	switch (value) {
-	case 0: // 低
+	case Low: // Low
 		mnuViewQualityLow->Checked = true;
 		break;
-	case 1: // バイリニア
+	case Bilinear: // Bilinear
 		mnuViewQualityBilinear->Checked = true;
 		break;
-	case 2: // バイキュービック
+	case Bicubic: // Bicubic
 		mnuViewQualityBicubic->Checked = true;
 		break;
-	case 3: // バイリニアHQ
+	case BilinearHQ: // BilinearHQ
 		mnuViewQualityBilinearHQ->Checked = true;
 		break;
-	case 4: // BicubicHQ
+	case BicubicHQ: // BicubicHQ
 		mnuViewQualityBicubicHQ->Checked = true;
 		break;
 	}
@@ -570,7 +560,6 @@ void __fastcall TForm1::fn_Quality(int value) {
 // [描画時間の最適化]
 void __fastcall TForm1::fn_OptimizeDrawingSpeed(bool value) {
 	Gdv0->OptimizeDrawingSpeed = value;
-	Gdv1->OptimizeDrawingSpeed = value;
 	mnuViewOptimizeDrawingSpeed->Checked = value;
 }
 
@@ -614,9 +603,6 @@ void __fastcall TForm1::fn_ZoomIn() {
 	if (Panel0->BevelOuter != bvNone) {
 		fn_ZoomIn(Gdv0);
 	}
-	if (Panel1->BevelOuter != bvNone) {
-		fn_ZoomIn(Gdv1);
-	}
 }
 
 // ---------------------------------------------------------------------------
@@ -624,9 +610,6 @@ void __fastcall TForm1::fn_ZoomIn() {
 void __fastcall TForm1::fn_ZoomOut() {
 	if (Panel0->BevelOuter != bvNone) {
 		fn_ZoomOut(Gdv0);
-	}
-	if (Panel1->BevelOuter != bvNone) {
-		fn_ZoomOut(Gdv1);
 	}
 }
 
@@ -648,7 +631,6 @@ void __fastcall TForm1::fn_ZoomOut(TGdViewer *gv) {
 // [Zoom Step]
 void __fastcall TForm1::fn_ZoomStep(int value) {
 	Gdv0->ZoomStep = value;
-	Gdv1->ZoomStep = value;
 }
 
 // ---------------------------------------------------------------------------

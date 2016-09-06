@@ -1,0 +1,866 @@
+// ---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "main.h"
+// ---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma link "msvcrt.lib"
+#pragma link "GdViewerPro4_OCX"
+#pragma resource "*.dfm"
+TForm1* Form1;
+
+// ---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner) : TForm(Owner) {
+	DragAcceptFiles(Handle, true); // Enable D&D
+
+	Gdv0->LicenseKEY = WideString(L"6223560888372426056441256");
+	Gdv1->LicenseKEY = WideString(L"6223560888372426056441256");
+
+	IniFile = TPath::Combine(ExtractFilePath(Application->ExeName), "v2iewx.ini");
+	KeyFile = TPath::Combine(ExtractFilePath(Application->ExeName), "key.ini");
+	LangFile = TPath::Combine(ExtractFilePath(Application->ExeName), "lang.ini");
+	RecentFile = TPath::Combine(ExtractFilePath(Application->ExeName), "recent.ini");
+
+	hSPI = new TObjectList();
+	flst = new TObjectList();
+	paramStr = new TStringList();
+	RecentList = new TStringList();
+
+	fn_LoadLang();
+	fn_LoadIni();
+	fn_LoadRecent();
+
+	KeyConf = new TMemIniFile(KeyFile);
+	Recent = new TMemIniFile(RecentFile);
+
+	if (ParamCount() > 0) {
+		for (int i = 1; i <= ParamCount(); ++i) {
+			paramStr->Add(ParamStr(i));
+		}
+		fn_ParseFiles(paramStr);
+	}
+}
+
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::FormDestroy(TObject* Sender) {
+	delete KeyConf;
+	delete hSPI;
+	delete flst;
+	delete paramStr;
+	fn_SaveIni();
+}
+
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::FormResize(TObject* Sender) {
+	if (Panel1->Visible) {
+		Panel1->Width = (Form1->ClientWidth - Splitter->Width) / 2;
+	}
+	if (ToolBar->Visible) {
+		ToolBar->Indent = (ToolBar->Width - 359) / 2;
+	}
+}
+
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::ScrollBarChange(TObject* Sender) {
+	if (flst->Count == 0)
+		return;
+
+	if (mnuViewSpreadViewNone->Checked) { // not spread view
+		fn_LoadImage(Gdv0, (TFI*)flst->Items[ScrollBar->Position - 1]);
+	} else {
+		fn_LoadImage(Gdv0, (TFI*)flst->Items[ScrollBar->Position - 1 + (int)(mnuViewSpreadViewRight->Checked ? 1 : 0)]);
+		fn_LoadImage(Gdv1, (TFI*)flst->Items[ScrollBar->Position - 1 + (int)(mnuViewSpreadViewLeft->Checked ? 1 : 0)]);
+	}
+}
+
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::DropFiles(TWMDropFiles Msg) {
+	TStringList* list = new TStringList();
+	wchar_t* fn = new wchar_t[MAX_PATH];
+
+	int n = DragQueryFileW((HDROP)Msg.Drop, -1, NULL, 0);
+
+	for (int i = 0; i < n; ++i) {
+		DragQueryFileW((HDROP)Msg.Drop, i, fn, MAX_PATH);
+		list->Add(String(fn));
+	}
+
+	fn_ParseFiles(list);
+
+	delete[]fn;
+	delete list;
+
+	DragFinish((HDROP)Msg.Drop);
+}
+
+#pragma region " mnuFile "
+
+// ---------------------------------------------------------------------------
+// [File]-[New Window]
+void __fastcall TForm1::mnuFileNewWindowClick(TObject* Sender) {
+	fn_NewWindow();
+}
+
+// ---------------------------------------------------------------------------
+// [File]-[Open File...]
+void __fastcall TForm1::mnuFileOpenFileClick(TObject* Sender) {
+	fn_FileOpenDialogEx(false);
+}
+
+// ---------------------------------------------------------------------------
+// [File]-[Open Folder...]
+void __fastcall TForm1::mnuFileOpenFolderClick(TObject* Sender) {
+	fn_FileOpenDialogEx(true);
+}
+
+// ---------------------------------------------------------------------------
+// [File]-[Delete]
+void __fastcall TForm1::mnuFileDeleteClick(TObject* Sender) {
+	fn_DeleteFile(FOF_ALLOWUNDO);
+}
+
+// ---------------------------------------------------------------------------
+// [File]-[スライド ショー]
+void __fastcall TForm1::mnuPlaySlideShowClick(TObject* Sender) {
+	fn_SlideShow();
+}
+
+// ---------------------------------------------------------------------------
+// [File]-[Exit]
+void __fastcall TForm1::mnuFileExitClick(TObject* Sender) {
+	exit(0);
+}
+
+#pragma end_region
+
+#pragma region " mnuEdit "
+
+// ---------------------------------------------------------------------------
+// [編集]-[画像のコピー]
+void __fastcall TForm1::mnuEditCopyClick(TObject* Sender) {
+	fn_ImageCopy();
+}
+
+// ---------------------------------------------------------------------------
+// [編集]-[パスのコピー]
+void __fastcall TForm1::mnuEditPathClick(TObject* Sender) {
+	fn_PathCopy();
+}
+
+#pragma end_region
+
+#pragma region " mnuView "
+
+// ---------------------------------------------------------------------------
+// [表示]-[メニュー バー]
+void __fastcall TForm1::mnuViewMainMenuClick(TObject* Sender) {
+	fn_MainMenu(!MainMenu->Tag);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[スクロール バー]
+void __fastcall TForm1::mnuViewScrollBarClick(TObject* Sender) {
+	fn_ScrollBar(!ScrollBar->Visible);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[ツール バー]
+void __fastcall TForm1::mnuViewToolBarClick(TObject* Sender) {
+	fn_ToolBar(!ToolBar->Visible);
+}
+
+// ---------------------------------------------------------------------------
+// [View]-[Status Bar]
+void __fastcall TForm1::mnuViewStatusBarClick(TObject* Sender) {
+	fn_StatusBar(!StatusBar->Visible);
+}
+// ---------------------------------------------------------------------------
+
+void __fastcall TForm1::mnuViewSpreadViewNoneClick(TObject* Sender) {
+	fn_SpreadView(0);
+}
+// ---------------------------------------------------------------------------
+
+void __fastcall TForm1::mnuViewSpreadViewRightClick(TObject* Sender) {
+	fn_SpreadView(1);
+}
+// ---------------------------------------------------------------------------
+
+void __fastcall TForm1::mnuViewSpreadViewLeftClick(TObject* Sender) {
+	fn_SpreadView(2);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[左回りに回転]
+void __fastcall TForm1::mnuViewRotateLeftClick(TObject* Sender) {
+	fn_RotateLeft();
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[右回りに回転]
+void __fastcall TForm1::mnuViewRotateRightClick(TObject* Sender) {
+	fn_RotateRight();
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[回転を保つ]
+void __fastcall TForm1::mnuViewKeepRotClick(TObject* Sender) {
+	fn_KeepRot(!mnuViewKeepRot->Checked);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[原寸大]
+void __fastcall TForm1::mnuViewActualClick(TObject* Sender) {
+	fn_ZoomMode(1);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[ウィンドウに合わせる]
+void __fastcall TForm1::mnuViewBestfitClick(TObject* Sender) {
+	fn_ZoomMode(2);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[ウィンドウに収める]
+void __fastcall TForm1::mnuViewInWindowClick(TObject* Sender) {
+	fn_ZoomMode(99);
+}
+
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::mnuViewOptimizeWindowSizeClick(TObject* Sender) {
+	fn_OptimizeWindowSize(!mnuViewOptimizeWindowSize->Checked);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[並び替え]-[名前]
+void __fastcall TForm1::mnuViewOrderNameClick(TObject* Sender) {
+	fn_Sort(kByName, conf.asc);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[並び替え]-[数値順]
+void __fastcall TForm1::mnuViewOrderNameNumClick(TObject* Sender) {
+	fn_Sort(kByNameNum, conf.asc);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[並び替え]-[更新日時]
+void __fastcall TForm1::mnuViewOrderDateClick(TObject* Sender) {
+	fn_Sort(kByTime, conf.asc);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[並び替え]-[種類]
+void __fastcall TForm1::mnuViewOrderTypeClick(TObject* Sender) {
+	fn_Sort(kByType, conf.asc);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[並び替え]-[サイズ]
+void __fastcall TForm1::mnuViewOrderSizeClick(TObject* Sender) {
+	fn_Sort(kBySize, conf.asc);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[並べ替え]-[昇順]
+void __fastcall TForm1::mnuViewOrderAscClick(TObject* Sender) {
+	fn_Sort(conf.order, true);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[並べ替え]-[降順]
+void __fastcall TForm1::mnuViewOrderDescClick(TObject* Sender) {
+	fn_Sort(conf.order, false);
+}
+
+// ---------------------------------------------------------------------------
+// [View]-[Quality]-[Auto]
+void __fastcall TForm1::mnuViewQualityAutoClick(TObject* Sender) {
+	fn_QualityAuto(!mnuViewQualityAuto->Checked);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[画質]-[低]
+void __fastcall TForm1::mnuViewQualityLowClick(TObject* Sender) {
+	fn_Quality(0);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[画質]-[バイリニア]
+void __fastcall TForm1::mnuViewQualityBilinearClick(TObject* Sender) {
+	fn_Quality(1);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[画質]-[バイキュービック]
+void __fastcall TForm1::mnuViewQualityBicubicClick(TObject* Sender) {
+	fn_Quality(1);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[画質]-[バイリニアHQ]
+void __fastcall TForm1::mnuViewQualityBilinearHQClick(TObject* Sender) {
+	fn_Quality(2);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[画質]-[バイキュービックHQ]
+void __fastcall TForm1::mnuViewQualityBicubicHQClick(TObject* Sender) {
+	fn_Quality(4);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[描画速度の最適化]
+void __fastcall TForm1::mnuViewOptimizeDrawingSpeedClick(TObject* Sender) {
+	fn_OptimizeDrawingSpeed(!Gdv0->OptimizeDrawingSpeed);
+}
+
+// ---------------------------------------------------------------------------
+// [表示]-[全画面表示]
+void __fastcall TForm1::mnuViewFullScreenClick(TObject* Sender) {
+	fn_FullScreen();
+}
+
+#pragma end_region
+
+#pragma region " mnuPlay "
+
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::mnuPlayPrevFrameClick(TObject* Sender) {
+	fn_PrevFrame();
+}
+
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::mnuPlayNextFrameClick(TObject* Sender) {
+	fn_NextFrame();
+}
+
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::mnuPlayPrevClick(TObject* Sender) {
+	fn_Prev();
+}
+
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::mnuPlayNextClick(TObject* Sender) {
+	fn_Next();
+}
+
+#pragma end_region
+
+#pragma region " mnuTools "
+
+// ---------------------------------------------------------------------------
+// [ツール]-[オプション]
+void __fastcall TForm1::mnuToolsOptionClick(TObject* Sender) {
+	fn_Options();
+}
+
+#pragma end_region
+
+#pragma region " mnuHelp "
+
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::mnuHelpAboutClick(TObject* Sender) {
+	Form2->ShowModal();
+}
+
+#pragma end_region
+
+#pragma region " ToolBar "
+
+// ---------------------------------------------------------------------------
+// [ツールバー]-[前のイメージ]
+void __fastcall TForm1::tbtnPrevClick(TObject* Sender) {
+	fn_Prev();
+}
+
+// ---------------------------------------------------------------------------
+// [ツールバー]-[次のイメージ]
+void __fastcall TForm1::tbtnNextClick(TObject* Sender) {
+	fn_Next();
+}
+
+// ---------------------------------------------------------------------------
+// [ツール バー]-[ウィンドウに合わせる]
+void __fastcall TForm1::tbtnBestfitClick(TObject* Sender) {
+	fn_ZoomMode(2);
+}
+
+// ---------------------------------------------------------------------------
+// [ツール バー]-[ウィンドウに収める]
+void __fastcall TForm1::tbtnInWindowClick(TObject* Sender) {
+	fn_ZoomMode(99);
+}
+
+// ---------------------------------------------------------------------------
+// [ツール バー]-[原寸大]
+void __fastcall TForm1::tbtnActualClick(TObject* Sender) {
+	fn_ZoomMode(1);
+}
+
+// ---------------------------------------------------------------------------
+// [ツール バー]-[ウィンドウに広げる]
+void __fastcall TForm1::tbtnSpreadClick(TObject* Sender) {
+	fn_ZoomMode(6);
+}
+
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::tbtnSpreadViewClick(TObject* Sender) {
+	switch (conf.SpreadView) {
+	case 0:
+		fn_SpreadView(1);
+		break;
+	case 1:
+		fn_SpreadView(2);
+		break;
+	case 2:
+		fn_SpreadView(0);
+		break;
+	}
+}
+
+// ---------------------------------------------------------------------------
+// [ツール バー]-[スライド ショー]
+void __fastcall TForm1::tbtnSlideShowClick(TObject* Sender) {
+	fn_SlideShow();
+}
+
+// ---------------------------------------------------------------------------
+// [ツールバー]-[拡大]
+void __fastcall TForm1::tbtnZoomInClick(TObject* Sender) {
+	fn_ZoomIn();
+}
+
+// ---------------------------------------------------------------------------
+// [ツールバー]-[縮小]
+void __fastcall TForm1::tbtnZoomOutClick(TObject* Sender) {
+	fn_ZoomOut();
+}
+
+// ---------------------------------------------------------------------------
+// [ツールバー]-[右回りに回転]
+void __fastcall TForm1::tbtnRotateLeftClick(TObject* Sender) {
+	fn_RotateLeft();
+}
+
+// ---------------------------------------------------------------------------
+// [ツールバー]-[左りに回転]
+void __fastcall TForm1::tbtnRotateRightClick(TObject* Sender) {
+	fn_RotateRight();
+}
+
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::tbtnKeepRotClick(TObject* Sender) {
+	fn_KeepRot(!mnuViewKeepRot->Checked);
+}
+
+// ---------------------------------------------------------------------------
+// [ツールバー]-[削除]
+void __fastcall TForm1::tbtnDeleteClick(TObject* Sender) {
+	fn_DeleteFile(FOF_ALLOWUNDO);
+}
+
+#pragma end_region
+
+#pragma region " Susie Plug-in "
+
+// ---------------------------------------------------------------------------
+// Susie Plug-in 読み込み
+void __fastcall TForm1::SPI_LoadPlugin(String path) {
+	TSearchRec sr;
+	if (FindFirst(TPath::Combine(path, L"*.spi"), 0, sr) == 0) {
+		do {
+			hSPI->Add((TObject*)LoadLibrary(TPath::Combine(path, sr.Name).w_str()));
+		}
+		while (!FindNext(sr));
+		// FindClose(sr);
+	}
+	FindClose(sr);
+}
+
+// ---------------------------------------------------------------------------
+//
+HBITMAP __fastcall TForm1::SPI_LoadImage(String fileName) {
+	/* 対応プラグインの検索 */
+	for (int i = 0; i < hSPI->Count; i++) { // プラグイン関数の取得
+		SPI_ISSUPPORTED spi_issupported = (SPI_ISSUPPORTED)GetProcAddress((HMODULE)hSPI->Items[i], SPIPROC_ISSUPPORTED);
+		SPI_GETPICTURE spi_getpicture = (SPI_GETPICTURE)GetProcAddress((HMODULE)hSPI->Items[i], SPIPROC_GETPICTURE);
+
+		if (spi_issupported == NULL || spi_getpicture == NULL) {
+			continue;
+		}
+
+		// File内容をロードする
+		HANDLE handle; // = NULL;
+
+		if ((handle = CreateFile_Read(fileName.w_str())) == INVALID_HANDLE_VALUE) {
+			return NULL;
+		}
+
+		DWORD filesize = GetFileSize(handle, NULL), readsize;
+		LPSTR data = (LPSTR)Heap_Malloc(filesize);
+		SetFilePointer(handle, 0, NULL, FILE_BEGIN);
+
+		if (!ReadFile(handle, data, filesize, &readsize, NULL)) {
+			CloseHandle(handle);
+		}
+
+		CloseHandle(handle);
+
+		// ロードできる形式かどうかをチェックする
+		if (spi_issupported(AnsiString(fileName).c_str(), (DWORD)data) == 0) {
+			Heap_Free(data);
+			continue;
+		}
+
+		// 画像を展開する
+		HLOCAL info, bm;
+		if (spi_getpicture(data, filesize, 1, &info, &bm, NULL, 0) != 0) {
+			Heap_Free(data);
+		}
+
+		LPBITMAPINFO bmpinfo = (LPBITMAPINFO)LocalLock(info); // BITMAPINFO構造体
+		LPBYTE bmbits = (LPBYTE)LocalLock(bm); // 画像データ
+
+		// 取得した情報からBITMAPハンドルを生成する
+		HDC dc = GetDC(0);
+		HBITMAP bitmap = CreateDIBitmap(dc, &bmpinfo->bmiHeader, CBM_INIT, bmbits, bmpinfo, DIB_RGB_COLORS);
+		ReleaseDC(0, dc);
+
+		// いろいろと開放
+		LocalUnlock(info);
+		LocalFree(info);
+		LocalUnlock(bm);
+		LocalFree(bm);
+		Heap_Free(data);
+
+		return bitmap;
+	}
+	return NULL;
+}
+
+#pragma end_region
+
+#pragma region " Mouse "
+
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::FormMouseWheel(TObject* Sender, TShiftState Shift, int WheelDelta, TPoint& MousePos, bool& Handled) {
+//	if (mg.enabled) {
+	if (mg.Enabled) {
+		if (WheelDelta > 0) {
+			fn_ZoomOut();
+		} else {
+			fn_ZoomIn();
+		}
+		fn_StatusText();
+	} else {
+		if (WheelDelta > 0) {
+			fn_Prev();
+		} else {
+			fn_Next();
+		}
+	}
+	Handled = true;
+}
+
+// ---------------------------------------------------------------------------
+
+// void __fastcall TForm1::Gdv0ClickControl(TObject* Sender) {
+// // TPoint pt;
+// // GetCursorPos(&pt);
+// // pt = Panel0->ScreenToClient(pt);
+// //
+// // if (Panel0->Width / 2 > pt.X) {
+// // fn_Prev();
+// // } else {
+// // fn_Next();
+// // }
+// if (Panel0->BevelOuter != bvNone) {
+// Panel0->BevelOuter = bvNone;
+// conf.CurGdv += 1;
+// } else {
+// Panel0->BevelOuter = bvLowered;
+// conf.CurGdv -= 1;
+// }
+// }
+
+// ---------------------------------------------------------------------------
+//
+// void __fastcall TForm1::Gdv0DblClickControl(TObject* Sender) {
+// if (mnuViewBestfit->Checked) {
+// fn_ZoomMode(Gdv0, 1);
+// } else if (mnuViewActual->Checked) {
+// fn_ZoomMode(Gdv0, 2);
+// }
+// fn_StatusText();
+// }
+
+// ---------------------------------------------------------------------------
+// Mouse Gestures
+// void __fastcall TForm1::Gdv0MouseDownControl(TObject* Sender, short* Button, short* shift, float* X, float* Y) {
+// if (conf.MouseGesture && Button[0] == 2) {
+// // mg.enabled = true;
+// }
+// if (Button[0] == 4) {
+// fn_Reset(Gdv0);
+// }
+// }
+
+// ---------------------------------------------------------------------------
+//
+// void __fastcall TForm1::Gdv0MouseMoveControl(TObject* Sender, short* Button, short* shift, float* X, float* Y) {
+// //
+// }
+
+// ---------------------------------------------------------------------------
+//
+// void __fastcall TForm1::Gdv0MouseUpControl(TObject* Sender, short* Button,
+// short* shift, float* X, float* Y) {
+// if (conf.MouseGesture && Button[0] == 2) {
+////		mg.enabled = false;
+// ExecAction(KeyConf->ReadString("Mouse", mg.strokes, NULL).LowerCase());
+// StatusBar->SimpleText = "";
+// }
+// }
+
+// ---------------------------------------------------------------------------
+
+// void __fastcall TForm1::Gdv1ClickControl(TObject* Sender) {
+// // TPoint pt;
+// // GetCursorPos(&pt);
+// // pt = Panel1->ScreenToClient(pt);
+// //
+// // if (Panel1->Width / 2 < pt.X) {
+// // fn_Prev();
+// // } else {
+// // fn_Next();
+// // }
+// if (Panel1->BevelOuter != bvNone) {
+// Panel1->BevelOuter = bvNone;
+// } else {
+// Panel1->BevelOuter = bvLowered;
+// }
+// }
+
+// ---------------------------------------------------------------------------
+//
+// void __fastcall TForm1::Gdv1DblClickControl(TObject* Sender) {
+// if (mnuViewBestfit->Checked) {
+// fn_ZoomMode(Gdv1, 1);
+// } else if (mnuViewActual->Checked) {
+// fn_ZoomMode(Gdv1, 2);
+// }
+// fn_StatusText();
+// }
+
+// ---------------------------------------------------------------------------
+// Mouse Gestures
+// void __fastcall TForm1::Gdv1MouseDownControl(TObject* Sender, short* Button, short* shift, float* X, float* Y) {
+// if (conf.MouseGesture && Button[0] == 2) {
+// // mg.enabled = true;
+// }
+// if (Button[0] == 4) {
+// fn_Reset(Gdv1);
+// }
+// }
+
+// ---------------------------------------------------------------------------
+//
+// void __fastcall TForm1::Gdv1MouseMoveControl(TObject* Sender, short* Button, short* shift, float* X, float* Y) {
+// TPoint pt;
+// GetCursorPos(&pt);
+// pt = Panel1->ScreenToClient(pt);
+// // pt = Panel1->ScreenToClient(pt);
+// this->Caption = ::IntToStr((int)pt.X) + ", " + ::IntToStr((int)pt.Y);
+// }
+
+// ---------------------------------------------------------------------------
+//
+// void __fastcall TForm1::Gdv1MouseUpControl(TObject* Sender, short* Button,
+// short* shift, float* X, float* Y) {
+// if (conf.MouseGesture && Button[0] == 2) {
+// mg.enabled = false;
+// }
+// }
+
+#pragma end_region
+
+#pragma region " KeyDown "
+
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::FormKeyDown(TObject* Sender, WORD& Key, TShiftState Shift) {
+	String code;
+	code = code.sprintf(L"%1x%02x", Shift.ToInt(), Key);
+	ExecAction(KeyConf->ReadString(L"key", code, NULL).LowerCase());
+	// Key = NULL;
+}
+
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::ExecAction(String value) {
+	if (value == "exit") {
+		exit(0);
+	} else if (value == "openfile") {
+		fn_FileOpenDialogEx(false);
+	} else if (value == "openfolder") {
+		fn_FileOpenDialogEx(true);
+	} else if (value == "exit") {
+		exit(0);
+	}
+	// else if (value == "alwaysontop")
+	// fn_AlwaysOnTop(!mnuViewAlwaysOnTop->Checked);
+	else if (value == "fullscreen") {
+		fn_FullScreen();
+	}
+	// else if (value == "fullscreenrestore")
+	// fn_FullScreen(false);
+	else if (value == "options") {
+		fn_Options();
+	} else if (value == "slideshow") {
+		fn_SlideShow();
+	} else if (value == "mainmenu") {
+		fn_MainMenu(!MainMenu->Tag);
+	} else if (value == "scrollbar") {
+		fn_ScrollBar(!ScrollBar->Visible);
+	} else if (value == "toolbar") {
+		fn_ToolBar(!ToolBar->Visible);
+	} else if (value == "statusbar") {
+		fn_StatusBar(!StatusBar->Visible);
+	} else if (value == "reset") {
+		fn_Reset();
+	}
+
+	else if (value == "next") {
+		fn_Next();
+	} else if (value == "prev") {
+		fn_Prev();
+	}
+
+	else if (value == "nextframe") {
+		fn_NextFrame();
+	} else if (value == "prevframe") {
+		fn_PrevFrame();
+	} else if (value == "first") {
+		fn_LoadImage(Gdv0, (TFI*)flst->Items[0]);
+	} else if (value == "last") {
+		fn_LoadImage(Gdv0, (TFI*)flst->Items[ScrollBar->Max - 1]);
+	}
+
+	else if (value == "zoomin") {
+		fn_ZoomIn();
+	} else if (value == "zoomout") {
+		fn_ZoomOut();
+	} else if (value == "rotateright") {
+		fn_RotateRight();
+	} else if (value == "rotateleft") {
+		fn_RotateLeft();
+	} else if (value == "windowmaximize") {
+		fn_WindowMaximize();
+	} else if (value == "windowminimize") {
+		fn_WindowMinimize();
+	} else if (value == "fileopendialog") {
+		fn_FileOpenDialog(fdoAllowMultiSelect | fdoPathMustExist | fdoFileMustExist);
+	} else if (value == "keeprot") {
+		fn_KeepRot(!mnuViewKeepRot->Checked);
+	} else if (value == "bestfit") {
+		fn_ZoomMode(2);
+	} else if (value == "spread") {
+		fn_ZoomMode(6);
+	} else if (value == "inwindow") {
+		fn_ZoomMode(99);
+	} else if (value == "actual") {
+		fn_ZoomMode(1);
+	}
+
+	else if (value == "quality_low") {
+		fn_Quality(Low);
+	} else if (value == "quality_bilinear") {
+		fn_Quality(Bilinear);
+	} else if (value == "quality_bicubic") {
+		fn_Quality(Bicubic);
+	} else if (value == "quality_bilinearhq") {
+		fn_Quality(BilinearHQ);
+	} else if (value == "quality_bicubichq") {
+		fn_Quality(BicubicHQ);
+	}
+
+	else if (value == "filetotrash") {
+		fn_DeleteFile(FOF_ALLOWUNDO);
+	} else if (value == "filetotrash_noconfirmation") {
+		fn_DeleteFile(FOF_ALLOWUNDO | FOF_NOCONFIRMATION);
+	} else if (value == "optimizedrawingspeed") {
+		fn_OptimizeDrawingSpeed(!Gdv0->OptimizeDrawingSpeed);
+	} else if (value == "quality_auto") {
+		fn_QualityAuto(!Gdv0->ViewerQualityAuto);
+	}
+	// else if (value == "properties")
+	// fn_properties();
+}
+
+#pragma end_region
+
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::TimerTimer(TObject* Sender) {
+	fn_Next();
+}
+
+// ---------------------------------------------------------------------------
+//
+void __fastcall TForm1::DisplayFromFile(TGdViewer* gv, String sFilePath) {
+	FullPath = sFilePath;
+	TFileStream* fs = new TFileStream(sFilePath, fmShareDenyNone);
+	char* buf = new char[fs->Size];
+	fs->Read(buf, fs->Size);
+	long g = fs->Size;
+	gv->DisplayFromMemory((long)buf, &g);
+	delete fs;
+	delete[]buf;
+}
+// ---------------------------------------------------------------------------
+//
+// void __fastcall TForm1::DisplayFromFile(TGdViewer* gv, String sFilePath) {
+// FREE_IMAGE_FORMAT format = FreeImage_GetFIFFromFilenameU(sFilePath.w_str());
+// FIBITMAP *dib  = FreeImage_LoadU(format, sFilePath.w_str(), 0);
+//
+//
+// HBITMAP bitmap = CreateDIBitmap((HDC)gv->hdc, FreeImage_GetInfoHeader(dib),
+//
+// CBM_INIT, FreeImage_GetBits(dib), FreeImage_GetInfo(dib), DIB_RGB_COLORS);
+//
+// //gv->DisplayFromHBitmap((long)bitmap);
+// img0->Picture->Bitmap->Handle = bitmap;
+// FreeImage_Unload(dib);
+//
+// }
+// ---------------------------------------------------------------------------
+
+void __fastcall TForm1::pumCopyToDesktopClick(TObject* Sender) {
+	if (flst->Count == 0)
+		return;
+
+	TFI* fi = (TFI*)(flst->Items[ScrollBar->Position - 1]);
+
+	wchar_t buff[MAX_PATH];
+	SHGetSpecialFolderPath(NULL, buff, CSIDL_DESKTOPDIRECTORY, false);
+
+	TFile::Copy(fi->FullName, TPath::Combine(String(buff), fi->Name));
+}
+
+// ---------------------------------------------------------------------------

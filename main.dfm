@@ -1317,37 +1317,27 @@ object Form1: TForm1
   OnResize = FormResize
   PixelsPerInch = 96
   TextHeight = 13
-  object Splitter: TSplitter
-    Left = 312
-    Top = 16
-    Width = 4
-    Height = 229
-    Align = alRight
-    ExplicitLeft = 313
-    ExplicitHeight = 228
-  end
   object Panel0: TPanel
     Left = 0
-    Top = 16
-    Width = 312
-    Height = 229
+    Top = 20
+    Width = 638
+    Height = 225
     Align = alClient
     BevelOuter = bvNone
     BevelWidth = 2
     ShowCaption = False
     TabOrder = 0
-    ExplicitHeight = 228
     object Gdv0: TGdViewer
       Left = 0
       Top = 0
-      Width = 312
-      Height = 229
+      Width = 638
+      Height = 225
       TabStop = False
       Align = alClient
+      DragCursor = crDefault
       TabOrder = 0
       OnMouseMoveControl = Gdv0MouseMoveControl
       OnClickControl = Gdv0ClickControl
-      OnDblClickControl = Gdv0DblClickControl
       OnMouseDownControl = Gdv0MouseDownControl
       OnMouseUpControl = Gdv0MouseUpControl
       ExplicitLeft = -2
@@ -1356,51 +1346,8 @@ object Form1: TForm1
       ExplicitHeight = 228
       ControlData = {
         93B2000088010000030008000BF25747200000005F0065007800740065006E00
-        740078003F200000030008000AF25747200000005F0065007800740065006E00
-        74007900AB1700000B000A00A9D2B51C240000007300630072006F006C006C00
-        6200610072007300000000000B000A002F18E5962400000065006E0061006200
-        6C0065006D0065006E007500000000000B0010001EFB760D3000000065006E00
-        610062006C0065006D006F0075007300650077006800650065006C0000000000
-        0B000A00263C76DF2400000061006E0069006D00610074006500670069006600
-        FFFF000002000B000B89C4CE2400000062006F00720064006500720073007400
-        79006C006500000002000A002560153324000000610070007000650061007200
-        61006E00630065000000000003000900267525BE240000006200610063006B00
-        63006F006C006F007200FFFFFF0000000B00140000599D2AB8FEFFFF6F007000
-        740069006D0069007A006500640072006100770069006E006700730070006500
-        65006400FFFF0000}
-    end
-  end
-  object Panel1: TPanel
-    Left = 316
-    Top = 16
-    Width = 322
-    Height = 229
-    Align = alRight
-    BevelOuter = bvNone
-    BevelWidth = 2
-    ShowCaption = False
-    TabOrder = 4
-    ExplicitHeight = 228
-    object Gdv1: TGdViewer
-      Left = 0
-      Top = 0
-      Width = 322
-      Height = 229
-      TabStop = False
-      Align = alClient
-      TabOrder = 0
-      OnMouseMoveControl = Gdv1MouseMoveControl
-      OnClickControl = Gdv1ClickControl
-      OnDblClickControl = Gdv1DblClickControl
-      OnMouseDownControl = Gdv1MouseDownControl
-      OnMouseUpControl = Gdv1MouseUpControl
-      ExplicitLeft = 2
-      ExplicitTop = -3
-      ExplicitHeight = 228
-      ControlData = {
-        93B2000088010000030008000BF25747200000005F0065007800740065006E00
-        7400780048210000030008000AF25747200000005F0065007800740065006E00
-        74007900AB1700000B000A00A9D2B51C240000007300630072006F006C006C00
+        74007800F0410000030008000AF25747200000005F0065007800740065006E00
+        74007900411700000B000A00A9D2B51C240000007300630072006F006C006C00
         6200610072007300000000000B000A002F18E5962400000065006E0061006200
         6C0065006D0065006E007500000000000B0010001EFB760D3000000065006E00
         610062006C0065006D006F0075007300650077006800650065006C0000000000
@@ -1417,7 +1364,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 638
-    Height = 16
+    Height = 20
     Align = alTop
     LargeChange = 10
     Max = 1
@@ -1438,7 +1385,6 @@ object Form1: TForm1
     ParentColor = True
     PopupMenu = pumMain
     SimplePanel = True
-    ExplicitTop = 270
   end
   object ToolBar: TToolBar
     AlignWithMargins = True
@@ -1455,7 +1401,6 @@ object Form1: TForm1
     PopupMenu = pumMain
     TabOrder = 2
     Transparent = False
-    ExplicitTop = 246
     object tbtnPrev: TToolButton
       Left = 0
       Top = 0
@@ -1631,7 +1576,7 @@ object Form1: TForm1
     Left = 136
     Top = 32
     Bitmap = {
-      494C0101140019008C0010001000FFFFFFFF2000FFFFFFFFFFFFFFFF424D3600
+      494C010114001900B40010001000FFFFFFFF2000FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2620,7 +2565,7 @@ object Form1: TForm1
           GroupIndex = 40
           OnClick = mnuViewQualityAutoClick
         end
-        object mnuView_7: TMenuItem
+        object mnuView_0_1: TMenuItem
           Caption = '-'
           GroupIndex = 40
         end

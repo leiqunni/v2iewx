@@ -19,6 +19,8 @@ void __fastcall TForm1::fn_LoadIni() {
 	Form1->Width = ini->ReadInteger("Window", "Width", 480);
 	Form1->Height = ini->ReadInteger("Window", "Height", 270);
 
+//	Form1->ScrollBar->Height = ini->ReadInteger("Window", "ScrollBarHeight", 16);
+
 	if (ini->ReadBool("Window", "KeepPosition", false)) {
 		Form1->Top = ini->ReadInteger("Window", "Top", 0);
 		Form1->Left = ini->ReadInteger("Window", "Left", 0);
@@ -41,12 +43,11 @@ void __fastcall TForm1::fn_LoadIni() {
 
 	// GdViewer section
 	fn_QualityAuto(ini->ReadBool("GdViewer", "QualityAuto", true));
-	fn_Quality(ini->ReadInteger("GdViewer", "Quality", 4));
+	fn_Quality((ViewerQuality)ini->ReadInteger("GdViewer", "Quality", 4));
 	fn_OptimizeDrawingSpeed(ini->ReadBool("GdViewer", "OptimizeDrawingSpeed", true));
 	fn_ZoomStep(ini->ReadInteger("GdViewer", "ZoomStep", 10));
 
 	Gdv0->MouseMode = ini->ReadInteger("GdViewer", "MouseMode", 2);
-	Gdv1->MouseMode = ini->ReadInteger("GdViewer", "MouseMode", 2);
 
 	if (ini->ReadBool("GdViewer", "Properties", false)) {
 		fn_LoadGdvProperties(Gdv0, ini);
@@ -55,10 +56,10 @@ void __fastcall TForm1::fn_LoadIni() {
 	// Function section
 	mnuFileLoadSubdirectry->Checked = ini->ReadBool("Function", "LoadSubdirectry", false);
 	conf.KeepListWhenFileOpen = ini->ReadBool(L"Function", "KeepListWhenFileOpen", false);
-	conf.MouseGesture = ini->ReadBool("Function", "MouseGesture", true);
+//	conf.MouseGesture = ini->ReadBool("Function", "MouseGesture", true);
 	fn_SpreadView(ini->ReadInteger("Function", "SpreadView", 0));
 	fn_KeepRot(ini->ReadBool("Function", "KeepRotation", false));
-	fn_Sort(ini->ReadInteger("Function", "SortOrder", 0), ini->ReadBool("Function", "SortAsc", true));
+	fn_Sort((SortOrder)ini->ReadInteger("Function", "SortOrder", 0), ini->ReadBool("Function", "SortAsc", true));
 	fn_ZoomMode(ini->ReadInteger("Function", "ZoomMode", 2));
 
 	Timer->Interval = ini->ReadInteger("Function", "SlideShow", 3000);

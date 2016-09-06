@@ -21,7 +21,6 @@ object Form3: TForm3
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 472
     DesignSize = (
       826
       37)
@@ -34,8 +33,6 @@ object Form3: TForm3
       Caption = 'OK'
       TabOrder = 0
       OnClick = btnOkClick
-      ExplicitLeft = 300
-      ExplicitTop = 47
     end
     object btnCancel: TButton
       Left = 740
@@ -46,8 +43,6 @@ object Form3: TForm3
       Caption = 'Cancel'
       TabOrder = 1
       OnClick = btnCancelClick
-      ExplicitLeft = 386
-      ExplicitTop = 47
     end
   end
   object PageControl1: TPageControl
@@ -55,16 +50,14 @@ object Form3: TForm3
     Top = 24
     Width = 585
     Height = 297
-    ActivePage = TabSheet10
+    ActivePage = TabSheet7
     TabOrder = 1
     object TabSheet6: TTabSheet
       Caption = 'TabSheet6'
-      ExplicitWidth = 241
     end
     object TabSheet7: TTabSheet
       Caption = 'TabSheet7'
       ImageIndex = 1
-      ExplicitWidth = 241
       object GroupBox1: TGroupBox
         Left = 11
         Top = 11
@@ -229,7 +222,6 @@ object Form3: TForm3
     object TabSheet8: TTabSheet
       Caption = 'TabSheet8'
       ImageIndex = 2
-      ExplicitWidth = 241
       object GroupBox6: TGroupBox
         Left = 3
         Top = 3
@@ -266,12 +258,10 @@ object Form3: TForm3
     object TabSheet9: TTabSheet
       Caption = 'TabSheet9'
       ImageIndex = 3
-      ExplicitWidth = 241
     end
     object TabSheet10: TTabSheet
       Caption = 'TabSheet10'
       ImageIndex = 4
-      ExplicitWidth = 241
       object ListBox1: TListBox
         Left = 0
         Top = 3
