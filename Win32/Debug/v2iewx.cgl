@@ -1,0 +1,16 @@
+Error 00112. 0x300010 (Thread 0x1D4DC):
+Resource leak: The memory block (0x2813340) was never freed
+
+The memory block (0x02813340) [size: 26 bytes] was allocated with SysGetMem
+Call Tree:
+   0x0057D836(=v2iewx.exe:0x01:17C836) System.pas#4351
+   0x00568790(=v2iewx.exe:0x01:167790) System.SysUtils.pas#27680
+   0x0053B6F7(=v2iewx.exe:0x01:13A6F7) System.IniFiles.pas#868
+   0x0053B32C(=v2iewx.exe:0x01:13A32C) System.IniFiles.pas#759
+   0x0053AF76(=v2iewx.exe:0x01:139F76) System.IniFiles.pas#647
+   0x0053AF21(=v2iewx.exe:0x01:139F21) System.IniFiles.pas#636
+   0x00698AD5(=v2iewx.exe:0x01:297AD5) Vcl.Forms.pas#10470
+   0x00402B62(=v2iewx.exe:0x01:001B62) v2iewx.cpp#16
+   0x007559B4(=v2iewx.exe:0x01:3549B4)
+
+------------------------------------------

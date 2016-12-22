@@ -1,0 +1,34 @@
+[Window]
+KeepSize=bool:true:Keep window size.
+KeepPosition=bool:true:Keep window position.
+Width=int:480:Window width.
+Height=int:270:Windows height.
+Top=int:20:Window top.
+Left=int:20:Window left.
+MainMenu=bool:true:Show main menu.
+ScrollBar=bool:true:Show scroll bar.
+ToolBar=bool:true:Show tool bar.
+StatusBar=bool:true:Show status bar.
+Glass=bool:true:Enable Aero Glass.
+
+[GdViewer]
+QualityAuto=0
+Quality=4
+OptimizeDrawingSpeed=0
+ZoomStep=10
+
+[Function]
+KeepRot=0
+SortAsc=0
+SortOrder=2
+ZoomMode=1
+Spread=0
+Interval=3000
+Title=%_filename_ext% [%_position%/%_total%] %_pagecount% - viewx++
+Status=大きさ: %_width% x %_height% 更新日時: %_last_modified% サイズ: %_filesize_kb% KB 拡大率: %_zoom% %
+Ext=\.bmp$|\.gif$|\.ico$|\.jpe$|\.jpeg$|\.jpg$|\.pcx$|\.png$|\.tif$|\.tif$|\.tiff$|\.wmf$|\.pdf$
+MouseGesture=1
+
+[SPI]
+Path=
+
