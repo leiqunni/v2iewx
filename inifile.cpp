@@ -19,7 +19,7 @@ void __fastcall TForm1::fn_LoadIni() {
 	Form1->Width = ini->ReadInteger("Window", "Width", 480);
 	Form1->Height = ini->ReadInteger("Window", "Height", 270);
 
-//	Form1->ScrollBar->Height = ini->ReadInteger("Window", "ScrollBarHeight", 16);
+	// Form1->ScrollBar->Height = ini->ReadInteger("Window", "ScrollBarHeight", 16);
 
 	if (ini->ReadBool("Window", "KeepPosition", false)) {
 		Form1->Top = ini->ReadInteger("Window", "Top", 0);
@@ -34,8 +34,7 @@ void __fastcall TForm1::fn_LoadIni() {
 	conf.Glass = ini->ReadBool("Window", "Glass", false);
 	if (conf.Glass) {
 		fn_Glass(Gdv0, conf.Glass);
-	}
-	else {
+	} else {
 		Gdv0->BackColor = StringToColor(ini->ReadString("GdViewer", "BackColor", L"0xffffff"));
 	}
 
@@ -56,7 +55,7 @@ void __fastcall TForm1::fn_LoadIni() {
 	// Function section
 	mnuFileLoadSubdirectry->Checked = ini->ReadBool("Function", "LoadSubdirectry", false);
 	conf.KeepListWhenFileOpen = ini->ReadBool(L"Function", "KeepListWhenFileOpen", false);
-//	conf.MouseGesture = ini->ReadBool("Function", "MouseGesture", true);
+	// conf.MouseGesture = ini->ReadBool("Function", "MouseGesture", true);
 	fn_SpreadView(ini->ReadInteger("Function", "SpreadView", 0));
 	fn_KeepRot(ini->ReadBool("Function", "KeepRotation", false));
 	fn_Sort((SortOrder)ini->ReadInteger("Function", "SortOrder", 0), ini->ReadBool("Function", "SortAsc", true));
@@ -217,8 +216,7 @@ void __fastcall TForm1::fn_SaveIni() {
 
 	if (mnuViewInWindow->Checked) {
 		ini->WriteInteger("Function", "ZoomMode", 99);
-	}
-	else {
+	} else {
 		ini->WriteInteger("Function", "ZoomMode", Gdv0->ZoomMode);
 	}
 

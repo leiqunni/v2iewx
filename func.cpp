@@ -338,30 +338,30 @@ void __fastcall TForm1::fn_Reset(TGdViewer *gv) {
 void __fastcall TForm1::fn_SpreadView(int value) {
 	conf.SpreadView = value;
 
-//	switch (value) {
-//	case 0:
-//		Splitter->Visible = false;
-//		Panel1->Visible = false;
-		mnuViewSpreadViewNone->Checked = true;
-		tbtnSpreadView->Down = false;
-		tbtnSpreadView->ImageIndex = 16;
-		return;
-//		break;
-//	case 1:
-//		mnuViewSpreadViewRight->Checked = true;
-//		tbtnSpreadView->ImageIndex = 17;
-//		break;
-//	case 2:
-//		mnuViewSpreadViewLeft->Checked = true;
-//		tbtnSpreadView->ImageIndex = 18;
-//		break;
-//	}
-//
-//	Panel1->Visible = true;
-//	Splitter->Visible = true;
-//	// Panel1->Visible = true;
-//	tbtnSpreadView->Down = true;
-//	Panel1->Width = (Form1->ClientWidth - Splitter->Width) / 2;
+	// switch (value) {
+	// case 0:
+	// Splitter->Visible = false;
+	// Panel1->Visible = false;
+	mnuViewSpreadViewNone->Checked = true;
+	tbtnSpreadView->Down = false;
+	tbtnSpreadView->ImageIndex = 16;
+	return;
+	// break;
+	// case 1:
+	// mnuViewSpreadViewRight->Checked = true;
+	// tbtnSpreadView->ImageIndex = 17;
+	// break;
+	// case 2:
+	// mnuViewSpreadViewLeft->Checked = true;
+	// tbtnSpreadView->ImageIndex = 18;
+	// break;
+	// }
+	//
+	// Panel1->Visible = true;
+	// Splitter->Visible = true;
+	// // Panel1->Visible = true;
+	// tbtnSpreadView->Down = true;
+	// Panel1->Width = (Form1->ClientWidth - Splitter->Width) / 2;
 }
 
 // ---------------------------------------------------------------------------
