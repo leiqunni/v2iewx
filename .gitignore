@@ -12,3 +12,9 @@
 *.pch
 *.map
 *.#*
+*.~3~
+*.~159~~HEAD
+Win32/Release/v2iewx.tds
+*.obj
+*.~160~
+*.~140~
