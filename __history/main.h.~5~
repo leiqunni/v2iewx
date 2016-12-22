@@ -232,7 +232,6 @@ __published: // IDE-managed Components
 	void __fastcall tbtnSpreadViewClick(TObject *Sender);
 	void __fastcall tbtnZoomInClick(TObject *Sender);
 	void __fastcall tbtnZoomOutClick(TObject *Sender);
-	void __fastcall mnuViewSpreadClick(TObject *Sender);
 
 private:
 	// User declarations

@@ -1379,12 +1379,12 @@ object Form1: TForm1
     object tbtnSep_1: TToolButton
       Left = 46
       Top = 0
-      Width = 8
+      Width = 6
       ImageIndex = 6
       Style = tbsSeparator
     end
     object tbtnActual: TToolButton
-      Left = 54
+      Left = 52
       Top = 0
       Hint = 'Actual'
       Grouped = True
@@ -1395,7 +1395,7 @@ object Form1: TForm1
       OnClick = tbtnActualClick
     end
     object tbtnBestfit: TToolButton
-      Left = 77
+      Left = 75
       Top = 0
       Hint = 'Best Fit'
       Grouped = True
@@ -1406,7 +1406,7 @@ object Form1: TForm1
       OnClick = tbtnBestfitClick
     end
     object tbtnInWindow: TToolButton
-      Left = 100
+      Left = 98
       Top = 0
       Hint = 'In Window'
       Grouped = True
@@ -1417,9 +1417,9 @@ object Form1: TForm1
       OnClick = tbtnInWindowClick
     end
     object tbtnSpread: TToolButton
-      Left = 123
+      Left = 121
       Top = 0
-      Hint = 'Spread to Window'
+      Hint = 'Spread View'
       Grouped = True
       ImageIndex = 5
       ParentShowHint = False
@@ -1427,30 +1427,22 @@ object Form1: TForm1
       Style = tbsCheck
       OnClick = tbtnSpreadClick
     end
-    object tbtnSep_6: TToolButton
-      Left = 146
-      Top = 0
-      Width = 8
-      Caption = 'tbtnSep_6'
-      ImageIndex = 12
-      Style = tbsSeparator
-    end
     object tbtnSpreadView: TToolButton
-      Left = 154
+      Left = 144
       Top = 0
       Caption = 'tbtnSpreadView'
       ImageIndex = 16
       OnClick = tbtnSpreadViewClick
     end
     object tbtnSep_5: TToolButton
-      Left = 177
+      Left = 167
       Top = 0
-      Width = 8
+      Width = 6
       ImageIndex = 12
       Style = tbsSeparator
     end
     object tbtnSlideShow: TToolButton
-      Left = 185
+      Left = 173
       Top = 0
       Hint = 'SlideShow Start'
       ImageIndex = 6
@@ -1460,14 +1452,14 @@ object Form1: TForm1
       OnClick = tbtnSlideShowClick
     end
     object tbtnSep_2: TToolButton
-      Left = 208
+      Left = 196
       Top = 0
-      Width = 8
+      Width = 6
       ImageIndex = 2
       Style = tbsSeparator
     end
     object tbtnZoomIn: TToolButton
-      Left = 216
+      Left = 202
       Top = 0
       Hint = 'Zoom In'
       ImageIndex = 7
@@ -1476,7 +1468,7 @@ object Form1: TForm1
       OnClick = tbtnZoomInClick
     end
     object tbtnZoomOut: TToolButton
-      Left = 239
+      Left = 225
       Top = 0
       Hint = 'Zoom Out'
       ImageIndex = 8
@@ -1485,14 +1477,14 @@ object Form1: TForm1
       OnClick = tbtnZoomOutClick
     end
     object tbtnSep_3: TToolButton
-      Left = 262
+      Left = 248
       Top = 0
-      Width = 8
+      Width = 6
       ImageIndex = 8
       Style = tbsSeparator
     end
     object tbtnRotateLeft: TToolButton
-      Left = 270
+      Left = 254
       Top = 0
       Hint = 'Rotate Left'
       ImageIndex = 9
@@ -1501,7 +1493,7 @@ object Form1: TForm1
       OnClick = tbtnRotateLeftClick
     end
     object tbtnRotateRight: TToolButton
-      Left = 293
+      Left = 277
       Top = 0
       Hint = 'Rotate Right'
       ImageIndex = 10
@@ -1510,7 +1502,7 @@ object Form1: TForm1
       OnClick = tbtnRotateRightClick
     end
     object tbtnKeepRot: TToolButton
-      Left = 316
+      Left = 300
       Top = 0
       Hint = 'Keep Rotate'
       ImageIndex = 12
@@ -1519,14 +1511,14 @@ object Form1: TForm1
       OnClick = tbtnKeepRotClick
     end
     object tbtnSep_4: TToolButton
-      Left = 339
+      Left = 323
       Top = 0
-      Width = 8
+      Width = 6
       ImageIndex = 10
       Style = tbsSeparator
     end
     object tbtnDelete: TToolButton
-      Left = 347
+      Left = 329
       Top = 0
       Hint = 'Delete'
       ImageIndex = 11
@@ -1573,7 +1565,7 @@ object Form1: TForm1
     Left = 136
     Top = 32
     Bitmap = {
-      494C010114001900E80010001000FFFFFFFF2000FFFFFFFFFFFFFFFF424D3600
+      494C010114001900D80010001000FFFFFFFF2000FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000006000000001002000000000000060
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2495,7 +2487,6 @@ object Form1: TForm1
         Caption = 'S&pread to Window'
         GroupIndex = 10
         RadioItem = True
-        OnClick = mnuViewSpreadClick
       end
       object mnuView_6: TMenuItem
         Caption = '-'

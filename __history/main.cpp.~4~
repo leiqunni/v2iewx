@@ -231,13 +231,6 @@ void __fastcall TForm1::mnuViewInWindowClick(TObject *Sender) {
 }
 
 // ---------------------------------------------------------------------------
-// [View]-[Spread to Window]
-void __fastcall TForm1::mnuViewSpreadClick(TObject *Sender)
-{
-	fn_ZoomMode(6);
-}
-
-// ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::mnuViewOptimizeWindowSizeClick(TObject *Sender) {
 	fn_OptimizeWindowSize(!mnuViewOptimizeWindowSize->Checked);
@@ -802,6 +795,4 @@ void __fastcall TForm1::pumCopyToDesktopClick(TObject *Sender) {
 	TFile::Copy(fi->FullName, TPath::Combine(String(buff), fi->Name));
 }
 
-
-//---------------------------------------------------------------------------
-
+// ---------------------------------------------------------------------------

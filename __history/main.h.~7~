@@ -156,6 +156,7 @@ __published: // IDE-managed Components
 	TToolButton *tbtnZoomOut;
 	TMenuItem *mnuView_0_1;
 	TToolButton *tbtnSep_6;
+	TToolButton *ToolButton1;
 
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);

@@ -600,17 +600,13 @@ void __fastcall TForm1::fn_FullScreen() {
 // ---------------------------------------------------------------------------
 // [Zoom In]
 void __fastcall TForm1::fn_ZoomIn() {
-	if (Panel0->BevelOuter != bvNone) {
-		fn_ZoomIn(Gdv0);
-	}
+	fn_ZoomIn(Gdv0);
 }
 
 // ---------------------------------------------------------------------------
 // [Zoom In]
 void __fastcall TForm1::fn_ZoomOut() {
-	if (Panel0->BevelOuter != bvNone) {
-		fn_ZoomOut(Gdv0);
-	}
+	fn_ZoomOut(Gdv0);
 }
 
 // ---------------------------------------------------------------------------

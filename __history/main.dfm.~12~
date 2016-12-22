@@ -1534,6 +1534,12 @@ object Form1: TForm1
       ShowHint = True
       OnClick = tbtnDeleteClick
     end
+    object ToolButton1: TToolButton
+      Left = 370
+      Top = 0
+      Caption = 'ToolButton1'
+      ImageIndex = 11
+    end
   end
   object Gdv0: TGdViewer
     Left = 0
