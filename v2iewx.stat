@@ -1,9 +1,17 @@
 [Stats]
+<<<<<<< HEAD
 EditorSecs=2705
 DesignerSecs=1270
 InspectorSecs=228
 CompileSecs=1621016
 OtherSecs=3358
+=======
+EditorSecs=3113
+DesignerSecs=738
+InspectorSecs=524
+CompileSecs=1056826
+OtherSecs=3600
+>>>>>>> parent of a3e9563... Revert "Revert "toolbar image png to bmp""
 StartTime=2016/02/11 18:59:58
 RealKeys=0
 EffectiveKeys=0

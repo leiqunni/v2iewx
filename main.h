@@ -1,4 +1,4 @@
-// ---------------------------------------------------------------------------
+﻿// ---------------------------------------------------------------------------
 
 #ifndef mainH
 #define mainH
@@ -115,12 +115,17 @@ __published: // IDE-managed Components
 	TMenuItem *mnuViewRotateRight;
 	TMenuItem *mnuViewScrollBar;
 	TMenuItem *mnuViewSpread;
+	TMenuItem *mnuViewSpreadView;
+	TMenuItem *mnuViewSpreadViewLeft;
+	TMenuItem *mnuViewSpreadViewNone;
+	TMenuItem *mnuViewSpreadViewRight;
 	TMenuItem *mnuViewStatusBar;
 	TMenuItem *mnuViewToolBar;
 	TMenuItem *mnuView_0;
 	TMenuItem *mnuView_1;
 	TMenuItem *mnuView_3;
 	TMenuItem *mnuView_4;
+	TMenuItem *mnuView_5;
 	TMenuItem *mnuView_6;
 	TMenuItem *pumCopyToDesktop;
 	TOpenDialog *OpenDialog;
@@ -146,9 +151,11 @@ __published: // IDE-managed Components
 	TToolButton *tbtnSep_5;
 	TToolButton *tbtnSlideShow;
 	TToolButton *tbtnSpread;
+	TToolButton *tbtnSpreadView;
 	TToolButton *tbtnZoomIn;
 	TToolButton *tbtnZoomOut;
 	TMenuItem *mnuView_0_1;
+	TToolButton *tbtnSep_6;
 
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
