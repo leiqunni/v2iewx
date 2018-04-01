@@ -204,7 +204,8 @@ void __fastcall TForm1::fn_NextFrame() {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_Options() {
-	RunProcess(L"c2onfig.exe", NULL);
+//	RunProcess(L"c2onfig.exe", NULL);
+    Form3->ShowModal();
 }
 
 // ---------------------------------------------------------------------------

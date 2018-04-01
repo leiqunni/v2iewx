@@ -29,6 +29,7 @@
 #include <math.hpp>
 
 #include "about.h"
+#include "option.h"
 #include "spi_plugin.h"
 #include <System.ImageList.hpp>
 
@@ -156,6 +157,7 @@ __published: // IDE-managed Components
 	TToolButton *tbtnZoomOut;
 	TMenuItem *mnuView_0_1;
 	TToolButton *tbtnSep_6;
+	TToolButton *tbtnTrash;
 
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
@@ -233,6 +235,7 @@ __published: // IDE-managed Components
 	void __fastcall tbtnZoomInClick(TObject *Sender);
 	void __fastcall tbtnZoomOutClick(TObject *Sender);
 	void __fastcall mnuViewSpreadClick(TObject *Sender);
+	void __fastcall tbtnTrashClick(TObject *Sender);
 
 private:
 	// User declarations
@@ -421,6 +424,9 @@ private:
 
 	String SlideShowStart, SlideShowStop;
 	String FullPath;
+
+public:
+    TMemIniFile *ini;
 };
 
 // ---------------------------------------------------------------------------

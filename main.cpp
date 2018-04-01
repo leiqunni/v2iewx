@@ -473,10 +473,17 @@ void __fastcall TForm1::tbtnKeepRotClick(TObject *Sender) {
 	fn_KeepRot(!mnuViewKeepRot->Checked);
 }
 
+//---------------------------------------------------------------------------
+//
+void __fastcall TForm1::tbtnTrashClick(TObject *Sender)
+{
+	fn_DeleteFile(FOF_ALLOWUNDO);
+}
+
 // ---------------------------------------------------------------------------
 // [ToolBar]-[Delete]
 void __fastcall TForm1::tbtnDeleteClick(TObject *Sender) {
-	fn_DeleteFile(FOF_ALLOWUNDO);
+	fn_DeleteFile(FOF_NOCONFIRMATION);
 }
 
 #pragma end_region
@@ -801,6 +808,7 @@ void __fastcall TForm1::pumCopyToDesktopClick(TObject *Sender) {
 
 	TFile::Copy(fi->FullName, TPath::Combine(String(buff), fi->Name));
 }
+
 
 
 //---------------------------------------------------------------------------

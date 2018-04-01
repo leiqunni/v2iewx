@@ -11,7 +11,8 @@
 // ---------------------------------------------------------------------------
 // Ini File Loading
 void __fastcall TForm1::fn_LoadIni() {
-	TMemIniFile *ini = new TMemIniFile(IniFile);
+//	TMemIniFile *ini = new TMemIniFile(IniFile);
+	ini = new TMemIniFile(IniFile);
 
 	// Window section
 	conf.KeepSize = ini->ReadBool("Window", "KeepSize", true);
@@ -72,7 +73,7 @@ void __fastcall TForm1::fn_LoadIni() {
 		SPI_LoadPlugin(ini->ReadString("SPI", "Path", ""));
 	}
 
-	delete ini;
+//	delete ini;
 	//
 	// this->Caption = "viewx++";
 }

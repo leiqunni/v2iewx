@@ -51,18 +51,18 @@
         <ILINK_LibraryPath>C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <RunBCCOutOfProcess>true</RunBCCOutOfProcess>
         <SanitizedProjectName>v2iewx</SanitizedProjectName>
-        <IncludePath>C:\Users\leiqunni\Documents\Embarcadero\Studio\14.0\Imports\;$(IncludePath)</IncludePath>
-        <VerInfo_MinorVer>2</VerInfo_MinorVer>
+        <IncludePath>C:\Users\leiqunni\Documents\Embarcadero\Studio\18.0\Imports;$(IncludePath)</IncludePath>
+        <VerInfo_MinorVer>4</VerInfo_MinorVer>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Release>17</VerInfo_Release>
-        <VerInfo_MajorVer>2015</VerInfo_MajorVer>
+        <VerInfo_Release>1</VerInfo_Release>
+        <VerInfo_MajorVer>2018</VerInfo_MajorVer>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <_TCHARMapping>wchar_t</_TCHARMapping>
         <ProjectType>CppVCLApplication</ProjectType>
         <Multithreaded>true</Multithreaded>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-        <VerInfo_Keys>CompanyName=DarkEra Software;FileDescription=v2iewrx the image viewer.;FileVersion=2015.2.17.0;InternalName=;LegalCopyright=Copyright © 2007-2015 793 ◆7BJkZFw08A / DarkEra;LegalTrademarks=;OriginalFilename=v2iewrx.exe;ProductName=v2iewrx;ProductVersion=2015.2.17.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=DarkEra Software;FileDescription=v2iewrx the image viewer.;FileVersion=2018.4.1.0;InternalName=;LegalCopyright=Copyright © 2007-2015 793 ◆7BJkZFw08A / DarkEra;LegalTrademarks=;OriginalFilename=v2iewrx.exe;ProductName=v2iewrx;ProductVersion=2018.4.1.0;Comments=</VerInfo_Keys>
         <BCC_PCHCache>true</BCC_PCHCache>
         <AllPackageLibs>rtl.lib;vcl.lib;GdViewerPro4.lib;vclx.lib</AllPackageLibs>
         <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
@@ -72,6 +72,7 @@
         <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
         <BCC_ExtendedErrorInfo>true</BCC_ExtendedErrorInfo>
         <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\release\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
+        <SubProcessesNumber>6</SubProcessesNumber>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <UWP_CppLogo44>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_44.png</UWP_CppLogo44>
@@ -155,10 +156,17 @@
             <DependentOn>main.h</DependentOn>
             <BuildOrder>2</BuildOrder>
         </CppCompile>
+        <CppCompile Include="option.cpp">
+            <Form>Form3</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>option.h</DependentOn>
+            <BuildOrder>5</BuildOrder>
+        </CppCompile>
         <CppCompile Include="v2iewx.cpp">
             <BuildOrder>0</BuildOrder>
         </CppCompile>
         <FormResources Include="main.dfm"/>
+        <FormResources Include="option.dfm"/>
         <FormResources Include="about.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
@@ -228,13 +236,13 @@
                     <ProjectProperties Name="IndexFiles">False</ProjectProperties>
                 </ProjectProperties>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="C:\Users\Public\Documents\Embarcadero\Studio\18.0\BPL\TTFreeImage.bpl">ファイル C:\Users\Public\Documents\Embarcadero\Studio\18.0\BPL\TTFreeImage.bpl が見つかりません。</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Users\Public\Documents\Embarcadero\Studio\18.0\BPL\TTFreeImsge.bpl">ファイル C:\Users\Public\Documents\Embarcadero\Studio\18.0\BPL\TTFreeImsge.bpl が見つかりません。</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k240.bpl">Embarcadero C++Builder Office 2000 サーバー パッケージ</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp240.bpl">Embarcadero C++Builder Office XP サーバー パッケージ</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k240.bpl">Microsoft Office 2000 オートメーション サーバー ラッパー コンポーネントのサンプル</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp240.bpl">Microsoft Office XP オートメーション サーバー ラッパー コンポーネントのサンプル</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Users\Public\Documents\Embarcadero\Studio\18.0\BPL\TFreePicture.bpl">ファイル C:\Users\Public\Documents\Embarcadero\Studio\18.0\BPL\TFreePicture.bpl が見つかりません。</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclbindcomp250.bpl">Embarcadero LiveBinding コンポーネント</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclfmxstd250.bpl">Embarcadero FMX 標準コンポーネント</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclBindCompFireDAC250.bpl">LiveBinding 式コンポーネント FireDac</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclbindcompvcl250.bpl">Embarcadero LiveBinding コンポーネント VCL</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclbindcompdbx250.bpl">LiveBinding 式コンポーネント DbExpress</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\fmxstyledesigner250.bpl">Embarcadero スタイル デザイナ パッケージ</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclbindcompfmx250.bpl">Embarcadero LiveBinding コンポーネント FireMonkey</Excluded_Packages>
                 </Excluded_Packages>
             </CPlusPlusBuilder.Personality>
             <Deployment Version="3">
@@ -283,17 +291,17 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin64\cc64250mt.dll" Class="DependencyModule">
-                    <Platform Name="Win64">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin\cc32240mt.dll" Class="DependencyModule">
                     <Platform Name="Win32">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin64\cc64220mt.dll" Class="DependencyModule">
+                    <Platform Name="Win64">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin64\cc64250mt.dll" Class="DependencyModule">
                     <Platform Name="Win64">
                         <Overwrite>true</Overwrite>
                     </Platform>
