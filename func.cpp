@@ -530,6 +530,12 @@ void __fastcall TForm1::fn_Sort(SortOrder order, bool asc) {
 // ---------------------------------------------------------------------------
 // [View]-[Quality]-[自動]
 void __fastcall TForm1::fn_QualityAuto(bool value) {
+	mnuViewQualityLow->Enabled = !value;
+	mnuViewQualityBilinear->Enabled = !value;
+    mnuViewQualityBicubic->Enabled = !value;
+	mnuViewQualityBilinearHQ->Enabled = !value;
+	mnuViewQualityBicubicHQ->Enabled = !value;
+
 	Gdv0->ViewerQualityAuto = value;
 	mnuViewQualityAuto->Checked = value;
 }
@@ -538,6 +544,7 @@ void __fastcall TForm1::fn_QualityAuto(bool value) {
 // [View]-[Quality]
 void __fastcall TForm1::fn_Quality(ViewerQuality value) {
 	Gdv0->ViewerQuality = value;
+
 	switch (value) {
 	case Low: // Low
 		mnuViewQualityLow->Checked = true;
@@ -628,20 +635,6 @@ void __fastcall TForm1::fn_ZoomOut(TGdViewer *gv) {
 // [Zoom Step]
 void __fastcall TForm1::fn_ZoomStep(int value) {
 	Gdv0->ZoomStep = value;
-}
-
-// ---------------------------------------------------------------------------
-// [Aero Glass???]
-void __fastcall TForm1::fn_Glass(TGdViewer *gv, bool value) {
-	if (value) {
-		gv->BackColor = clBlack; // StringToColor(L"000000");
-		Form1->GlassFrame->Enabled = true;
-		Form1->GlassFrame->SheetOfGlass = true;
-	} else {
-		gv->BackColor = clWhite; // StringToColor(L"ffffff");
-		Form1->GlassFrame->Enabled = false;
-		Form1->GlassFrame->SheetOfGlass = false;
-	}
 }
 
 // ---------------------------------------------------------------------------

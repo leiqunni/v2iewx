@@ -32,13 +32,6 @@ void __fastcall TForm1::fn_LoadIni() {
 	fn_ToolBar(ini->ReadBool("Window", "ToolBar", true));
 	fn_StatusBar(ini->ReadBool("Window", "StatusBar", false));
 
-	conf.Glass = ini->ReadBool("Window", "Glass", false);
-	if (conf.Glass) {
-		fn_Glass(Gdv0, conf.Glass);
-	} else {
-		Gdv0->BackColor = StringToColor(ini->ReadString("GdViewer", "BackColor", L"0xffffff"));
-	}
-
 	Form1->ScreenSnap = ini->ReadBool("Window", "Snap", false);
 
 	// GdViewer section

@@ -365,7 +365,6 @@ private:
 	void __fastcall RunProcess(String, String);
 	void __fastcall SPI_LoadPlugin(String);
 	void __fastcall fn_SaveIni();
-	void __fastcall TForm1::fn_Glass(TGdViewer *gv, bool value);
 	void __fastcall fn_BackColor(String value);
 	void __fastcall fn_Bmp2in1(Graphics::TBitmap *bmp, String path1, String path2);
 	void __fastcall fn_DeleteFile(int);
