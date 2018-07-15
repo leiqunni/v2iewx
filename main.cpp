@@ -627,26 +627,12 @@ void __fastcall TForm1::Gdv0MouseDownControl(TObject *Sender, short *Button, sho
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::Gdv0MouseMoveControl(TObject *Sender, short *Button, short *shift, float *X, float *Y) {
-	if (X[0] > this->Width * 0.75) {
-		Gdv0->Cursor = crSizeWE;
-	} else if (X[0] < this->Width * 0.25) {
-		Gdv0->Cursor = crSizeWE;
-	} else {
-		Gdv0->Cursor = crDefault;
-	}
+//
 }
 
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::Gdv0MouseUpControl(TObject *Sender, short *Button, short *shift, float *X, float *Y) {
-	if (Button[0] == MouseButtonLeft) {
-		// mg.enabled = true;
-		if (X[0] > this->Width * 0.75) {
-			fn_Next();
-		} else if (X[0] < this->Width * 0.25) {
-			fn_Prev();
-		}
-	}
 	if (Button[0] == MouseButtonRight) {
 		mg.Enabled = false;
 	}
