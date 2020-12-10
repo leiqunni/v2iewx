@@ -6,7 +6,7 @@
         <AppType>Application</AppType>
         <MainSource>v2iewx.cpp</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>1</TargetedPlatforms>
     </PropertyGroup>
@@ -51,17 +51,17 @@
         <RunBCCOutOfProcess>true</RunBCCOutOfProcess>
         <SanitizedProjectName>v2iewx</SanitizedProjectName>
         <IncludePath>C:\Users\leiqunni\Documents\Embarcadero\Studio\20.0\Imports;$(IncludePath)</IncludePath>
-        <VerInfo_MinorVer>4</VerInfo_MinorVer>
+        <VerInfo_MinorVer>12</VerInfo_MinorVer>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Release>1</VerInfo_Release>
-        <VerInfo_MajorVer>2018</VerInfo_MajorVer>
+        <VerInfo_Release>10</VerInfo_Release>
+        <VerInfo_MajorVer>2020</VerInfo_MajorVer>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <_TCHARMapping>wchar_t</_TCHARMapping>
         <ProjectType>CppVCLApplication</ProjectType>
         <Multithreaded>true</Multithreaded>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-        <VerInfo_Keys>CompanyName=DarkEra Software;FileDescription=v2iewrx the image viewer.;FileVersion=2018.4.1.0;InternalName=;LegalCopyright=Copyright © 2007-2015 793 ◆7BJkZFw08A / DarkEra;LegalTrademarks=;OriginalFilename=v2iewrx.exe;ProductName=v2iewrx;ProductVersion=2018.4.1.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=DarkEra Software;FileDescription=v2iewrx the image viewer.;FileVersion=2020.12.10.0;InternalName=;LegalCopyright=Copyright © 2007-2020 793 ◆7BJkZFw08A / DarkEra;LegalTrademarks=;OriginalFilename=v2iewrx.exe;ProductName=v2iewrx;ProductVersion=2020.12.10.0;Comments=</VerInfo_Keys>
         <BCC_PCHCache>true</BCC_PCHCache>
         <AllPackageLibs>rtl.lib;vcl.lib;GdViewerPro4.lib;vclx.lib</AllPackageLibs>
         <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
@@ -73,19 +73,28 @@
         <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\release\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
         <SubProcessesNumber>3</SubProcessesNumber>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
+        <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <BCC_InstructionSet>5</BCC_InstructionSet>
+        <RunBCCOutOfProcess>true</RunBCCOutOfProcess>
+        <SanitizedProjectName>v2iewx</SanitizedProjectName>
+        <_TCHARMapping>wchar_t</_TCHARMapping>
+        <ProjectType>CppVCLApplication</ProjectType>
+        <Multithreaded>true</Multithreaded>
+        <BCC_PCHCache>true</BCC_PCHCache>
+        <AllPackageLibs>rtl.lib;vcl.lib;GdViewerPro4.lib;vclx.lib</AllPackageLibs>
+        <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
+        <IntermediateOutputDir>.\$(Platform)\$(Config)</IntermediateOutputDir>
+        <FinalOutputDir>.\$(Platform)\$(Config)</FinalOutputDir>
         <UWP_CppLogo44>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_44.png</UWP_CppLogo44>
+        <BCC_wpar>false</BCC_wpar>
         <UWP_CppLogo150>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_150.png</UWP_CppLogo150>
-        <BCC_WindowsVersionDefines>NTDDI_VERSION=NTDDI_WIN2K;_WIN32_WINNT=_WIN32_WINNT_WIN2K</BCC_WindowsVersionDefines>
-        <VerInfo_MajorVer>1</VerInfo_MajorVer>
-        <ILINK_DisableIncrementalLinking>true</ILINK_DisableIncrementalLinking>
-        <VerInfo_Release>0</VerInfo_Release>
-        <VerInfo_MinorVer>0</VerInfo_MinorVer>
-        <IncludePath>$(BDSINCLUDE)\windows\vcl;$(IncludePath)</IncludePath>
-        <PackageImports>adortl;bcbie;bcbsmp;bdertl;bindcomp;bindcompdbx;bindcompfmx;bindcompvcl;bindengine;CloudService;CodeSiteExpressPkg;CustomIPTransport;DataSnapClient;DataSnapCommon;DataSnapConnectors;DatasnapConnectorsFreePascal;DataSnapIndy10ServerTransport;DataSnapProviderClient;DataSnapServer;dbexpress;dbrtl;dbxcds;DbxClientDriver;DbxCommonDriver;DBXDb2Driver;DBXFirebirdDriver;DBXInformixDriver;DBXInterBaseDriver;DBXMSSQLDriver;DBXMySQLDriver;DBXOdbcDriver;DBXOracleDriver;DBXSqliteDriver;DBXSybaseASADriver;DBXSybaseASEDriver;dsnap;dsnapcon;fmx;fmxase;fmxdae;fmxobj;FMXTee;FmxTeeUI;frx18;frxDB18;frxe18;GdViewerPro4;ibxpress;IndyCore;IndyIPClient;IndyIPCommon;IndyIPServer;IndyProtocols;IndySystem;inet;inetdb;inetdbbde;inetdbxpress;Intraweb;MetropolisUILiveTile;rtl;soaprtl;svn;Tee;TeeDB;TeeUI;vcl;vclactnband;vcldb;vcldbx;vcldsnap;vclib;vclie;vclimg;vclribbon;VclSmp;vcltouch;vclx;webdsnap;xmlrtl;$(PackageImports)</PackageImports>
-        <VerInfo_Keys>CompanyName=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
-        <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
+        <BCC_ExtendedErrorInfo>true</BCC_ExtendedErrorInfo>
+        <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\release\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
+        <SubProcessesNumber>3</SubProcessesNumber>
+        <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <UWP_CppLogo150>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_150.png</UWP_CppLogo150>
@@ -116,26 +125,48 @@
         <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\debug\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <BT_BuildType>Debug</BT_BuildType>
-        <ILINK_LibraryPath>$(BDS)\lib\Win32\debug\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
-        <VerInfo_Release>11</VerInfo_Release>
-        <VerInfo_MinorVer>12</VerInfo_MinorVer>
-        <VerInfo_Keys>CompanyName=DarkEra Software;FileDescription=v2iewx the image viewer;FileVersion=2020.12.11.0;InternalName=;LegalCopyright=Copyright 2007 - 2020 793 ◆7BJkZFw08A / DarkEra Software;LegalTrademarks=;OriginalFilename=v2iewx.exe;ProductName=v2iewx;ProductVersion=2020.12.11.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+        <BCC_InstructionSet>5</BCC_InstructionSet>
+        <RunBCCOutOfProcess>true</RunBCCOutOfProcess>
+        <SanitizedProjectName>v2iewx</SanitizedProjectName>
+        <_TCHARMapping>wchar_t</_TCHARMapping>
+        <ProjectType>CppVCLApplication</ProjectType>
+        <Multithreaded>true</Multithreaded>
+        <BCC_PCHCache>true</BCC_PCHCache>
+        <AllPackageLibs>rtl.lib;vcl.lib;GdViewerPro4.lib;vclx.lib</AllPackageLibs>
+        <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
         <LinkPackageStatics>rtl.lib;vcl.lib;GdViewerPro4.lib;vclx.lib</LinkPackageStatics>
-        <VerInfo_MajorVer>2020</VerInfo_MajorVer>
-        <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
+        <IntermediateOutputDir>.\$(Platform)\$(Config)</IntermediateOutputDir>
+        <FinalOutputDir>.\$(Platform)\$(Config)</FinalOutputDir>
+        <BCC_wpar>false</BCC_wpar>
+        <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
+        <BCC_ExtendedErrorInfo>true</BCC_ExtendedErrorInfo>
+        <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\release\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
+        <SubProcessesNumber>3</SubProcessesNumber>
+        <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <Defines>NDEBUG;$(Defines)</Defines>
         <TASM_Debugging>None</TASM_Debugging>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
-        <VerInfo_Keys>CompanyName=DarkEra Software;FileVersion=2015.2.17.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName);FileDescription=$(MSBuildProjectName);ProductName=$(MSBuildProjectName)</VerInfo_Keys>
+        <BCC_InstructionSet>5</BCC_InstructionSet>
+        <RunBCCOutOfProcess>true</RunBCCOutOfProcess>
+        <SanitizedProjectName>v2iewx</SanitizedProjectName>
+        <_TCHARMapping>wchar_t</_TCHARMapping>
+        <ProjectType>CppVCLApplication</ProjectType>
+        <Multithreaded>true</Multithreaded>
+        <BCC_PCHCache>true</BCC_PCHCache>
+        <AllPackageLibs>rtl.lib;vcl.lib;GdViewerPro4.lib;vclx.lib</AllPackageLibs>
+        <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
         <LinkPackageStatics>rtl.lib;vcl.lib;GdViewerPro4.lib;vclx.lib</LinkPackageStatics>
-        <VerInfo_MajorVer>2015</VerInfo_MajorVer>
-        <BT_BuildType>Debug</BT_BuildType>
-        <VerInfo_MinorVer>2</VerInfo_MinorVer>
-        <VerInfo_Release>17</VerInfo_Release>
+        <IntermediateOutputDir>.\$(Platform)\$(Config)</IntermediateOutputDir>
+        <FinalOutputDir>.\$(Platform)\$(Config)</FinalOutputDir>
+        <BCC_wpar>false</BCC_wpar>
+        <BCC_OptimizeForSpeed>true</BCC_OptimizeForSpeed>
+        <BCC_ExtendedErrorInfo>true</BCC_ExtendedErrorInfo>
+        <ILINK_TranslatedLibraryPath>$(BDSLIB)\$(PLATFORM)\release\$(LANGDIR);$(ILINK_TranslatedLibraryPath)</ILINK_TranslatedLibraryPath>
+        <SubProcessesNumber>3</SubProcessesNumber>
+        <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
     </PropertyGroup>
     <ItemGroup>
         <CppCompile Include="about.cpp">
@@ -351,6 +382,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_44.png" Configuration="Release" Class="UWP_CppLogo44">
+                    <Platform Name="Win32">
+                        <RemoteDir>Assets\</RemoteDir>
+                        <RemoteName>Logo44x44.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'=='true'" LocalName="$(BDS)\bin64\cc64250mt.dll" Class="DependencyModule">
                     <Platform Name="Win64">
                         <Overwrite>true</Overwrite>
@@ -364,6 +402,13 @@
                 <DeployFile LocalName=".\Win32\Debug\v2iewx.tds" Configuration="Debug" Class="DebugSymbols">
                     <Platform Name="Win32">
                         <RemoteName>v2iewx.tds</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_150.png" Configuration="Release" Class="UWP_CppLogo150">
+                    <Platform Name="Win32">
+                        <RemoteDir>Assets\</RemoteDir>
+                        <RemoteName>Logo150x150.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
