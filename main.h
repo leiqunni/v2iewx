@@ -56,7 +56,6 @@ class TForm1 : public TForm {
 __published: // IDE-managed Components
 
 	TFileOpenDialog * FileOpenDialog;
-	TGdViewer *Gdv0;
 	TImageList *ImageList;
 	TMainMenu *MainMenu;
 	TMenuItem *N1;
@@ -158,15 +157,20 @@ __published: // IDE-managed Components
 	TMenuItem *mnuView_0_1;
 	TToolButton *tbtnSep_6;
 	TToolButton *tbtnTrash;
+	TGdViewer *Gdv0;
 
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
-	void __fastcall FormMouseWheel(TObject *Sender, TShiftState Shift, int WheelDelta, TPoint &MousePos, bool &Handled);
+	void __fastcall FormMouseWheel(TObject *Sender, TShiftState Shift,
+		int WheelDelta, TPoint &MousePos, bool &Handled);
 	void __fastcall FormResize(TObject *Sender);
 	void __fastcall Gdv0ClickControl(TObject *Sender);
-	void __fastcall Gdv0MouseDownControl(TObject *Sender, short *Button, short *shift, float *X, float *Y);
-	void __fastcall Gdv0MouseMoveControl(TObject *Sender, short *Button, short *shift, float *X, float *Y);
-	void __fastcall Gdv0MouseUpControl(TObject *Sender, short *Button, short *shift, float *X, float *Y);
+	void __fastcall Gdv0MouseDownControl(TObject *Sender, short *Button,
+		short *shift, float *X, float *Y);
+	void __fastcall Gdv0MouseMoveControl(TObject *Sender, short *Button,
+		short *shift, float *X, float *Y);
+	void __fastcall Gdv0MouseUpControl(TObject *Sender, short *Button,
+		short *shift, float *X, float *Y);
 	void __fastcall Gdv0DblClickControl(TObject *Sender);
 
 	// void __fastcall Gdv1ClickControl(TObject *Sender);
@@ -245,38 +249,16 @@ private:
 	};
 
 	typedef enum {
-		Low, Bilinear, Bicubic, BilinearHQ, BicubicHQ
-	}
+		Low, Bilinear, Bicubic, BilinearHQ, BicubicHQ, Auto
+	} ViewerQuality;
 
-	ViewerQuality;
-
-	struct { // Config structure
-		int rot;
-		bool asc;
-		bool Glass;
-		bool isSPI;
-		bool KeepPos;
-		bool KeepSize;
-		bool KeepListWhenFileOpen;
-		bool MouseGesture;
-		SortOrder order;
-		int errorcode;
-		String TitleText;
-		String StatusText;
-		String Ext;
-		int SpreadView;
-		int CurGdv;
-	}
-
-	conf;
+    int _ViewerQuality = 5;
 
 	struct { // Mouse gestures
 		bool Enabled;
 		// int exx, exy;
 		// String strokes;
-	}
-
-	mg;
+	} mg;
 
 	// File object class
 	class TFI : public TObject {
@@ -308,19 +290,23 @@ private:
 #pragma region  " sortFunc "
 
 	int __fastcall static cmpNameAsc(void *left, void *right) {
-		return StrComp(((TFI *) left)->Name.w_str(), ((TFI *) right)->Name.w_str());
+		return StrComp(((TFI *) left)->Name.w_str(),
+			((TFI *) right)->Name.w_str());
 	}
 
 	int __fastcall static cmpNameDesc(void *right, void *left) {
-		return StrComp(((TFI *) left)->Name.w_str(), ((TFI *) right)->Name.w_str());
+		return StrComp(((TFI *) left)->Name.w_str(),
+			((TFI *) right)->Name.w_str());
 	}
 
 	int __fastcall static cmpNameNumAsc(void *left, void *right) {
-		return StrCmpLogicalW(((TFI *) left)->Name.w_str(), ((TFI *) right)->Name.w_str());
+		return StrCmpLogicalW(((TFI *) left)->Name.w_str(),
+			((TFI *) right)->Name.w_str());
 	}
 
 	int __fastcall static cmpNameNumDesc(void *right, void *left) {
-		return StrCmpLogicalW(((TFI *) left)->Name.w_str(), ((TFI *) right)->Name.w_str());
+		return StrCmpLogicalW(((TFI *) left)->Name.w_str(),
+			((TFI *) right)->Name.w_str());
 	}
 
 	int __fastcall static cmpTimeAsc(void *left, void *right) {
@@ -332,11 +318,13 @@ private:
 	}
 
 	int __fastcall static cmpTypeAsc(void *left, void *right) {
-		return StrComp(((TFI *) left)->Ext.w_str(), ((TFI *) right)->Ext.w_str());
+		return StrComp(((TFI *) left)->Ext.w_str(),
+			((TFI *) right)->Ext.w_str());
 	}
 
 	int __fastcall static cmpTypeDesc(void *right, void *left) {
-		return StrComp(((TFI *) left)->Ext.w_str(), ((TFI *) right)->Ext.w_str());
+		return StrComp(((TFI *) left)->Ext.w_str(),
+			((TFI *) right)->Ext.w_str());
 	}
 
 	int __fastcall static cmpSizeAsc(void *left, void *right) {
@@ -366,7 +354,8 @@ private:
 	void __fastcall SPI_LoadPlugin(String);
 	void __fastcall fn_SaveIni();
 	void __fastcall fn_BackColor(String value);
-	void __fastcall fn_Bmp2in1(Graphics::TBitmap *bmp, String path1, String path2);
+	void __fastcall fn_Bmp2in1(Graphics::TBitmap *bmp, String path1,
+		String path2);
 	void __fastcall fn_DeleteFile(int);
 	void __fastcall fn_EnableMenu(bool value);
 	void __fastcall fn_FileOpenDialog(bool);
@@ -391,7 +380,6 @@ private:
 	void __fastcall fn_Prev();
 	void __fastcall fn_PrevFrame();
 	void __fastcall fn_Quality(ViewerQuality value);
-	void __fastcall fn_QualityAuto(bool);
 	void __fastcall fn_Reset();
 	void __fastcall fn_Reset(TGdViewer *);
 	void __fastcall fn_RotateLeft();
@@ -415,7 +403,8 @@ private:
 	void __fastcall TForm1::fn_LoadRecent();
 	void __fastcall TForm1::fn_AddRecent(String path);
 
-	BEGIN_MESSAGE_MAP VCL_MESSAGE_HANDLER(WM_DROPFILES, TWMDropFiles, DropFiles) END_MESSAGE_MAP(TForm) public :
+	BEGIN_MESSAGE_MAP VCL_MESSAGE_HANDLER(WM_DROPFILES, TWMDropFiles, DropFiles)
+		END_MESSAGE_MAP(TForm) public :
 		// User declarations
 		__fastcall TForm1(TComponent *Owner);
 
@@ -425,7 +414,27 @@ private:
 	String FullPath;
 
 public:
-    TMemIniFile *ini;
+	TMemIniFile *ini;
+
+    	struct { // Config structure
+		int rot;
+		bool asc;
+		bool Glass;
+		bool isSPI;
+		bool KeepPos;
+		bool KeepSize;
+		bool KeepListWhenFileOpen;
+		bool MouseGesture;
+		SortOrder order;
+		int errorcode;
+		String TitleText;
+		String StatusText;
+		String Ext;
+		int SpreadView;
+		int CurGdv;
+	}
+
+	conf;
 };
 
 // ---------------------------------------------------------------------------

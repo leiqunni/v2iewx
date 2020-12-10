@@ -13,11 +13,7 @@ TForm2 *Form2;
 __fastcall TForm2::TForm2(TComponent* Owner) : TForm(Owner) {
 	// gpg -a -c 140.jpg
 }
-// ---------------------------------------------------------------------------
 
-void __fastcall TForm2::memAboutClick(TObject *Sender) {
-	this->Close();
-}
 // ---------------------------------------------------------------------------
 
 void __fastcall TForm2::FormShow(TObject *Sender) {

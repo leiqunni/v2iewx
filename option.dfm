@@ -16,84 +16,6 @@ object Form3: TForm3
     328)
   PixelsPerInch = 96
   TextHeight = 13
-  object tabOption: TTabControl
-    Left = 8
-    Top = 8
-    Width = 617
-    Height = 282
-    Anchors = [akLeft, akTop, akRight, akBottom]
-    TabOrder = 0
-    Tabs.Strings = (
-      'General'
-      'Key Config')
-    TabIndex = 0
-    DesignSize = (
-      617
-      282)
-    object grpTextFormat: TGroupBox
-      Left = 16
-      Top = 32
-      Width = 585
-      Height = 81
-      Anchors = [akLeft, akTop, akRight]
-      Caption = 'Text Format'
-      TabOrder = 0
-      DesignSize = (
-        585
-        81)
-      object Label1: TLabel
-        Left = 16
-        Top = 24
-        Width = 33
-        Height = 13
-        Caption = 'Title'
-      end
-      object Label2: TLabel
-        Left = 16
-        Top = 48
-        Width = 31
-        Height = 13
-        Caption = 'Status'
-      end
-      object edtTitle: TEdit
-        Left = 64
-        Top = 21
-        Width = 505
-        Height = 21
-        Anchors = [akLeft, akTop, akRight]
-        TabOrder = 0
-      end
-      object edtStatus: TEdit
-        Left = 64
-        Top = 48
-        Width = 505
-        Height = 21
-        Anchors = [akLeft, akTop, akRight]
-        TabOrder = 1
-      end
-    end
-    object GroupBox1: TGroupBox
-      Left = 16
-      Top = 119
-      Width = 585
-      Height = 58
-      Anchors = [akLeft, akTop, akRight]
-      Caption = 'File Extention'
-      TabOrder = 1
-      DesignSize = (
-        585
-        58)
-      object Edit3: TEdit
-        Left = 64
-        Top = 24
-        Width = 505
-        Height = 21
-        Anchors = [akLeft, akTop, akRight]
-        TabOrder = 0
-        Text = 'Edit1'
-      end
-    end
-  end
   object btnApply: TButton
     Left = 346
     Top = 296
@@ -102,7 +24,7 @@ object Form3: TForm3
     Anchors = [akRight, akBottom]
     Caption = '&Apply'
     Enabled = False
-    TabOrder = 1
+    TabOrder = 0
   end
   object btnOk: TButton
     Left = 440
@@ -111,7 +33,7 @@ object Form3: TForm3
     Height = 24
     Anchors = [akRight, akBottom]
     Caption = '&Ok'
-    TabOrder = 2
+    TabOrder = 1
   end
   object btnCancel: TButton
     Left = 534
@@ -120,6 +42,96 @@ object Form3: TForm3
     Height = 24
     Anchors = [akRight, akBottom]
     Caption = '&Cancel'
+    TabOrder = 2
+  end
+  object PageControl1: TPageControl
+    Left = 8
+    Top = 8
+    Width = 614
+    Height = 282
+    ActivePage = TabSheet1
     TabOrder = 3
+    object TabSheet1: TTabSheet
+      Caption = 'General'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 609
+      ExplicitHeight = 0
+      DesignSize = (
+        606
+        254)
+      object grpTextFormat: TGroupBox
+        Left = 3
+        Top = 3
+        Width = 600
+        Height = 81
+        Anchors = [akLeft, akTop, akRight]
+        Caption = 'Text Format'
+        TabOrder = 0
+        DesignSize = (
+          600
+          81)
+        object Label1: TLabel
+          Left = 16
+          Top = 24
+          Width = 20
+          Height = 13
+          Caption = 'Title'
+        end
+        object Label2: TLabel
+          Left = 16
+          Top = 48
+          Width = 31
+          Height = 13
+          Caption = 'Status'
+        end
+        object edtTitle: TEdit
+          Left = 64
+          Top = 21
+          Width = 520
+          Height = 21
+          Anchors = [akLeft, akTop, akRight]
+          TabOrder = 0
+          ExplicitWidth = 505
+        end
+        object edtStatus: TEdit
+          Left = 64
+          Top = 48
+          Width = 520
+          Height = 21
+          Anchors = [akLeft, akTop, akRight]
+          TabOrder = 1
+          ExplicitWidth = 505
+        end
+      end
+      object GroupBox1: TGroupBox
+        Left = 0
+        Top = 90
+        Width = 603
+        Height = 58
+        Anchors = [akLeft, akTop, akRight]
+        Caption = 'File Extention'
+        TabOrder = 1
+        DesignSize = (
+          603
+          58)
+        object edtExt: TEdit
+          Left = 67
+          Top = 24
+          Width = 520
+          Height = 21
+          Anchors = [akLeft, akTop, akRight]
+          TabOrder = 0
+        end
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'Key config'
+      ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 609
+      ExplicitHeight = 0
+    end
   end
 end

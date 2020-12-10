@@ -528,22 +528,20 @@ void __fastcall TForm1::fn_Sort(SortOrder order, bool asc) {
 }
 
 // ---------------------------------------------------------------------------
-// [View]-[Quality]-[自動]
-void __fastcall TForm1::fn_QualityAuto(bool value) {
-	mnuViewQualityLow->Enabled = !value;
-	mnuViewQualityBilinear->Enabled = !value;
-    mnuViewQualityBicubic->Enabled = !value;
-	mnuViewQualityBilinearHQ->Enabled = !value;
-	mnuViewQualityBicubicHQ->Enabled = !value;
-
-	Gdv0->ViewerQualityAuto = value;
-	mnuViewQualityAuto->Checked = value;
-}
-
-// ---------------------------------------------------------------------------
 // [View]-[Quality]
 void __fastcall TForm1::fn_Quality(ViewerQuality value) {
-	Gdv0->ViewerQuality = value;
+	_ViewerQuality = value;
+
+	switch (value) {
+	case Auto:
+		Gdv0->ViewerQualityAuto = true;
+		mnuViewQualityAuto->Checked = true;
+		break;
+	default:
+		Gdv0->ViewerQualityAuto = false;
+		Gdv0->ViewerQuality = value;
+		break;
+	}
 
 	switch (value) {
 	case Low: // Low
@@ -704,7 +702,7 @@ TColor __fastcall TForm1::fn_IntToColor(int rgb) {
 	int r = 255 - (rgb % 256);
 	int g = 255 - ((rgb / 256) % 256);
 	int b = 255 - (rgb / 65536);
-	return RGB(r, g, b);
+	return (TColor)RGB(r, g, b);
 }
 
 // ---------------------------------------------------------------------------

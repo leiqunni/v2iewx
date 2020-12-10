@@ -35,8 +35,7 @@ void __fastcall TForm1::fn_LoadIni() {
 	Form1->ScreenSnap = ini->ReadBool("Window", "Snap", false);
 
 	// GdViewer section
-	fn_QualityAuto(ini->ReadBool("GdViewer", "QualityAuto", true));
-	fn_Quality((ViewerQuality)ini->ReadInteger("GdViewer", "Quality", 4));
+	fn_Quality((ViewerQuality)ini->ReadInteger("GdViewer", "Quality", 5));
 	fn_OptimizeDrawingSpeed(ini->ReadBool("GdViewer", "OptimizeDrawingSpeed", true));
 	fn_ZoomStep(ini->ReadInteger("GdViewer", "ZoomStep", 10));
 
@@ -197,8 +196,7 @@ void __fastcall TForm1::fn_SaveIni() {
 	ini->WriteBool("Window", "StatusBar", StatusBar->Visible);
 
 	// GdViewer section
-	ini->WriteBool("GdViewer", "QualityAuto", Gdv0->ViewerQualityAuto);
-	ini->WriteInteger("GdViewer", "Quality", Gdv0->ViewerQuality);
+	ini->WriteInteger("GdViewer", "Quality", _ViewerQuality);
 	ini->WriteBool("GdViewer", "OptimizeDrawingSpeed", Gdv0->OptimizeDrawingSpeed);
 
 	// Function section

@@ -13,7 +13,6 @@ class TForm2 : public TForm {
 __published: // IDE で管理されるコンポーネント
 	TMemo *memAbout;
 
-	void __fastcall memAboutClick(TObject *Sender);
 	void __fastcall FormShow(TObject *Sender);
 
 private: // ユーザー宣言
