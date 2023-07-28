@@ -1,0 +1,6 @@
+BasedOnStyle: Chromium
+ColumnLimit: 160
+IndentWidth: 4
+Language: Cpp
+TabWidth: 4
+UseTab: ForIndentation

@@ -1355,7 +1355,9 @@ object Form1: TForm1
     Margins.Bottom = 2
     Align = alBottom
     Images = ImageList
+    ParentShowHint = False
     PopupMenu = pumMain
+    ShowHint = True
     TabOrder = 1
     Transparent = False
     object tbtnPrev: TToolButton

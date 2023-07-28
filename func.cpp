@@ -8,7 +8,7 @@
 
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::fn_ParseFiles(TStringList *list) {
+void __fastcall TForm1::fn_ParseFiles(TStringList* list) {
 	flst->Clear();
 
 	if (list->Count == 1 && FileExists(list->Strings[0])) {
@@ -20,7 +20,7 @@ void __fastcall TForm1::fn_ParseFiles(TStringList *list) {
 
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::fn_LoadFiles(TStringList *list) {
+void __fastcall TForm1::fn_LoadFiles(TStringList* list) {
 	for (int i = 0; i < list->Count; ++i) {
 		if (DirectoryExists(list->Strings[i])) {
 			fn_FindDir(list->Strings[i], "*.*");
@@ -134,7 +134,7 @@ void __fastcall TForm1::fn_FileOpenDialogEx(bool folder) {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_OpenDialog() {
-	TStringBuilder *sb = new TStringBuilder();
+	TStringBuilder* sb = new TStringBuilder();
 
 	TMatchCollection m = TRegEx::Matches(conf.Ext, "\\.(.+?)\\$");
 	for (int i = 0; i < m.Count; ++i) {
@@ -147,14 +147,14 @@ void __fastcall TForm1::fn_OpenDialog() {
 	delete sb;
 
 	if (OpenDialog->Execute() == true) {
-		fn_LoadFiles((TStringList *)FileOpenDialog->Files);
+		fn_LoadFiles((TStringList*)FileOpenDialog->Files);
 	}
 }
 
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_FileOpenDialog(bool folder) {
-	TStringBuilder *sb = new TStringBuilder();
+	TStringBuilder* sb = new TStringBuilder();
 
 	TMatchCollection m = TRegEx::Matches(conf.Ext, "\\.(.+?)\\$");
 
@@ -162,7 +162,7 @@ void __fastcall TForm1::fn_FileOpenDialog(bool folder) {
 		sb->Append("*." + m.Item[i].Groups[1].Value + ";");
 	}
 
-	TFileTypeItem *item;
+	TFileTypeItem* item;
 
 	item = FileOpenDialog->FileTypes->Add();
 	item->DisplayName = "All Image Types";
@@ -179,13 +179,14 @@ void __fastcall TForm1::fn_FileOpenDialog(bool folder) {
 	item->FileMask = "*.*";
 
 	if (folder) {
-		FileOpenDialog->Options = TFileDialogOptions() << fdoPickFolders << fdoAllowMultiSelect << fdoPathMustExist << fdoFileMustExist;
+		FileOpenDialog->Options =
+			TFileDialogOptions() << fdoPickFolders << fdoAllowMultiSelect << fdoPathMustExist << fdoFileMustExist;
 	} else {
 		FileOpenDialog->Options = TFileDialogOptions() << fdoAllowMultiSelect << fdoPathMustExist << fdoFileMustExist;
 	}
 
 	if (FileOpenDialog->Execute() == true) {
-		fn_ParseFiles((TStringList *)FileOpenDialog->Files);
+		fn_ParseFiles((TStringList*)FileOpenDialog->Files);
 	}
 }
 
@@ -204,8 +205,8 @@ void __fastcall TForm1::fn_NextFrame() {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::fn_Options() {
-//	RunProcess(L"c2onfig.exe", NULL);
-    Form3->ShowModal();
+	// RunProcess(L"c2onfig.exe", NULL);
+	Form3->ShowModal();
 }
 
 // ---------------------------------------------------------------------------
@@ -317,7 +318,7 @@ void __fastcall TForm1::fn_Reset() {
 
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::fn_Reset(TGdViewer *gv) {
+void __fastcall TForm1::fn_Reset(TGdViewer* gv) {
 	switch (conf.rot) {
 	case 1:
 		gv->Rotate270();
@@ -429,7 +430,7 @@ void __fastcall TForm1::fn_ZoomMode(int value) {
 
 // ---------------------------------------------------------------------------
 //
-void __fastcall TForm1::fn_ZoomMode(TGdViewer *gv, int value) {
+void __fastcall TForm1::fn_ZoomMode(TGdViewer* gv, int value) {
 	switch (value) {
 	case 1: // []
 		gv->ZoomMode = 1;
@@ -466,8 +467,8 @@ void __fastcall TForm1::fn_ZoomMode(TGdViewer *gv, int value) {
 // []
 void __fastcall TForm1::fn_OptimizeWindowSize(bool value) {
 	this->ClientWidth = Gdv0->ImageWidth;
-	this->ClientHeight = Gdv0->ImageHeight - (ScrollBar->Visible ? ScrollBar->Height : 0) - (ToolBar->Visible ? ToolBar->Height : 0) -
-		(StatusBar->Visible ? StatusBar->Height : 0);
+	this->ClientHeight = Gdv0->ImageHeight - (ScrollBar->Visible ? ScrollBar->Height : 0) -
+		(ToolBar->Visible ? ToolBar->Height : 0) - (StatusBar->Visible ? StatusBar->Height : 0);
 	mnuViewOptimizeWindowSize->Checked = value;
 }
 
@@ -617,14 +618,14 @@ void __fastcall TForm1::fn_ZoomOut() {
 
 // ---------------------------------------------------------------------------
 // [Zoom In]
-void __fastcall TForm1::fn_ZoomIn(TGdViewer *gv) {
+void __fastcall TForm1::fn_ZoomIn(TGdViewer* gv) {
 	gv->ZoomIN();
 	fn_StatusText();
 }
 
 // ---------------------------------------------------------------------------
 // [Zoom Out]
-void __fastcall TForm1::fn_ZoomOut(TGdViewer *gv) {
+void __fastcall TForm1::fn_ZoomOut(TGdViewer* gv) {
 	gv->ZoomOUT();
 	fn_StatusText();
 }
@@ -638,9 +639,8 @@ void __fastcall TForm1::fn_ZoomStep(int value) {
 // ---------------------------------------------------------------------------
 // [Delete File]
 void __fastcall TForm1::fn_DeleteFile(int flags) {
-	if (flst->Count == 0) {
+	if (flst->Count == 0)
 		return;
-	}
 
 	String path = ((TFI*)flst->Items[ScrollBar->Position - 1])->FullName;
 	path.cat_printf(L"%c%c", 0, 0);
@@ -675,7 +675,7 @@ String __fastcall TForm1::fn_TitleFormatting(String value) {
 	if (flst->Count == 0)
 		return "";
 
-	TFI *fi = (TFI*)(flst->Items[ScrollBar->Position - 1]);
+	TFI* fi = (TFI*)(flst->Items[ScrollBar->Position - 1]);
 
 	value = StringReplace(value, "%_path%", fi->FullName, TReplaceFlags() << rfReplaceAll);
 	value = StringReplace(value, "%_filename_ext%", ExtractFileName(fi->FullName), TReplaceFlags() << rfReplaceAll);
@@ -717,14 +717,14 @@ double __fastcall TForm1::fn_GetVer() {
 // ---------------------------------------------------------------------------
 // [Delete File]
 void __fastcall TForm1::fn_LoadRecent() {
-	TStringList *sect = new TStringList();
+	TStringList* sect = new TStringList();
 
 	// ini->ReadSectionValues("Recent", sect);
 
 	for (int i = 0; i < sect->Count; ++i) {
 		String key = sect->Names[i];
 		String val = sect->Values[key];
-		TMenuItem *item = new TMenuItem(mnuFileRecentFiles);
+		TMenuItem* item = new TMenuItem(mnuFileRecentFiles);
 		item->Caption = val;
 		mnuFileRecentFiles->Add(item);
 	}
@@ -740,13 +740,13 @@ void __fastcall TForm1::fn_FindDir(String dir, String name) {
 			if (sr.Name == "." || sr.Name == "..")
 				continue;
 			if (TRegEx::IsMatch(sr.Name, conf.Ext, TRegExOptions() << roIgnoreCase)) {
-				TFI *fi = new TFI;
+				TFI* fi = new TFI;
 				fi->FullName = TPath::Combine(dir, sr.Name);
 				fi->Name = sr.Name;
 				fi->Ext = ExtractFileExt(sr.Name);
 				fi->Size = sr.Size;
 				fi->Date = sr.TimeStamp;
-				flst->Add((TObject *)fi);
+				flst->Add((TObject*)fi);
 			}
 			// Load Sub Directries.
 			if (mnuFileLoadSubdirectry->Checked) {
@@ -763,7 +763,7 @@ void __fastcall TForm1::fn_FindDir(String dir, String name) {
 
 // ---------------------------------------------------------------------------
 // 画像表示
-void __fastcall TForm1::fn_LoadImage(TGdViewer *gv, TFI *fi) {
+void __fastcall TForm1::fn_LoadImage(TGdViewer* gv, TFI* fi) {
 	if (hSPI->Count > 0) { // use SPI
 		conf.isSPI = false;
 		HBITMAP bmp = SPI_LoadImage(fi->FullName.w_str());
@@ -772,7 +772,7 @@ void __fastcall TForm1::fn_LoadImage(TGdViewer *gv, TFI *fi) {
 			conf.isSPI = true;
 		}
 	} else { // not use SPI
-		DisplayFromFile(gv, ((TFI *)fi)->FullName);
+		DisplayFromFile(gv, ((TFI*)fi)->FullName);
 	}
 
 	if (mnuViewKeepRot->Checked) {
@@ -820,5 +820,4 @@ void __fastcall TForm1::fn_AddRecent(String path) {
 	}
 
 	RecentList->Add(path);
-
 }

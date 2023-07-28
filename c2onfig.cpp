@@ -15,7 +15,7 @@ WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 		Application->CreateForm(__classid(TForm4), &Form4);
 		Application->Run();
 	}
-	catch (Exception &exception)
+	catch (Exception& exception)
 	{
 		Application->ShowException(&exception);
 	}
@@ -25,7 +25,7 @@ WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 		{
 			throw Exception("");
 		}
-		catch (Exception &exception)
+		catch (Exception& exception)
 		{
 			Application->ShowException(&exception);
 		}

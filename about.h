@@ -9,18 +9,19 @@
 #include "main.h"
 
 // ---------------------------------------------------------------------------
-class TForm2 : public TForm {
+class TForm2 : public TForm
+{
 __published: // IDE で管理されるコンポーネント
-	TMemo *memAbout;
+	TMemo* memAbout;
 
-	void __fastcall FormShow(TObject *Sender);
+	void __fastcall FormShow(TObject* Sender);
 
 private: // ユーザー宣言
-public: // ユーザー宣言
+public:	 // ユーザー宣言
 	__fastcall TForm2(TComponent* Owner);
 };
 
 // ---------------------------------------------------------------------------
-extern PACKAGE TForm2 *Form2;
+extern PACKAGE TForm2* Form2;
 // ---------------------------------------------------------------------------
 #endif

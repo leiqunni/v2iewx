@@ -55,191 +55,191 @@
 class TForm1 : public TForm {
 __published: // IDE-managed Components
 
-	TFileOpenDialog * FileOpenDialog;
-	TImageList *ImageList;
-	TMainMenu *MainMenu;
-	TMenuItem *N1;
-	TMenuItem *N2;
-	TMenuItem *N3;
-	TMenuItem *N4;
-	TMenuItem *mnuEdit;
-	TMenuItem *mnuEditCopy;
-	TMenuItem *mnuEditPath;
-	TMenuItem *mnuFile;
-	TMenuItem *mnuFileDelete;
-	TMenuItem *mnuFileExit;
-	TMenuItem *mnuFileLoadSubdirectry;
-	TMenuItem *mnuFileNewWindow;
-	TMenuItem *mnuFileOpenFile;
-	TMenuItem *mnuFileOpenFolder;
-	TMenuItem *mnuFileRecentFiles;
-	TMenuItem *mnuFile_0;
-	TMenuItem *mnuFile_2;
-	TMenuItem *mnuHelp;
-	TMenuItem *mnuHelpAbout;
-	TMenuItem *mnuPlay;
-	TMenuItem *mnuPlayNext;
-	TMenuItem *mnuPlayNextFrame;
-	TMenuItem *mnuPlayPrev;
-	TMenuItem *mnuPlayPrevFrame;
-	TMenuItem *mnuPlaySlideShow;
-	TMenuItem *mnuPlay_0;
-	TMenuItem *mnuTools;
-	TMenuItem *mnuToolsOption;
-	TMenuItem *mnuView;
-	TMenuItem *mnuViewActual;
-	TMenuItem *mnuViewBestfit;
-	TMenuItem *mnuViewFullScreen;
-	TMenuItem *mnuViewInWindow;
-	TMenuItem *mnuViewKeepRot;
-	TMenuItem *mnuViewMainMenu;
-	TMenuItem *mnuViewOptimizeDrawingSpeed;
-	TMenuItem *mnuViewOptimizeWindowSize;
-	TMenuItem *mnuViewOrder;
-	TMenuItem *mnuViewOrderAsc;
-	TMenuItem *mnuViewOrderDate;
-	TMenuItem *mnuViewOrderDesc;
-	TMenuItem *mnuViewOrderName;
-	TMenuItem *mnuViewOrderNameNum;
-	TMenuItem *mnuViewOrderSize;
-	TMenuItem *mnuViewOrderType;
-	TMenuItem *mnuViewOrder_0;
-	TMenuItem *mnuViewQuality;
-	TMenuItem *mnuViewQualityAuto;
-	TMenuItem *mnuViewQualityBicubic;
-	TMenuItem *mnuViewQualityBicubicHQ;
-	TMenuItem *mnuViewQualityBilinear;
-	TMenuItem *mnuViewQualityBilinearHQ;
-	TMenuItem *mnuViewQualityLow;
-	TMenuItem *mnuViewRotateLeft;
-	TMenuItem *mnuViewRotateRight;
-	TMenuItem *mnuViewScrollBar;
-	TMenuItem *mnuViewSpread;
-	TMenuItem *mnuViewSpreadView;
-	TMenuItem *mnuViewSpreadViewLeft;
-	TMenuItem *mnuViewSpreadViewNone;
-	TMenuItem *mnuViewSpreadViewRight;
-	TMenuItem *mnuViewStatusBar;
-	TMenuItem *mnuViewToolBar;
-	TMenuItem *mnuView_0;
-	TMenuItem *mnuView_1;
-	TMenuItem *mnuView_3;
-	TMenuItem *mnuView_4;
-	TMenuItem *mnuView_5;
-	TMenuItem *mnuView_6;
-	TMenuItem *pumCopyToDesktop;
-	TOpenDialog *OpenDialog;
-	TPopupMenu *PopupMenu;
-	TPopupMenu *pumMain;
-	TScrollBar *ScrollBar;
-	TStatusBar *StatusBar;
-	TTimer *Timer;
-	TToolBar *ToolBar;
-	TToolButton *tbtnActual;
-	TToolButton *tbtnBestfit;
-	TToolButton *tbtnDelete;
-	TToolButton *tbtnInWindow;
-	TToolButton *tbtnKeepRot;
-	TToolButton *tbtnNext;
-	TToolButton *tbtnPrev;
-	TToolButton *tbtnRotateLeft;
-	TToolButton *tbtnRotateRight;
-	TToolButton *tbtnSep_1;
-	TToolButton *tbtnSep_2;
-	TToolButton *tbtnSep_3;
-	TToolButton *tbtnSep_4;
-	TToolButton *tbtnSep_5;
-	TToolButton *tbtnSlideShow;
-	TToolButton *tbtnSpread;
-	TToolButton *tbtnSpreadView;
-	TToolButton *tbtnZoomIn;
-	TToolButton *tbtnZoomOut;
-	TMenuItem *mnuView_0_1;
-	TToolButton *tbtnSep_6;
-	TToolButton *tbtnTrash;
-	TGdViewer *Gdv0;
+	TFileOpenDialog* FileOpenDialog;
+	TImageList* ImageList;
+	TMainMenu* MainMenu;
+	TMenuItem* N1;
+	TMenuItem* N2;
+	TMenuItem* N3;
+	TMenuItem* N4;
+	TMenuItem* mnuEdit;
+	TMenuItem* mnuEditCopy;
+	TMenuItem* mnuEditPath;
+	TMenuItem* mnuFile;
+	TMenuItem* mnuFileDelete;
+	TMenuItem* mnuFileExit;
+	TMenuItem* mnuFileLoadSubdirectry;
+	TMenuItem* mnuFileNewWindow;
+	TMenuItem* mnuFileOpenFile;
+	TMenuItem* mnuFileOpenFolder;
+	TMenuItem* mnuFileRecentFiles;
+	TMenuItem* mnuFile_0;
+	TMenuItem* mnuFile_2;
+	TMenuItem* mnuHelp;
+	TMenuItem* mnuHelpAbout;
+	TMenuItem* mnuPlay;
+	TMenuItem* mnuPlayNext;
+	TMenuItem* mnuPlayNextFrame;
+	TMenuItem* mnuPlayPrev;
+	TMenuItem* mnuPlayPrevFrame;
+	TMenuItem* mnuPlaySlideShow;
+	TMenuItem* mnuPlay_0;
+	TMenuItem* mnuTools;
+	TMenuItem* mnuToolsOption;
+	TMenuItem* mnuView;
+	TMenuItem* mnuViewActual;
+	TMenuItem* mnuViewBestfit;
+	TMenuItem* mnuViewFullScreen;
+	TMenuItem* mnuViewInWindow;
+	TMenuItem* mnuViewKeepRot;
+	TMenuItem* mnuViewMainMenu;
+	TMenuItem* mnuViewOptimizeDrawingSpeed;
+	TMenuItem* mnuViewOptimizeWindowSize;
+	TMenuItem* mnuViewOrder;
+	TMenuItem* mnuViewOrderAsc;
+	TMenuItem* mnuViewOrderDate;
+	TMenuItem* mnuViewOrderDesc;
+	TMenuItem* mnuViewOrderName;
+	TMenuItem* mnuViewOrderNameNum;
+	TMenuItem* mnuViewOrderSize;
+	TMenuItem* mnuViewOrderType;
+	TMenuItem* mnuViewOrder_0;
+	TMenuItem* mnuViewQuality;
+	TMenuItem* mnuViewQualityAuto;
+	TMenuItem* mnuViewQualityBicubic;
+	TMenuItem* mnuViewQualityBicubicHQ;
+	TMenuItem* mnuViewQualityBilinear;
+	TMenuItem* mnuViewQualityBilinearHQ;
+	TMenuItem* mnuViewQualityLow;
+	TMenuItem* mnuViewRotateLeft;
+	TMenuItem* mnuViewRotateRight;
+	TMenuItem* mnuViewScrollBar;
+	TMenuItem* mnuViewSpread;
+	TMenuItem* mnuViewSpreadView;
+	TMenuItem* mnuViewSpreadViewLeft;
+	TMenuItem* mnuViewSpreadViewNone;
+	TMenuItem* mnuViewSpreadViewRight;
+	TMenuItem* mnuViewStatusBar;
+	TMenuItem* mnuViewToolBar;
+	TMenuItem* mnuView_0;
+	TMenuItem* mnuView_1;
+	TMenuItem* mnuView_3;
+	TMenuItem* mnuView_4;
+	TMenuItem* mnuView_5;
+	TMenuItem* mnuView_6;
+	TMenuItem* pumCopyToDesktop;
+	TOpenDialog* OpenDialog;
+	TPopupMenu* PopupMenu;
+	TPopupMenu* pumMain;
+	TScrollBar* ScrollBar;
+	TStatusBar* StatusBar;
+	TTimer* Timer;
+	TToolBar* ToolBar;
+	TToolButton* tbtnActual;
+	TToolButton* tbtnBestfit;
+	TToolButton* tbtnDelete;
+	TToolButton* tbtnInWindow;
+	TToolButton* tbtnKeepRot;
+	TToolButton* tbtnNext;
+	TToolButton* tbtnPrev;
+	TToolButton* tbtnRotateLeft;
+	TToolButton* tbtnRotateRight;
+	TToolButton* tbtnSep_1;
+	TToolButton* tbtnSep_2;
+	TToolButton* tbtnSep_3;
+	TToolButton* tbtnSep_4;
+	TToolButton* tbtnSep_5;
+	TToolButton* tbtnSlideShow;
+	TToolButton* tbtnSpread;
+	TToolButton* tbtnSpreadView;
+	TToolButton* tbtnZoomIn;
+	TToolButton* tbtnZoomOut;
+	TMenuItem* mnuView_0_1;
+	TToolButton* tbtnSep_6;
+	TToolButton* tbtnTrash;
+	TGdViewer* Gdv0;
 
-	void __fastcall FormDestroy(TObject *Sender);
-	void __fastcall FormKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
-	void __fastcall FormMouseWheel(TObject *Sender, TShiftState Shift,
-		int WheelDelta, TPoint &MousePos, bool &Handled);
-	void __fastcall FormResize(TObject *Sender);
-	void __fastcall Gdv0ClickControl(TObject *Sender);
-	void __fastcall Gdv0MouseDownControl(TObject *Sender, short *Button,
-		short *shift, float *X, float *Y);
-	void __fastcall Gdv0MouseMoveControl(TObject *Sender, short *Button,
-		short *shift, float *X, float *Y);
-	void __fastcall Gdv0MouseUpControl(TObject *Sender, short *Button,
-		short *shift, float *X, float *Y);
-	void __fastcall Gdv0DblClickControl(TObject *Sender);
+	void __fastcall FormDestroy(TObject* Sender);
+	void __fastcall FormKeyDown(TObject* Sender, WORD& Key, TShiftState Shift);
+	void __fastcall FormMouseWheel(TObject* Sender, TShiftState Shift,
+		int WheelDelta, TPoint& MousePos, bool& Handled);
+	void __fastcall FormResize(TObject* Sender);
+	void __fastcall Gdv0ClickControl(TObject* Sender);
+	void __fastcall Gdv0MouseDownControl(TObject* Sender, short* Button,
+		short* shift, float* X, float* Y);
+	void __fastcall Gdv0MouseMoveControl(TObject* Sender, short* Button,
+		short* shift, float* X, float* Y);
+	void __fastcall Gdv0MouseUpControl(TObject* Sender, short* Button,
+		short* shift, float* X, float* Y);
+	void __fastcall Gdv0DblClickControl(TObject* Sender);
 
 	// void __fastcall Gdv1ClickControl(TObject *Sender);
 	// void __fastcall Gdv1MouseDownControl(TObject *Sender, short *Button, short *shift, float *X, float *Y);
 	// void __fastcall Gdv1MouseMoveControl(TObject *Sender, short *Button, short *shift, float *X, float *Y);
 	// void __fastcall Gdv1MouseUpControl(TObject *Sender, short *Button, short *shift, float *X, float *Y);
 	// void __fastcall Gdv1DblClickControl(TObject *Sender);
-	void __fastcall ScrollBarChange(TObject *Sender);
-	void __fastcall TimerTimer(TObject *Sender);
-	void __fastcall mnuEditCopyClick(TObject *Sender);
-	void __fastcall mnuEditPathClick(TObject *Sender);
-	void __fastcall mnuFileDeleteClick(TObject *Sender);
-	void __fastcall mnuFileExitClick(TObject *Sender);
-	void __fastcall mnuFileNewWindowClick(TObject *Sender);
-	void __fastcall mnuFileOpenFileClick(TObject *Sender);
-	void __fastcall mnuFileOpenFolderClick(TObject *Sender);
-	void __fastcall mnuHelpAboutClick(TObject *Sender);
-	void __fastcall mnuPlayNextClick(TObject *Sender);
-	void __fastcall mnuPlayNextFrameClick(TObject *Sender);
-	void __fastcall mnuPlayPrevClick(TObject *Sender);
-	void __fastcall mnuPlayPrevFrameClick(TObject *Sender);
-	void __fastcall mnuPlaySlideShowClick(TObject *Sender);
-	void __fastcall mnuToolsOptionClick(TObject *Sender);
-	void __fastcall mnuViewActualClick(TObject *Sender);
-	void __fastcall mnuViewBestfitClick(TObject *Sender);
-	void __fastcall mnuViewFullScreenClick(TObject *Sender);
-	void __fastcall mnuViewInWindowClick(TObject *Sender);
-	void __fastcall mnuViewKeepRotClick(TObject *Sender);
-	void __fastcall mnuViewMainMenuClick(TObject *Sender);
-	void __fastcall mnuViewOptimizeDrawingSpeedClick(TObject *Sender);
-	void __fastcall mnuViewOptimizeWindowSizeClick(TObject *Sender);
-	void __fastcall mnuViewOrderAscClick(TObject *Sender);
-	void __fastcall mnuViewOrderDateClick(TObject *Sender);
-	void __fastcall mnuViewOrderDescClick(TObject *Sender);
-	void __fastcall mnuViewOrderNameClick(TObject *Sender);
-	void __fastcall mnuViewOrderNameNumClick(TObject *Sender);
-	void __fastcall mnuViewOrderSizeClick(TObject *Sender);
-	void __fastcall mnuViewOrderTypeClick(TObject *Sender);
-	void __fastcall mnuViewQualityAutoClick(TObject *Sender);
-	void __fastcall mnuViewQualityBicubicClick(TObject *Sender);
-	void __fastcall mnuViewQualityBicubicHQClick(TObject *Sender);
-	void __fastcall mnuViewQualityBilinearClick(TObject *Sender);
-	void __fastcall mnuViewQualityBilinearHQClick(TObject *Sender);
-	void __fastcall mnuViewQualityLowClick(TObject *Sender);
-	void __fastcall mnuViewRotateLeftClick(TObject *Sender);
-	void __fastcall mnuViewRotateRightClick(TObject *Sender);
-	void __fastcall mnuViewScrollBarClick(TObject *Sender);
-	void __fastcall mnuViewSpreadViewLeftClick(TObject *Sender);
-	void __fastcall mnuViewSpreadViewNoneClick(TObject *Sender);
-	void __fastcall mnuViewSpreadViewRightClick(TObject *Sender);
-	void __fastcall mnuViewStatusBarClick(TObject *Sender);
-	void __fastcall mnuViewToolBarClick(TObject *Sender);
-	void __fastcall pumCopyToDesktopClick(TObject *Sender);
-	void __fastcall tbtnActualClick(TObject *Sender);
-	void __fastcall tbtnBestfitClick(TObject *Sender);
-	void __fastcall tbtnDeleteClick(TObject *Sender);
-	void __fastcall tbtnInWindowClick(TObject *Sender);
-	void __fastcall tbtnKeepRotClick(TObject *Sender);
-	void __fastcall tbtnNextClick(TObject *Sender);
-	void __fastcall tbtnPrevClick(TObject *Sender);
-	void __fastcall tbtnRotateLeftClick(TObject *Sender);
-	void __fastcall tbtnRotateRightClick(TObject *Sender);
-	void __fastcall tbtnSlideShowClick(TObject *Sender);
-	void __fastcall tbtnSpreadClick(TObject *Sender);
-	void __fastcall tbtnSpreadViewClick(TObject *Sender);
-	void __fastcall tbtnZoomInClick(TObject *Sender);
-	void __fastcall tbtnZoomOutClick(TObject *Sender);
-	void __fastcall mnuViewSpreadClick(TObject *Sender);
-	void __fastcall tbtnTrashClick(TObject *Sender);
+	void __fastcall ScrollBarChange(TObject* Sender);
+	void __fastcall TimerTimer(TObject* Sender);
+	void __fastcall mnuEditCopyClick(TObject* Sender);
+	void __fastcall mnuEditPathClick(TObject* Sender);
+	void __fastcall mnuFileDeleteClick(TObject* Sender);
+	void __fastcall mnuFileExitClick(TObject* Sender);
+	void __fastcall mnuFileNewWindowClick(TObject* Sender);
+	void __fastcall mnuFileOpenFileClick(TObject* Sender);
+	void __fastcall mnuFileOpenFolderClick(TObject* Sender);
+	void __fastcall mnuHelpAboutClick(TObject* Sender);
+	void __fastcall mnuPlayNextClick(TObject* Sender);
+	void __fastcall mnuPlayNextFrameClick(TObject* Sender);
+	void __fastcall mnuPlayPrevClick(TObject* Sender);
+	void __fastcall mnuPlayPrevFrameClick(TObject* Sender);
+	void __fastcall mnuPlaySlideShowClick(TObject* Sender);
+	void __fastcall mnuToolsOptionClick(TObject* Sender);
+	void __fastcall mnuViewActualClick(TObject* Sender);
+	void __fastcall mnuViewBestfitClick(TObject* Sender);
+	void __fastcall mnuViewFullScreenClick(TObject* Sender);
+	void __fastcall mnuViewInWindowClick(TObject* Sender);
+	void __fastcall mnuViewKeepRotClick(TObject* Sender);
+	void __fastcall mnuViewMainMenuClick(TObject* Sender);
+	void __fastcall mnuViewOptimizeDrawingSpeedClick(TObject* Sender);
+	void __fastcall mnuViewOptimizeWindowSizeClick(TObject* Sender);
+	void __fastcall mnuViewOrderAscClick(TObject* Sender);
+	void __fastcall mnuViewOrderDateClick(TObject* Sender);
+	void __fastcall mnuViewOrderDescClick(TObject* Sender);
+	void __fastcall mnuViewOrderNameClick(TObject* Sender);
+	void __fastcall mnuViewOrderNameNumClick(TObject* Sender);
+	void __fastcall mnuViewOrderSizeClick(TObject* Sender);
+	void __fastcall mnuViewOrderTypeClick(TObject* Sender);
+	void __fastcall mnuViewQualityAutoClick(TObject* Sender);
+	void __fastcall mnuViewQualityBicubicClick(TObject* Sender);
+	void __fastcall mnuViewQualityBicubicHQClick(TObject* Sender);
+	void __fastcall mnuViewQualityBilinearClick(TObject* Sender);
+	void __fastcall mnuViewQualityBilinearHQClick(TObject* Sender);
+	void __fastcall mnuViewQualityLowClick(TObject* Sender);
+	void __fastcall mnuViewRotateLeftClick(TObject* Sender);
+	void __fastcall mnuViewRotateRightClick(TObject* Sender);
+	void __fastcall mnuViewScrollBarClick(TObject* Sender);
+	void __fastcall mnuViewSpreadViewLeftClick(TObject* Sender);
+	void __fastcall mnuViewSpreadViewNoneClick(TObject* Sender);
+	void __fastcall mnuViewSpreadViewRightClick(TObject* Sender);
+	void __fastcall mnuViewStatusBarClick(TObject* Sender);
+	void __fastcall mnuViewToolBarClick(TObject* Sender);
+	void __fastcall pumCopyToDesktopClick(TObject* Sender);
+	void __fastcall tbtnActualClick(TObject* Sender);
+	void __fastcall tbtnBestfitClick(TObject* Sender);
+	void __fastcall tbtnDeleteClick(TObject* Sender);
+	void __fastcall tbtnInWindowClick(TObject* Sender);
+	void __fastcall tbtnKeepRotClick(TObject* Sender);
+	void __fastcall tbtnNextClick(TObject* Sender);
+	void __fastcall tbtnPrevClick(TObject* Sender);
+	void __fastcall tbtnRotateLeftClick(TObject* Sender);
+	void __fastcall tbtnRotateRightClick(TObject* Sender);
+	void __fastcall tbtnSlideShowClick(TObject* Sender);
+	void __fastcall tbtnSpreadClick(TObject* Sender);
+	void __fastcall tbtnSpreadViewClick(TObject* Sender);
+	void __fastcall tbtnZoomInClick(TObject* Sender);
+	void __fastcall tbtnZoomOutClick(TObject* Sender);
+	void __fastcall mnuViewSpreadClick(TObject* Sender);
+	void __fastcall tbtnTrashClick(TObject* Sender);
 
 private:
 	// User declarations
@@ -252,7 +252,7 @@ private:
 		Low, Bilinear, Bicubic, BilinearHQ, BicubicHQ, Auto
 	} ViewerQuality;
 
-    int _ViewerQuality = 5;
+	int _ViewerQuality = 5;
 
 	struct { // Mouse gestures
 		bool Enabled;
@@ -271,68 +271,68 @@ private:
 	};
 
 	// Susie Plug-in
-	TObjectList *hSPI;
+	TObjectList* hSPI;
 
 	// File list
-	TObjectList *flst;
+	TObjectList* flst;
 
 	// Command parameters
-	TStringList *paramStr;
+	TStringList* paramStr;
 
 	// Inifile's path
 	String IniFile, KeyFile, LangFile, RecentFile;
 
-	TMemIniFile *KeyConf, *Recent;
+	TMemIniFile* KeyConf, * Recent;
 
-	TStringList *RecentList;
+	TStringList* RecentList;
 	// bool isSetWindowSize;
 
 #pragma region  " sortFunc "
 
-	int __fastcall static cmpNameAsc(void *left, void *right) {
-		return StrComp(((TFI *) left)->Name.w_str(),
-			((TFI *) right)->Name.w_str());
+	int __fastcall static cmpNameAsc(void* left, void* right) {
+		return StrComp(((TFI*)left)->Name.w_str(),
+			((TFI*)right)->Name.w_str());
 	}
 
-	int __fastcall static cmpNameDesc(void *right, void *left) {
-		return StrComp(((TFI *) left)->Name.w_str(),
-			((TFI *) right)->Name.w_str());
+	int __fastcall static cmpNameDesc(void* right, void* left) {
+		return StrComp(((TFI*)left)->Name.w_str(),
+			((TFI*)right)->Name.w_str());
 	}
 
-	int __fastcall static cmpNameNumAsc(void *left, void *right) {
-		return StrCmpLogicalW(((TFI *) left)->Name.w_str(),
-			((TFI *) right)->Name.w_str());
+	int __fastcall static cmpNameNumAsc(void* left, void* right) {
+		return StrCmpLogicalW(((TFI*)left)->Name.w_str(),
+			((TFI*)right)->Name.w_str());
 	}
 
-	int __fastcall static cmpNameNumDesc(void *right, void *left) {
-		return StrCmpLogicalW(((TFI *) left)->Name.w_str(),
-			((TFI *) right)->Name.w_str());
+	int __fastcall static cmpNameNumDesc(void* right, void* left) {
+		return StrCmpLogicalW(((TFI*)left)->Name.w_str(),
+			((TFI*)right)->Name.w_str());
 	}
 
-	int __fastcall static cmpTimeAsc(void *left, void *right) {
-		return ((TFI *) left)->Date - ((TFI *) right)->Date;
+	int __fastcall static cmpTimeAsc(void* left, void* right) {
+		return ((TFI*)left)->Date - ((TFI*)right)->Date;
 	}
 
-	int __fastcall static cmpTimeDesc(void *right, void *left) {
-		return ((TFI *) left)->Date - ((TFI *) right)->Date;
+	int __fastcall static cmpTimeDesc(void* right, void* left) {
+		return ((TFI*)left)->Date - ((TFI*)right)->Date;
 	}
 
-	int __fastcall static cmpTypeAsc(void *left, void *right) {
-		return StrComp(((TFI *) left)->Ext.w_str(),
-			((TFI *) right)->Ext.w_str());
+	int __fastcall static cmpTypeAsc(void* left, void* right) {
+		return StrComp(((TFI*)left)->Ext.w_str(),
+			((TFI*)right)->Ext.w_str());
 	}
 
-	int __fastcall static cmpTypeDesc(void *right, void *left) {
-		return StrComp(((TFI *) left)->Ext.w_str(),
-			((TFI *) right)->Ext.w_str());
+	int __fastcall static cmpTypeDesc(void* right, void* left) {
+		return StrComp(((TFI*)left)->Ext.w_str(),
+			((TFI*)right)->Ext.w_str());
 	}
 
-	int __fastcall static cmpSizeAsc(void *left, void *right) {
-		return ((TFI *) left)->Size - ((TFI *) right)->Size;
+	int __fastcall static cmpSizeAsc(void* left, void* right) {
+		return ((TFI*)left)->Size - ((TFI*)right)->Size;
 	}
 
-	int __fastcall static cmpSizeDesc(void *right, void *left) {
-		return ((TFI *) left)->Size - ((TFI *) right)->Size;
+	int __fastcall static cmpSizeDesc(void* right, void* left) {
+		return ((TFI*)left)->Size - ((TFI*)right)->Size;
 	}
 
 #pragma end_region
@@ -341,20 +341,20 @@ private:
 	String __fastcall fn_TitleFormatting(String);
 	TColor __fastcall fn_IntToColor(int rgb);
 	double __fastcall fn_GetVer();
-	void __fastcall DisplayFromFile(TGdViewer *object, String sFilePath);
+	void __fastcall DisplayFromFile(TGdViewer* object, String sFilePath);
 	void __fastcall DropFiles(TWMDropFiles Message);
 	void __fastcall ExecAction(String value);
 	void __fastcall fn_FindDir(String dir, String name);
-	void __fastcall fn_LoadGdvProperties(TGdViewer *gdv, TMemIniFile *ini);
-	void __fastcall fn_LoadImage(TGdViewer *gv, TFI *fi);
-	void __fastcall LoadImageSpread(TFI *fi1, TFI *fi2);
+	void __fastcall fn_LoadGdvProperties(TGdViewer* gdv, TMemIniFile* ini);
+	void __fastcall fn_LoadImage(TGdViewer* gv, TFI* fi);
+	void __fastcall LoadImageSpread(TFI* fi1, TFI* fi2);
 	void __fastcall fn_LoadIni();
 	void __fastcall fn_LoadLang();
 	void __fastcall RunProcess(String, String);
 	void __fastcall SPI_LoadPlugin(String);
 	void __fastcall fn_SaveIni();
 	void __fastcall fn_BackColor(String value);
-	void __fastcall fn_Bmp2in1(Graphics::TBitmap *bmp, String path1,
+	void __fastcall fn_Bmp2in1(Graphics::TBitmap* bmp, String path1,
 		String path2);
 	void __fastcall fn_DeleteFile(int);
 	void __fastcall fn_EnableMenu(bool value);
@@ -365,7 +365,7 @@ private:
 	void __fastcall fn_ImageCopy();
 	void __fastcall fn_KeepRot(bool);
 	void __fastcall fn_LoadFiles(String);
-	void __fastcall fn_LoadFiles(TStringList *);
+	void __fastcall fn_LoadFiles(TStringList*);
 	void __fastcall fn_MainMenu(bool);
 	void __fastcall fn_MouseMode(int value);
 	void __fastcall fn_NewWindow();
@@ -375,13 +375,13 @@ private:
 	void __fastcall fn_OptimizeDrawingSpeed(bool);
 	void __fastcall fn_OptimizeWindowSize(bool);
 	void __fastcall fn_Options();
-	void __fastcall fn_ParseFiles(TStringList *);
+	void __fastcall fn_ParseFiles(TStringList*);
 	void __fastcall fn_PathCopy();
 	void __fastcall fn_Prev();
 	void __fastcall fn_PrevFrame();
 	void __fastcall fn_Quality(ViewerQuality value);
 	void __fastcall fn_Reset();
-	void __fastcall fn_Reset(TGdViewer *);
+	void __fastcall fn_Reset(TGdViewer*);
 	void __fastcall fn_RotateLeft();
 	void __fastcall fn_RotateRight();
 	void __fastcall fn_ScrollBar(bool);
@@ -394,19 +394,19 @@ private:
 	void __fastcall fn_WindowMaximize();
 	void __fastcall fn_WindowMinimize();
 	void __fastcall fn_ZoomIn();
-	void __fastcall fn_ZoomIn(TGdViewer *gv);
+	void __fastcall fn_ZoomIn(TGdViewer* gv);
 	void __fastcall fn_ZoomMode(int);
-	void __fastcall fn_ZoomMode(TGdViewer *gv, int value);
+	void __fastcall fn_ZoomMode(TGdViewer* gv, int value);
 	void __fastcall fn_ZoomOut();
-	void __fastcall fn_ZoomOut(TGdViewer *gv);
+	void __fastcall fn_ZoomOut(TGdViewer* gv);
 	void __fastcall fn_ZoomStep(int value);
 	void __fastcall TForm1::fn_LoadRecent();
 	void __fastcall TForm1::fn_AddRecent(String path);
 
 	BEGIN_MESSAGE_MAP VCL_MESSAGE_HANDLER(WM_DROPFILES, TWMDropFiles, DropFiles)
-		END_MESSAGE_MAP(TForm) public :
-		// User declarations
-		__fastcall TForm1(TComponent *Owner);
+END_MESSAGE_MAP(TForm) public:
+	// User declarations
+	__fastcall TForm1(TComponent* Owner);
 
 	TPoint FMouseDownPt;
 
@@ -414,9 +414,9 @@ private:
 	String FullPath;
 
 public:
-	TMemIniFile *ini;
+	TMemIniFile* ini;
 
-    	struct { // Config structure
+	struct { // Config structure
 		int rot;
 		bool asc;
 		bool Glass;
@@ -438,6 +438,6 @@ public:
 };
 
 // ---------------------------------------------------------------------------
-extern PACKAGE TForm1 *Form1;
+extern PACKAGE TForm1* Form1;
 // ---------------------------------------------------------------------------
 #endif

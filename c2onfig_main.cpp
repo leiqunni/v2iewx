@@ -7,7 +7,7 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
-TForm4 *Form4;
+TForm4* Form4;
 //---------------------------------------------------------------------------
 __fastcall TForm4::TForm4(TComponent* Owner)
 	: TForm(Owner)
@@ -33,17 +33,17 @@ void __fastcall TForm4::LoadIni()
 
 void __fastcall TForm4::LoadIniDef()
 {
-//
+	//
 	def = new TMemIniFile(IniDefFile);
 
-	TStringList *sections = new TStringList();
+	TStringList* sections = new TStringList();
 	def->ReadSections(sections);
 
 	String key, val, param;
 
 	for (int i = 0; i < sections->Count; i++) {
-		TStringList *sect = new TStringList();
-		TTreeNode *p = TreeView->Items->Add(NULL, sections->Strings[i]);
+		TStringList* sect = new TStringList();
+		TTreeNode* p = TreeView->Items->Add(NULL, sections->Strings[i]);
 		def->ReadSectionValues(sections->Strings[i], sect);
 		for (int i = 0; i < sect->Count; i++) {
 			String key = sect->Names[i];
@@ -54,23 +54,23 @@ void __fastcall TForm4::LoadIniDef()
 	TreeView->FullExpand();
 
 
-//	String key, val, param;
-//
-//	for (int i = 0; i < sections->Count; i++) {
-//		TStringList *sect = new TStringList();
-//		ini->ReadSectionValues(sections->Strings[i], sect);
-//		TreeView1->Items->Add(NULL, sections->Strings[i]);
-//		for (int j = 0; j < sect->Count; j++) {
-//			key = sect->Names[j];
-//			val = sect->Values[key];
-//			TTreeNode *node = TreeView1->Items->Item[i];
-////			param = key +　"=";// + val;
-////			TreeView1->Items->AddChild(node, key +　"=" + val);
-//		}
-//
-//	}
+	//	String key, val, param;
+	//
+	//	for (int i = 0; i < sections->Count; i++) {
+	//		TStringList *sect = new TStringList();
+	//		ini->ReadSectionValues(sections->Strings[i], sect);
+	//		TreeView1->Items->Add(NULL, sections->Strings[i]);
+	//		for (int j = 0; j < sect->Count; j++) {
+	//			key = sect->Names[j];
+	//			val = sect->Values[key];
+	//			TTreeNode *node = TreeView1->Items->Item[i];
+	////			param = key +　"=";// + val;
+	////			TreeView1->Items->AddChild(node, key +　"=" + val);
+	//		}
+	//
+	//	}
 }
-void __fastcall TForm4::TreeViewClick(TObject *Sender)
+void __fastcall TForm4::TreeViewClick(TObject* Sender)
 {
 	if (TreeView->Selected->Parent == NULL) return;
 

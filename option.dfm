@@ -53,10 +53,6 @@ object Form3: TForm3
     TabOrder = 3
     object TabSheet1: TTabSheet
       Caption = 'General'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 609
-      ExplicitHeight = 0
       DesignSize = (
         606
         254)
@@ -128,10 +124,6 @@ object Form3: TForm3
     object TabSheet2: TTabSheet
       Caption = 'Key config'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 609
-      ExplicitHeight = 0
     end
   end
 end

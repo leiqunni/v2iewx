@@ -11,7 +11,7 @@
 // ---------------------------------------------------------------------------
 // Ini File Loading
 void __fastcall TForm1::fn_LoadIni() {
-//	TMemIniFile *ini = new TMemIniFile(IniFile);
+	// TMemIniFile *ini = new TMemIniFile(IniFile);
 	ini = new TMemIniFile(IniFile);
 
 	// Window section
@@ -56,8 +56,10 @@ void __fastcall TForm1::fn_LoadIni() {
 
 	Timer->Interval = ini->ReadInteger("Function", "SlideShow", 3000);
 	conf.TitleText = ini->ReadString("Function", "Title", "%_filename_ext% [%_position%/%_total%] - v2iewx %_isspi%");
-	conf.StatusText = ini->ReadString("Function", "Status", "大きさ: %_width% x %_height% 更新日時: %_last_modified% サイズ: %_filesize_kb% KB 拡大率: %_zoom% %");
-	conf.Ext = ini->ReadString("Function", "Ext", "\\.bmp$|\\.gif$|\\.ico$|\\.jpe$|\\.jpeg$|\\.jpg$|\\.pcx$|\\.png$|\\.tif$|\\.tiff$|\\.wmf$|\\.jp2$|\\.j2k$");
+	conf.StatusText = ini->ReadString("Function", "Status",
+		"大きさ: %_width% x %_height% 更新日時: %_last_modified% サイズ: %_filesize_kb% KB 拡大率: %_zoom% %");
+	conf.Ext = ini->ReadString("Function", "Ext",
+		"\\.bmp$|\\.gif$|\\.ico$|\\.jpe$|\\.jpeg$|\\.jpg$|\\.pcx$|\\.png$|\\.tif$|\\.tiff$|\\.wmf$|\\.jp2$|\\.j2k$");
 	// conf.rot = ini->ReadInteger("Function", "Rot", 0);
 
 	// SPI section
@@ -65,7 +67,7 @@ void __fastcall TForm1::fn_LoadIni() {
 		SPI_LoadPlugin(ini->ReadString("SPI", "Path", ""));
 	}
 
-//	delete ini;
+	// delete ini;
 	//
 	// this->Caption = "viewx++";
 }
@@ -76,7 +78,7 @@ void __fastcall TForm1::fn_LoadIni() {
 
 // ---------------------------------------------------------------------------
 // Load Raw GdViewer
-void __fastcall TForm1::fn_LoadGdvProperties(TGdViewer *gdv, TMemIniFile *ini) {
+void __fastcall TForm1::fn_LoadGdvProperties(TGdViewer* gdv, TMemIniFile* ini) {
 	gdv->AnimateGIF = ini->ReadBool("GdViewer", "AnimateGIF", true);
 	gdv->Appearance = ini->ReadInteger("GdViewer", "Appearance", 0);
 	gdv->BackColor = fn_IntToColor(ini->ReadInteger("GdViewer", "BackColor", 0xffffff));
@@ -137,14 +139,14 @@ void __fastcall TForm1::fn_LoadGdvProperties(TGdViewer *gdv, TMemIniFile *ini) {
 // lang.ini loading
 void __fastcall TForm1::fn_LoadLang() {
 	if (TFile::Exists(LangFile)) {
-		TStringList *sect = new TStringList();
-		TMemIniFile *ini = new TMemIniFile(LangFile);
+		TStringList* sect = new TStringList();
+		TMemIniFile* ini = new TMemIniFile(LangFile);
 
 		ini->ReadSectionValues("Lang.TMenuItem.Caption", sect);
 		for (int i = 0; i < sect->Count; ++i) {
 			String key = sect->Names[i];
 			String val = sect->Values[key];
-			TMenuItem *item = static_cast<TMenuItem*>(Form1->FindComponent(key));
+			TMenuItem* item = static_cast<TMenuItem*>(Form1->FindComponent(key));
 			if (item != NULL) {
 				item->Caption = val;
 			}
@@ -154,7 +156,7 @@ void __fastcall TForm1::fn_LoadLang() {
 		for (int i = 0; i < sect->Count; ++i) {
 			String key = sect->Names[i];
 			String val = sect->Values[key];
-			TToolButton *item = static_cast<TToolButton*>(Form1->FindComponent(key));
+			TToolButton* item = static_cast<TToolButton*>(Form1->FindComponent(key));
 			if (item != NULL) {
 				item->Hint = val;
 			}
@@ -176,7 +178,7 @@ void __fastcall TForm1::fn_LoadLang() {
 // ---------------------------------------------------------------------------
 // Ini File Saving
 void __fastcall TForm1::fn_SaveIni() {
-	TMemIniFile *ini = new TMemIniFile(IniFile);
+	TMemIniFile* ini = new TMemIniFile(IniFile);
 
 	// Window section
 	if (Form1->WindowState != wsMaximized && Form1->WindowState != wsMinimized) {

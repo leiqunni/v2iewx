@@ -16,14 +16,14 @@
 class TForm3 : public TForm
 {
 __published:	// IDE で管理されるコンポーネント
-	TListView *ListView1;
-	TButton *Button1;
-	void __fastcall FormShow(TObject *Sender);
-	void __fastcall FormDestroy(TObject *Sender);
+	TListView* ListView1;
+	TButton* Button1;
+	void __fastcall FormShow(TObject* Sender);
+	void __fastcall FormDestroy(TObject* Sender);
 private:	// ユーザー宣言
 	void __fastcall TForm3::AddListItem(String name, String value);
 
-//	TsearchRec sr;
+	//	TsearchRec sr;
 
 	class TFI : public TObject {
 	public:
@@ -42,6 +42,6 @@ public:		// ユーザー宣言
 	void __fastcall TForm3::ReadInfo(String fileName);
 };
 //---------------------------------------------------------------------------
-extern PACKAGE TForm3 *Form3;
+extern PACKAGE TForm3* Form3;
 //---------------------------------------------------------------------------
 #endif

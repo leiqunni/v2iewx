@@ -4,7 +4,7 @@
         <Icon_MainIcon>v2iewx_Icon.ico</Icon_MainIcon>
         <RunBCCOutOfProcess>true</RunBCCOutOfProcess>
         <SanitizedProjectName>v2iewx</SanitizedProjectName>
-        <IncludePath>C:\Users\leiqunni\Documents\Embarcadero\Studio\20.0\Imports;$(IncludePath)</IncludePath>
+        <IncludePath>C:\Users\leiqunni\Documents\Embarcadero\Studio\21.0\Imports;$(IncludePath)</IncludePath>
         <VerInfo_MinorVer>12</VerInfo_MinorVer>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Release>10</VerInfo_Release>

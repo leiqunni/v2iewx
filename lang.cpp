@@ -11,14 +11,14 @@
 void __fastcall LoadLang(TForm1* form, String inifile)
 {
 	if (TFile::Exists(inifile)) {
-		TStringList *sect = new TStringList();
-		TMemIniFile *ini = new TMemIniFile(inifile);
+		TStringList* sect = new TStringList();
+		TMemIniFile* ini = new TMemIniFile(inifile);
 
 		ini->ReadSectionValues("Lang.TMenuItem.Caption", sect);
 		for (int i = 0; i < sect->Count; ++i) {
 			String key = sect->Names[i];
 			String val = sect->Values[key];
-			TMenuItem *item = static_cast<TMenuItem*>(form->FindComponent(key));
+			TMenuItem* item = static_cast<TMenuItem*>(form->FindComponent(key));
 			if (item != NULL) {
 				item->Caption = val;
 			}
@@ -28,7 +28,7 @@ void __fastcall LoadLang(TForm1* form, String inifile)
 		for (int i = 0; i < sect->Count; ++i) {
 			String key = sect->Names[i];
 			String val = sect->Values[key];
-			TToolButton *item = static_cast<TToolButton*>(form->FindComponent(key));
+			TToolButton* item = static_cast<TToolButton*>(form->FindComponent(key));
 			if (item != NULL) {
 				item->Hint = val;
 			}
