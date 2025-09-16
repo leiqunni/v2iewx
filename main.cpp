@@ -63,13 +63,10 @@ void __fastcall TForm1::FormResize(TObject* Sender) {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::ScrollBarChange(TObject* Sender) {
-	if (flst->Count == 0) return;
+	if (flst->Count == 0)
+		return;
 
-	if (mnuViewSpreadViewNone->Checked) {  // not spread view
-		fn_LoadImage(Gdv0, (TFI*)flst->Items[ScrollBar->Position - 1]);
-	} else {
-		fn_LoadImage(Gdv0, (TFI*)flst->Items[ScrollBar->Position - 1 + (int)(mnuViewSpreadViewRight->Checked ? 1 : 0)]);
-	}
+	fn_LoadImage(Gdv0, (TFI*)flst->Items[ScrollBar->Position - 1]);
 }
 
 // ---------------------------------------------------------------------------
@@ -173,24 +170,6 @@ void __fastcall TForm1::mnuViewToolBarClick(TObject* Sender) {
 // [View]-[Status Bar]
 void __fastcall TForm1::mnuViewStatusBarClick(TObject* Sender) {
 	fn_StatusBar(!StatusBar->Visible);
-}
-
-// ---------------------------------------------------------------------------
-
-void __fastcall TForm1::mnuViewSpreadViewNoneClick(TObject* Sender) {
-	fn_SpreadView(0);
-}
-
-// ---------------------------------------------------------------------------
-
-void __fastcall TForm1::mnuViewSpreadViewRightClick(TObject* Sender) {
-	fn_SpreadView(1);
-}
-
-// ---------------------------------------------------------------------------
-
-void __fastcall TForm1::mnuViewSpreadViewLeftClick(TObject* Sender) {
-	fn_SpreadView(2);
 }
 
 // ---------------------------------------------------------------------------
@@ -420,22 +399,6 @@ void __fastcall TForm1::tbtnSpreadClick(TObject* Sender) {
 }
 
 // ---------------------------------------------------------------------------
-//
-void __fastcall TForm1::tbtnSpreadViewClick(TObject* Sender) {
-	switch (conf.SpreadView) {
-		case 0:
-			fn_SpreadView(1);
-			break;
-		case 1:
-			fn_SpreadView(2);
-			break;
-		case 2:
-			fn_SpreadView(0);
-			break;
-	}
-}
-
-// ---------------------------------------------------------------------------
 // [ToolBar]-[Slide Show]
 void __fastcall TForm1::tbtnSlideShowClick(TObject* Sender) {
 	fn_SlideShow();
@@ -506,7 +469,7 @@ void __fastcall TForm1::SPI_LoadPlugin(String path) {
 //
 HBITMAP __fastcall TForm1::SPI_LoadImage(String fileName) {
 	/* 対応プラグインの検索 */
-	for (int i = 0; i < hSPI->Count; i++) { // プラグイン関数の取得
+	for (int i = 0; i < hSPI->Count; i++) {  // プラグイン関数の取得
 		SPI_ISSUPPORTED spi_issupported = (SPI_ISSUPPORTED)GetProcAddress((HMODULE)hSPI->Items[i], SPIPROC_ISSUPPORTED);
 		SPI_GETPICTURE spi_getpicture = (SPI_GETPICTURE)GetProcAddress((HMODULE)hSPI->Items[i], SPIPROC_GETPICTURE);
 
@@ -753,13 +716,42 @@ void __fastcall TForm1::TimerTimer(TObject* Sender) {
 //
 void __fastcall TForm1::DisplayFromFile(TGdViewer* gv, String sFilePath) {
 	FullPath = sFilePath;
-	TFileStream* fs = new TFileStream(sFilePath, fmShareDenyNone);
-	char* buf = new char[fs->Size];
-	fs->Read(buf, fs->Size);
-	long g = fs->Size;
-	gv->DisplayFromMemory((long)buf, &g);
-	delete fs;
-	delete[] buf;
+
+	if (mnuViewEngineWic->Checked) {
+//		TWICHelper* wic = new TWICHelper();
+//		if (wic->IsInitialized()) {
+//			gv->DisplayFromHBitmap((long)wic->LoadImage(sFilePath)->Handle);
+//		}
+//		delete wic;
+		LoadFromWICFile(sFilePath);
+	} else {
+		TFileStream* fs = new TFileStream(sFilePath, fmShareDenyNone);
+		char* buf = new char[fs->Size];
+		fs->Read(buf, fs->Size);
+		long g = fs->Size;
+		gv->DisplayFromMemory((long)buf, &g);
+		delete fs;
+		delete[] buf;
+	}
+}
+
+TBitmap* __fastcall TForm1::LoadFromWICFile(String sFilePath) {
+	try {
+        TWICImage* wicImage = new TWICImage();
+        TBitmap* bitmap = new TBitmap();
+
+		try {
+			wicImage->LoadFromFile(sFilePath);
+			bitmap->Assign(wicImage);
+			Gdv0->DisplayFromHBitmap((long)bitmap->Handle);
+			return bitmap;
+		} __finally {
+            delete wicImage;
+            delete bitmap;
+        }
+	} catch (const Exception& e) {
+		ShowMessage("Error: " + e.Message);
+	}
 }
 
 // ---------------------------------------------------------------------------
@@ -781,7 +773,8 @@ void __fastcall TForm1::DisplayFromFile(TGdViewer* gv, String sFilePath) {
 // ---------------------------------------------------------------------------
 //
 void __fastcall TForm1::pumCopyToDesktopClick(TObject* Sender) {
-	if (flst->Count == 0) return;
+	if (flst->Count == 0)
+		return;
 
 	TFI* fi = (TFI*)(flst->Items[ScrollBar->Position - 1]);
 
@@ -792,3 +785,15 @@ void __fastcall TForm1::pumCopyToDesktopClick(TObject* Sender) {
 }
 
 //---------------------------------------------------------------------------
+void __fastcall TForm1::mnuViewEngineGdViewerClick(TObject *Sender)
+{
+	fn_ViewEngine(0);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::mnuViewEngineWicClick(TObject *Sender)
+{
+	fn_ViewEngine(1);
+}
+//---------------------------------------------------------------------------
+

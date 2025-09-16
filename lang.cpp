@@ -8,8 +8,7 @@
 
 // ---------------------------------------------------------------------------
 // lang.ini loading
-void __fastcall LoadLang(TForm1* form, String inifile)
-{
+void __fastcall LoadLang(TForm1* form, String inifile) {
 	if (TFile::Exists(inifile)) {
 		TStringList* sect = new TStringList();
 		TMemIniFile* ini = new TMemIniFile(inifile);
@@ -42,4 +41,3 @@ void __fastcall LoadLang(TForm1* form, String inifile)
 		delete sect;
 	}
 }
-

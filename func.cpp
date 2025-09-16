@@ -1,6 +1,6 @@
 ﻿// ---------------------------------------------------------------------------
-#include <vcl.h>
 #include "func.h"
+#include <vcl.h>
 #pragma hdrstop
 // ---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -85,18 +85,10 @@ void __fastcall TForm1::fn_Next() {
 	if (flst->Count == 0)
 		return;
 
-	if (mnuViewSpreadViewNone->Checked) { // Not Spread View
-		if (ScrollBar->Position >= flst->Count) {
-			ScrollBar->Position = 1;
-		} else {
-			ScrollBar->Position += 1;
-		}
+	if (ScrollBar->Position >= flst->Count) {
+		ScrollBar->Position = 1;
 	} else {
-		if (ScrollBar->Position >= flst->Count - 2) {
-			ScrollBar->Position = 1;
-		} else {
-			ScrollBar->Position += 2;
-		}
+		ScrollBar->Position += 1;
 	}
 }
 
@@ -106,18 +98,10 @@ void __fastcall TForm1::fn_Prev() {
 	if (flst->Count == 0)
 		return;
 
-	if (mnuViewSpreadViewNone->Checked) {
-		if (ScrollBar->Position <= 1) {
-			ScrollBar->Position = flst->Count;
-		} else {
-			ScrollBar->Position -= 1;
-		}
+	if (ScrollBar->Position <= 1) {
+		ScrollBar->Position = flst->Count;
 	} else {
-		if (ScrollBar->Position <= 0) {
-			ScrollBar->Position = flst->Count - 2;
-		} else {
-			ScrollBar->Position -= 2;
-		}
+		ScrollBar->Position -= 1;
 	}
 }
 
@@ -179,8 +163,7 @@ void __fastcall TForm1::fn_FileOpenDialog(bool folder) {
 	item->FileMask = "*.*";
 
 	if (folder) {
-		FileOpenDialog->Options =
-			TFileDialogOptions() << fdoPickFolders << fdoAllowMultiSelect << fdoPathMustExist << fdoFileMustExist;
+		FileOpenDialog->Options = TFileDialogOptions() << fdoPickFolders << fdoAllowMultiSelect << fdoPathMustExist << fdoFileMustExist;
 	} else {
 		FileOpenDialog->Options = TFileDialogOptions() << fdoAllowMultiSelect << fdoPathMustExist << fdoFileMustExist;
 	}
@@ -301,15 +284,15 @@ void __fastcall TForm1::fn_StatusBar(bool value) {
 //
 void __fastcall TForm1::fn_Reset() {
 	switch (conf.rot) {
-	case 1:
-		Gdv0->Rotate270();
-		break;
-	case 2:
-		Gdv0->Rotate180();
-		break;
-	case 3:
-		Gdv0->Rotate90();
-		break;
+		case 1:
+			Gdv0->Rotate270();
+			break;
+		case 2:
+			Gdv0->Rotate180();
+			break;
+		case 3:
+			Gdv0->Rotate90();
+			break;
 	}
 
 	conf.rot = 0;
@@ -320,15 +303,15 @@ void __fastcall TForm1::fn_Reset() {
 //
 void __fastcall TForm1::fn_Reset(TGdViewer* gv) {
 	switch (conf.rot) {
-	case 1:
-		gv->Rotate270();
-		break;
-	case 2:
-		gv->Rotate180();
-		break;
-	case 3:
-		gv->Rotate90();
-		break;
+		case 1:
+			gv->Rotate270();
+			break;
+		case 2:
+			gv->Rotate180();
+			break;
+		case 3:
+			gv->Rotate90();
+			break;
 	}
 
 	conf.rot = 0;
@@ -337,33 +320,19 @@ void __fastcall TForm1::fn_Reset(TGdViewer* gv) {
 
 // ---------------------------------------------------------------------------
 // []
-void __fastcall TForm1::fn_SpreadView(int value) {
-	conf.SpreadView = value;
-
-	// switch (value) {
-	// case 0:
-	// Splitter->Visible = false;
-	// Panel1->Visible = false;
-	mnuViewSpreadViewNone->Checked = true;
-	tbtnSpreadView->Down = false;
-	tbtnSpreadView->ImageIndex = 16;
-	return;
-	// break;
-	// case 1:
-	// mnuViewSpreadViewRight->Checked = true;
-	// tbtnSpreadView->ImageIndex = 17;
-	// break;
-	// case 2:
-	// mnuViewSpreadViewLeft->Checked = true;
-	// tbtnSpreadView->ImageIndex = 18;
-	// break;
-	// }
-	//
-	// Panel1->Visible = true;
-	// Splitter->Visible = true;
-	// // Panel1->Visible = true;
-	// tbtnSpreadView->Down = true;
-	// Panel1->Width = (Form1->ClientWidth - Splitter->Width) / 2;
+void __fastcall TForm1::fn_ViewEngine(int value) {
+	conf.ViewEngine = value;
+	switch (value) {
+		case 0:
+			mnuViewEngineGdViewer->Checked = true;
+			mnuViewEngineWic->Checked = false;
+			break;
+		case 1:
+        default:
+			mnuViewEngineGdViewer->Checked = false;
+			mnuViewEngineWic->Checked = true;
+			break;
+	}
 }
 
 // ---------------------------------------------------------------------------
@@ -397,34 +366,34 @@ void __fastcall TForm1::fn_KeepRot(bool value) {
 //
 void __fastcall TForm1::fn_ZoomMode(int value) {
 	switch (value) {
-	case 1: // []
-		Gdv0->ZoomMode = 1;
-		mnuViewActual->Checked = true;
-		mnuViewOptimizeWindowSize->Enabled = true;
-		tbtnActual->Down = true;
-		break;
-	case 2: // []
-		Gdv0->ZoomMode = 2;
-		mnuViewBestfit->Checked = true;
-		mnuViewOptimizeWindowSize->Enabled = false;
-		tbtnBestfit->Down = true;
-		break;
-	case 6: // []
-		Gdv0->ZoomMode = 6;
-		mnuViewSpread->Checked = true;
-		mnuViewOptimizeWindowSize->Enabled = false;
-		tbtnSpread->Down = true;
-		break;
-	case 99:
-		if (Gdv0->Width > Gdv0->ImageWidth && Gdv0->Height > Gdv0->ImageHeight) {
+		case 1:  // []
 			Gdv0->ZoomMode = 1;
-		} else {
+			mnuViewActual->Checked = true;
+			mnuViewOptimizeWindowSize->Enabled = true;
+			tbtnActual->Down = true;
+			break;
+		case 2:  // []
 			Gdv0->ZoomMode = 2;
-		}
-		mnuViewInWindow->Checked = true;
-		mnuViewOptimizeWindowSize->Enabled = false;
-		tbtnInWindow->Down = true;
-		break;
+			mnuViewBestfit->Checked = true;
+			mnuViewOptimizeWindowSize->Enabled = false;
+			tbtnBestfit->Down = true;
+			break;
+		case 6:  // []
+			Gdv0->ZoomMode = 6;
+			mnuViewSpread->Checked = true;
+			mnuViewOptimizeWindowSize->Enabled = false;
+			tbtnSpread->Down = true;
+			break;
+		case 99:
+			if (Gdv0->Width > Gdv0->ImageWidth && Gdv0->Height > Gdv0->ImageHeight) {
+				Gdv0->ZoomMode = 1;
+			} else {
+				Gdv0->ZoomMode = 2;
+			}
+			mnuViewInWindow->Checked = true;
+			mnuViewOptimizeWindowSize->Enabled = false;
+			tbtnInWindow->Down = true;
+			break;
 	}
 }
 
@@ -432,34 +401,34 @@ void __fastcall TForm1::fn_ZoomMode(int value) {
 //
 void __fastcall TForm1::fn_ZoomMode(TGdViewer* gv, int value) {
 	switch (value) {
-	case 1: // []
-		gv->ZoomMode = 1;
-		mnuViewActual->Checked = true;
-		mnuViewOptimizeWindowSize->Enabled = true;
-		tbtnActual->Down = true;
-		break;
-	case 2: // []
-		gv->ZoomMode = 2;
-		mnuViewBestfit->Checked = true;
-		mnuViewOptimizeWindowSize->Enabled = false;
-		tbtnBestfit->Down = true;
-		break;
-	case 6: // []
-		gv->ZoomMode = 6;
-		mnuViewSpread->Checked = true;
-		mnuViewOptimizeWindowSize->Enabled = false;
-		tbtnSpread->Down = true;
-		break;
-	case 99:
-		if (gv->Width > gv->ImageWidth && gv->Height > gv->ImageHeight) {
+		case 1:  // []
 			gv->ZoomMode = 1;
-		} else {
+			mnuViewActual->Checked = true;
+			mnuViewOptimizeWindowSize->Enabled = true;
+			tbtnActual->Down = true;
+			break;
+		case 2:  // []
 			gv->ZoomMode = 2;
-		}
-		mnuViewInWindow->Checked = true;
-		mnuViewOptimizeWindowSize->Enabled = false;
-		tbtnInWindow->Down = true;
-		break;
+			mnuViewBestfit->Checked = true;
+			mnuViewOptimizeWindowSize->Enabled = false;
+			tbtnBestfit->Down = true;
+			break;
+		case 6:  // []
+			gv->ZoomMode = 6;
+			mnuViewSpread->Checked = true;
+			mnuViewOptimizeWindowSize->Enabled = false;
+			tbtnSpread->Down = true;
+			break;
+		case 99:
+			if (gv->Width > gv->ImageWidth && gv->Height > gv->ImageHeight) {
+				gv->ZoomMode = 1;
+			} else {
+				gv->ZoomMode = 2;
+			}
+			mnuViewInWindow->Checked = true;
+			mnuViewOptimizeWindowSize->Enabled = false;
+			tbtnInWindow->Down = true;
+			break;
 	}
 }
 
@@ -467,8 +436,8 @@ void __fastcall TForm1::fn_ZoomMode(TGdViewer* gv, int value) {
 // []
 void __fastcall TForm1::fn_OptimizeWindowSize(bool value) {
 	this->ClientWidth = Gdv0->ImageWidth;
-	this->ClientHeight = Gdv0->ImageHeight - (ScrollBar->Visible ? ScrollBar->Height : 0) -
-		(ToolBar->Visible ? ToolBar->Height : 0) - (StatusBar->Visible ? StatusBar->Height : 0);
+	this->ClientHeight = Gdv0->ImageHeight - (ScrollBar->Visible ? ScrollBar->Height : 0) - (ToolBar->Visible ? ToolBar->Height : 0) -
+	                     (StatusBar->Visible ? StatusBar->Height : 0);
 	mnuViewOptimizeWindowSize->Checked = value;
 }
 
@@ -485,46 +454,46 @@ void __fastcall TForm1::fn_Sort(SortOrder order, bool asc) {
 	}
 
 	switch (order) {
-	case kByName: // [Name]
-		if (asc) {
-			flst->Sort(cmpNameAsc);
-		} else {
-			flst->Sort(cmpNameDesc);
-		}
-		mnuViewOrderName->Checked = true;
-		break;
-	case kByNameNum: // [Numeric]
-		if (asc) {
-			flst->Sort(cmpNameNumAsc);
-		} else {
-			flst->Sort(cmpNameNumDesc);
-		}
-		mnuViewOrderNameNum->Checked = true;
-		break;
-	case kByTime: // [Modify Date]
-		if (asc) {
-			flst->Sort(cmpTimeAsc);
-		} else {
-			flst->Sort(cmpTimeDesc);
-		}
-		mnuViewOrderDate->Checked = true;
-		break;
-	case kByType: // [Type]
-		if (asc) {
-			flst->Sort(cmpTypeAsc);
-		} else {
-			flst->Sort(cmpTypeDesc);
-		}
-		mnuViewOrderType->Checked = true;
-		break;
-	case kBySize: // [Size]
-		if (asc) {
-			flst->Sort(cmpSizeAsc);
-		} else {
-			flst->Sort(cmpSizeDesc);
-		}
-		mnuViewOrderSize->Checked = true;
-		break;
+		case kByName:  // [Name]
+			if (asc) {
+				flst->Sort(cmpNameAsc);
+			} else {
+				flst->Sort(cmpNameDesc);
+			}
+			mnuViewOrderName->Checked = true;
+			break;
+		case kByNameNum:  // [Numeric]
+			if (asc) {
+				flst->Sort(cmpNameNumAsc);
+			} else {
+				flst->Sort(cmpNameNumDesc);
+			}
+			mnuViewOrderNameNum->Checked = true;
+			break;
+		case kByTime:  // [Modify Date]
+			if (asc) {
+				flst->Sort(cmpTimeAsc);
+			} else {
+				flst->Sort(cmpTimeDesc);
+			}
+			mnuViewOrderDate->Checked = true;
+			break;
+		case kByType:  // [Type]
+			if (asc) {
+				flst->Sort(cmpTypeAsc);
+			} else {
+				flst->Sort(cmpTypeDesc);
+			}
+			mnuViewOrderType->Checked = true;
+			break;
+		case kBySize:  // [Size]
+			if (asc) {
+				flst->Sort(cmpSizeAsc);
+			} else {
+				flst->Sort(cmpSizeDesc);
+			}
+			mnuViewOrderSize->Checked = true;
+			break;
 	}
 }
 
@@ -534,32 +503,32 @@ void __fastcall TForm1::fn_Quality(ViewerQuality value) {
 	_ViewerQuality = value;
 
 	switch (value) {
-	case Auto:
-		Gdv0->ViewerQualityAuto = true;
-		mnuViewQualityAuto->Checked = true;
-		break;
-	default:
-		Gdv0->ViewerQualityAuto = false;
-		Gdv0->ViewerQuality = value;
-		break;
+		case Auto:
+			Gdv0->ViewerQualityAuto = true;
+			mnuViewQualityAuto->Checked = true;
+			break;
+		default:
+			Gdv0->ViewerQualityAuto = false;
+			Gdv0->ViewerQuality = value;
+			break;
 	}
 
 	switch (value) {
-	case Low: // Low
-		mnuViewQualityLow->Checked = true;
-		break;
-	case Bilinear: // Bilinear
-		mnuViewQualityBilinear->Checked = true;
-		break;
-	case Bicubic: // Bicubic
-		mnuViewQualityBicubic->Checked = true;
-		break;
-	case BilinearHQ: // BilinearHQ
-		mnuViewQualityBilinearHQ->Checked = true;
-		break;
-	case BicubicHQ: // BicubicHQ
-		mnuViewQualityBicubicHQ->Checked = true;
-		break;
+		case Low:  // Low
+			mnuViewQualityLow->Checked = true;
+			break;
+		case Bilinear:  // Bilinear
+			mnuViewQualityBilinear->Checked = true;
+			break;
+		case Bicubic:  // Bicubic
+			mnuViewQualityBicubic->Checked = true;
+			break;
+		case BilinearHQ:  // BilinearHQ
+			mnuViewQualityBilinearHQ->Checked = true;
+			break;
+		case BicubicHQ:  // BicubicHQ
+			mnuViewQualityBicubicHQ->Checked = true;
+			break;
 	}
 }
 
@@ -754,8 +723,7 @@ void __fastcall TForm1::fn_FindDir(String dir, String name) {
 					fn_FindDir(TPath::Combine(dir, sr.Name), "*.*");
 				}
 			}
-		}
-		while (!FindNext(sr));
+		} while (!FindNext(sr));
 	}
 
 	FindClose(sr);
@@ -764,28 +732,28 @@ void __fastcall TForm1::fn_FindDir(String dir, String name) {
 // ---------------------------------------------------------------------------
 // 画像表示
 void __fastcall TForm1::fn_LoadImage(TGdViewer* gv, TFI* fi) {
-	if (hSPI->Count > 0) { // use SPI
+	if (hSPI->Count > 0) {  // use SPI
 		conf.isSPI = false;
 		HBITMAP bmp = SPI_LoadImage(fi->FullName.w_str());
 		if (bmp != NULL) {
 			gv->DisplayFromHBitmap((long)bmp);
 			conf.isSPI = true;
 		}
-	} else { // not use SPI
+	} else {  // not use SPI
 		DisplayFromFile(gv, ((TFI*)fi)->FullName);
 	}
 
 	if (mnuViewKeepRot->Checked) {
 		switch (conf.rot) {
-		case 1:
-			gv->Rotate90();
-			break;
-		case 2:
-			gv->Rotate180();
-			break;
-		case 3:
-			gv->Rotate270();
-			break;
+			case 1:
+				gv->Rotate90();
+				break;
+			case 2:
+				gv->Rotate180();
+				break;
+			case 3:
+				gv->Rotate270();
+				break;
 		}
 	} else {
 		conf.rot = 0;

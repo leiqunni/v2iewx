@@ -23,8 +23,8 @@ object Form3: TForm3
     Height = 24
     Anchors = [akRight, akBottom]
     Caption = '&Apply'
-    Enabled = False
     TabOrder = 0
+    OnClick = btnApplyClick
   end
   object btnOk: TButton
     Left = 440
@@ -34,6 +34,7 @@ object Form3: TForm3
     Anchors = [akRight, akBottom]
     Caption = '&Ok'
     TabOrder = 1
+    OnClick = btnOkClick
   end
   object btnCancel: TButton
     Left = 534
@@ -43,6 +44,7 @@ object Form3: TForm3
     Anchors = [akRight, akBottom]
     Caption = '&Cancel'
     TabOrder = 2
+    OnClick = btnCancelClick
   end
   object PageControl1: TPageControl
     Left = 8
@@ -88,7 +90,6 @@ object Form3: TForm3
           Height = 21
           Anchors = [akLeft, akTop, akRight]
           TabOrder = 0
-          ExplicitWidth = 505
         end
         object edtStatus: TEdit
           Left = 64
@@ -97,7 +98,6 @@ object Form3: TForm3
           Height = 21
           Anchors = [akLeft, akTop, akRight]
           TabOrder = 1
-          ExplicitWidth = 505
         end
       end
       object GroupBox1: TGroupBox

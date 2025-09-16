@@ -4,17 +4,16 @@
 #define optionH
 //---------------------------------------------------------------------------
 #include <System.Classes.hpp>
-#include <Vcl.Controls.hpp>
-#include <Vcl.StdCtrls.hpp>
-#include <Vcl.Forms.hpp>
 #include <Vcl.ComCtrls.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.Forms.hpp>
+#include <Vcl.StdCtrls.hpp>
 
 #include "main.h"
 
 //---------------------------------------------------------------------------
-class TForm3 : public TForm
-{
-__published:	// IDE で管理されるコンポーネント
+class TForm3 : public TForm {
+   __published:  // IDE で管理されるコンポーネント
 	TButton* btnApply;
 	TButton* btnOk;
 	TButton* btnCancel;
@@ -28,8 +27,12 @@ __published:	// IDE で管理されるコンポーネント
 	TEdit* edtStatus;
 	TGroupBox* GroupBox1;
 	TEdit* edtExt;
-private:	// ユーザー宣言
-public:		// ユーザー宣言
+	void __fastcall btnCancelClick(TObject* Sender);
+	void __fastcall btnOkClick(TObject* Sender);
+	void __fastcall btnApplyClick(TObject* Sender);
+
+   private:  // ユーザー宣言
+   public:   // ユーザー宣言
 	__fastcall TForm3(TComponent* Owner);
 };
 //---------------------------------------------------------------------------

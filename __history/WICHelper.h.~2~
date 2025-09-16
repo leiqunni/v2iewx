@@ -1,0 +1,61 @@
+// WICHelper.h
+#ifndef WICHelperH
+#define WICHelperH
+
+#include <vcl.h>
+#include <windows.h>
+#include <wincodec.h>
+#include <wincodecsdk.h>
+//#include <comdef.h>
+#include <comutil.h>
+#include <Graphics.hpp>
+
+class TWICHelper {
+private:
+    IWICImagingFactory* FFactory;
+    bool FInitialized;
+
+    // Error handling
+    String GetErrorMessage(HRESULT hr);
+
+    // Internal helper methods
+    bool ConvertFrameToBitmap(IWICBitmapFrameDecode* pFrame, TBitmap* bitmap);
+    IWICBitmapEncoder* CreateEncoder(const String& fileName, GUID& containerFormat);
+
+public:
+    TWICHelper();
+    ~TWICHelper();
+
+    // Check initialization status
+    bool IsInitialized() const { return FInitialized; }
+
+    // Image loading
+	bool LoadImage(const String& fileName, TBitmap* bitmap);
+	bool LoadImageFromStream(TStream* stream, TBitmap* bitmap);
+
+	TBitmap* LoadImage(const String& fileName);
+	TBitmap* LoadImageFromStream(TStream* stream);
+
+    // Image saving
+    bool SaveImage(TBitmap* bitmap, const String& fileName, int quality = 95);
+    bool SaveImageToStream(TBitmap* bitmap, TStream* stream, const GUID& format, int quality = 95);
+
+    // Get image information
+    bool GetImageInfo(const String& fileName, UINT& width, UINT& height,
+                     WICPixelFormatGUID& pixelFormat);
+
+    // Check supported format
+    bool IsSupportedFormat(const String& fileName);
+
+    // Resize
+    bool ResizeImage(const String& srcFileName, const String& dstFileName,
+                    UINT newWidth, UINT newHeight, int quality = 95);
+
+    // Format conversion
+    bool ConvertFormat(const String& srcFileName, const String& dstFileName,
+                      int quality = 95);
+};
+
+#endif
+
+

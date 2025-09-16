@@ -9,9 +9,7 @@
 #pragma resource "*.dfm"
 TForm4* Form4;
 //---------------------------------------------------------------------------
-__fastcall TForm4::TForm4(TComponent* Owner)
-	: TForm(Owner)
-{
+__fastcall TForm4::TForm4(TComponent* Owner) : TForm(Owner) {
 	IniDefFile = TPath::Combine(ExtractFilePath(Application->ExeName), "v2iewx.ini.def");
 	IniFile = TPath::Combine(ExtractFilePath(Application->ExeName), "v2iewx.ini");
 
@@ -22,17 +20,11 @@ __fastcall TForm4::TForm4(TComponent* Owner)
 
 #pragma region "LoadIni"
 
-void __fastcall TForm4::LoadIni()
-{
+void __fastcall TForm4::LoadIni() {
 	ini = new TMemIniFile(IniFile);
-
-
-
 }
 
-
-void __fastcall TForm4::LoadIniDef()
-{
+void __fastcall TForm4::LoadIniDef() {
 	//
 	def = new TMemIniFile(IniDefFile);
 
@@ -53,7 +45,6 @@ void __fastcall TForm4::LoadIniDef()
 	}
 	TreeView->FullExpand();
 
-
 	//	String key, val, param;
 	//
 	//	for (int i = 0; i < sections->Count; i++) {
@@ -70,14 +61,11 @@ void __fastcall TForm4::LoadIniDef()
 	//
 	//	}
 }
-void __fastcall TForm4::TreeViewClick(TObject* Sender)
-{
-	if (TreeView->Selected->Parent == NULL) return;
+void __fastcall TForm4::TreeViewClick(TObject* Sender) {
+	if (TreeView->Selected->Parent == NULL)
+		return;
 
-	String val = def->ReadString(
-		TreeView->Selected->Parent->Text,
-		TreeView->Selected->Text,
-		"");
+	String val = def->ReadString(TreeView->Selected->Parent->Text, TreeView->Selected->Text, "");
 
 	TStringDynArray vals = SplitString(val, ":");
 
@@ -87,9 +75,6 @@ void __fastcall TForm4::TreeViewClick(TObject* Sender)
 
 	if (vals[1] == "bool") {
 		String value = ini->ReadString(TreeView->Selected->Parent->Text, TreeView->Selected->Text, "false");
-
 	}
-
 }
 //---------------------------------------------------------------------------
-

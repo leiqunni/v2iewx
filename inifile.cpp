@@ -49,17 +49,16 @@ void __fastcall TForm1::fn_LoadIni() {
 	mnuFileLoadSubdirectry->Checked = ini->ReadBool("Function", "LoadSubdirectry", false);
 	conf.KeepListWhenFileOpen = ini->ReadBool(L"Function", "KeepListWhenFileOpen", false);
 	// conf.MouseGesture = ini->ReadBool("Function", "MouseGesture", true);
-	fn_SpreadView(ini->ReadInteger("Function", "SpreadView", 0));
 	fn_KeepRot(ini->ReadBool("Function", "KeepRotation", false));
 	fn_Sort((SortOrder)ini->ReadInteger("Function", "SortOrder", 0), ini->ReadBool("Function", "SortAsc", true));
 	fn_ZoomMode(ini->ReadInteger("Function", "ZoomMode", 2));
+	fn_ViewEngine(ini->ReadInteger("Function", "ViewEngine", 0));
 
 	Timer->Interval = ini->ReadInteger("Function", "SlideShow", 3000);
 	conf.TitleText = ini->ReadString("Function", "Title", "%_filename_ext% [%_position%/%_total%] - v2iewx %_isspi%");
-	conf.StatusText = ini->ReadString("Function", "Status",
-		"大きさ: %_width% x %_height% 更新日時: %_last_modified% サイズ: %_filesize_kb% KB 拡大率: %_zoom% %");
-	conf.Ext = ini->ReadString("Function", "Ext",
-		"\\.bmp$|\\.gif$|\\.ico$|\\.jpe$|\\.jpeg$|\\.jpg$|\\.pcx$|\\.png$|\\.tif$|\\.tiff$|\\.wmf$|\\.jp2$|\\.j2k$");
+	conf.StatusText =
+	    ini->ReadString("Function", "Status", "大きさ: %_width% x %_height% 更新日時: %_last_modified% サイズ: %_filesize_kb% KB 拡大率: %_zoom% %");
+	conf.Ext = ini->ReadString("Function", "Ext", "\\.bmp$|\\.gif$|\\.ico$|\\.jpe$|\\.jpeg$|\\.jpg$|\\.pcx$|\\.png$|\\.tif$|\\.tiff$|\\.wmf$|\\.jp2$|\\.j2k$");
 	// conf.rot = ini->ReadInteger("Function", "Rot", 0);
 
 	// SPI section
@@ -203,7 +202,8 @@ void __fastcall TForm1::fn_SaveIni() {
 
 	// Function section
 	ini->WriteBool("Function", "LoadSubdirectry", mnuFileLoadSubdirectry->Checked);
-	ini->WriteInteger("Function", "SpreadView", conf.SpreadView);
+	ini->WriteInteger("Function", "ViewEngine", conf.ViewEngine);
+
 	ini->WriteBool("Function", "KeepRot", mnuViewKeepRot->Checked);
 	ini->WriteBool("Function", "SortAsc", conf.asc);
 	ini->WriteInteger("Function", "SortOrder", conf.order);

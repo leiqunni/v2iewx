@@ -4,45 +4,46 @@
 #define mainH
 // ---------------------------------------------------------------------------
 #include <System.Classes.hpp>
-#include <Vcl.Controls.hpp>
-#include <Vcl.StdCtrls.hpp>
-#include <Vcl.Forms.hpp>
-#include "GdViewerPro4_OCX.h"
 #include <Vcl.ComCtrls.hpp>
+#include <Vcl.Controls.hpp>
 #include <Vcl.Dialogs.hpp>
 #include <Vcl.ExtCtrls.hpp>
+#include <Vcl.Forms.hpp>
 #include <Vcl.ImgList.hpp>
 #include <Vcl.Menus.hpp>
 #include <Vcl.OleCtrls.hpp>
+#include <Vcl.StdCtrls.hpp>
 #include <Vcl.ToolWin.hpp>
+#include "GdViewerPro4_OCX.h"
+#include "WICHelper.h"
 // ---------------------------------------------------------------------------
-#include <Buttons.hpp>
-#include <Clipbrd.hpp>
-#include <IOUtils.hpp>
-#include <System.RegularExpressions.hpp>
-#include <System.StrUtils.hpp>
-#include <System.IniFiles.hpp>
+#include <mmsystem.h>
 #include <shlwapi.h>
 #include <typeinfo.h>
+#include <Buttons.hpp>
+#include <Clipbrd.hpp>
 #include <FileCtrl.hpp>
-#include <mmsystem.h>
+#include <IOUtils.hpp>
+#include <System.IniFiles.hpp>
+#include <System.RegularExpressions.hpp>
+#include <System.StrUtils.hpp>
 #include <math.hpp>
 
+#include <System.ImageList.hpp>
 #include "about.h"
 #include "option.h"
 #include "spi_plugin.h"
-#include <System.ImageList.hpp>
 
 // ---------------------------------------------------------------------------
 // Open Macro
-#define CreateFile_Read(filename)   (CreateFile(filename, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL))
-#define CreateFile_Create(filename) (CreateFile(filename, GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_NEW,   FILE_ATTRIBUTE_NORMAL, NULL))
-#define CreateFile_Write(filename)  (CreateFile(filename, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL))
+#define CreateFile_Read(filename) (CreateFile(filename, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL))
+#define CreateFile_Create(filename) (CreateFile(filename, GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL))
+#define CreateFile_Write(filename) (CreateFile(filename, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL))
 
 // Heap Macro
-#define Heap_Malloc(size)       (HeapAlloc(GetProcessHeap(), 0, size))
+#define Heap_Malloc(size) (HeapAlloc(GetProcessHeap(), 0, size))
 #define Heap_ReAlloc(mem, size) (HeapReAlloc(GetProcessHeap(), 0, mem, size))
-#define Heap_Free(mem)          (HeapFree(GetProcessHeap(), 0, mem))
+#define Heap_Free(mem) (HeapFree(GetProcessHeap(), 0, mem))
 
 #define max(a, b) (((a) > (b)) ? (a) : (b))
 #define min(a, b) (((a) < (b)) ? (a) : (b))
@@ -53,8 +54,7 @@
 
 // ---------------------------------------------------------------------------
 class TForm1 : public TForm {
-__published: // IDE-managed Components
-
+   __published:  // IDE-managed Components
 	TFileOpenDialog* FileOpenDialog;
 	TImageList* ImageList;
 	TMainMenu* MainMenu;
@@ -115,17 +115,12 @@ __published: // IDE-managed Components
 	TMenuItem* mnuViewRotateRight;
 	TMenuItem* mnuViewScrollBar;
 	TMenuItem* mnuViewSpread;
-	TMenuItem* mnuViewSpreadView;
-	TMenuItem* mnuViewSpreadViewLeft;
-	TMenuItem* mnuViewSpreadViewNone;
-	TMenuItem* mnuViewSpreadViewRight;
 	TMenuItem* mnuViewStatusBar;
 	TMenuItem* mnuViewToolBar;
 	TMenuItem* mnuView_0;
 	TMenuItem* mnuView_1;
 	TMenuItem* mnuView_3;
 	TMenuItem* mnuView_4;
-	TMenuItem* mnuView_5;
 	TMenuItem* mnuView_6;
 	TMenuItem* pumCopyToDesktop;
 	TOpenDialog* OpenDialog;
@@ -158,19 +153,18 @@ __published: // IDE-managed Components
 	TToolButton* tbtnSep_6;
 	TToolButton* tbtnTrash;
 	TGdViewer* Gdv0;
+	TMenuItem *N5;
+	TMenuItem *mnuViewEngineGdViewer;
+	TMenuItem *mnuViewEngineWic;
 
 	void __fastcall FormDestroy(TObject* Sender);
 	void __fastcall FormKeyDown(TObject* Sender, WORD& Key, TShiftState Shift);
-	void __fastcall FormMouseWheel(TObject* Sender, TShiftState Shift,
-		int WheelDelta, TPoint& MousePos, bool& Handled);
+	void __fastcall FormMouseWheel(TObject* Sender, TShiftState Shift, int WheelDelta, TPoint& MousePos, bool& Handled);
 	void __fastcall FormResize(TObject* Sender);
 	void __fastcall Gdv0ClickControl(TObject* Sender);
-	void __fastcall Gdv0MouseDownControl(TObject* Sender, short* Button,
-		short* shift, float* X, float* Y);
-	void __fastcall Gdv0MouseMoveControl(TObject* Sender, short* Button,
-		short* shift, float* X, float* Y);
-	void __fastcall Gdv0MouseUpControl(TObject* Sender, short* Button,
-		short* shift, float* X, float* Y);
+	void __fastcall Gdv0MouseDownControl(TObject* Sender, short* Button, short* shift, float* X, float* Y);
+	void __fastcall Gdv0MouseMoveControl(TObject* Sender, short* Button, short* shift, float* X, float* Y);
+	void __fastcall Gdv0MouseUpControl(TObject* Sender, short* Button, short* shift, float* X, float* Y);
 	void __fastcall Gdv0DblClickControl(TObject* Sender);
 
 	// void __fastcall Gdv1ClickControl(TObject *Sender);
@@ -218,9 +212,6 @@ __published: // IDE-managed Components
 	void __fastcall mnuViewRotateLeftClick(TObject* Sender);
 	void __fastcall mnuViewRotateRightClick(TObject* Sender);
 	void __fastcall mnuViewScrollBarClick(TObject* Sender);
-	void __fastcall mnuViewSpreadViewLeftClick(TObject* Sender);
-	void __fastcall mnuViewSpreadViewNoneClick(TObject* Sender);
-	void __fastcall mnuViewSpreadViewRightClick(TObject* Sender);
 	void __fastcall mnuViewStatusBarClick(TObject* Sender);
 	void __fastcall mnuViewToolBarClick(TObject* Sender);
 	void __fastcall pumCopyToDesktopClick(TObject* Sender);
@@ -235,26 +226,23 @@ __published: // IDE-managed Components
 	void __fastcall tbtnRotateRightClick(TObject* Sender);
 	void __fastcall tbtnSlideShowClick(TObject* Sender);
 	void __fastcall tbtnSpreadClick(TObject* Sender);
-	void __fastcall tbtnSpreadViewClick(TObject* Sender);
 	void __fastcall tbtnZoomInClick(TObject* Sender);
 	void __fastcall tbtnZoomOutClick(TObject* Sender);
 	void __fastcall mnuViewSpreadClick(TObject* Sender);
 	void __fastcall tbtnTrashClick(TObject* Sender);
+	void __fastcall mnuViewEngineGdViewerClick(TObject *Sender);
+	void __fastcall mnuViewEngineWicClick(TObject *Sender);
 
-private:
+   private:
 	// User declarations
 
-	enum SortOrder {
-		kByName, kByNameNum, kByTime, kByType, kBySize
-	};
+	enum SortOrder { kByName, kByNameNum, kByTime, kByType, kBySize };
 
-	typedef enum {
-		Low, Bilinear, Bicubic, BilinearHQ, BicubicHQ, Auto
-	} ViewerQuality;
+	typedef enum { Low, Bilinear, Bicubic, BilinearHQ, BicubicHQ, Auto } ViewerQuality;
 
 	int _ViewerQuality = 5;
 
-	struct { // Mouse gestures
+	struct {  // Mouse gestures
 		bool Enabled;
 		// int exx, exy;
 		// String strokes;
@@ -262,7 +250,7 @@ private:
 
 	// File object class
 	class TFI : public TObject {
-	public:
+	   public:
 		String FullName;
 		String Name;
 		String Ext;
@@ -282,58 +270,32 @@ private:
 	// Inifile's path
 	String IniFile, KeyFile, LangFile, RecentFile;
 
-	TMemIniFile* KeyConf, * Recent;
+	TMemIniFile *KeyConf, *Recent;
 
 	TStringList* RecentList;
 	// bool isSetWindowSize;
 
-#pragma region  " sortFunc "
+#pragma region " sortFunc "
 
-	int __fastcall static cmpNameAsc(void* left, void* right) {
-		return StrComp(((TFI*)left)->Name.w_str(),
-			((TFI*)right)->Name.w_str());
-	}
+	int __fastcall static cmpNameAsc(void* left, void* right) { return StrComp(((TFI*)left)->Name.w_str(), ((TFI*)right)->Name.w_str()); }
 
-	int __fastcall static cmpNameDesc(void* right, void* left) {
-		return StrComp(((TFI*)left)->Name.w_str(),
-			((TFI*)right)->Name.w_str());
-	}
+	int __fastcall static cmpNameDesc(void* right, void* left) { return StrComp(((TFI*)left)->Name.w_str(), ((TFI*)right)->Name.w_str()); }
 
-	int __fastcall static cmpNameNumAsc(void* left, void* right) {
-		return StrCmpLogicalW(((TFI*)left)->Name.w_str(),
-			((TFI*)right)->Name.w_str());
-	}
+	int __fastcall static cmpNameNumAsc(void* left, void* right) { return StrCmpLogicalW(((TFI*)left)->Name.w_str(), ((TFI*)right)->Name.w_str()); }
 
-	int __fastcall static cmpNameNumDesc(void* right, void* left) {
-		return StrCmpLogicalW(((TFI*)left)->Name.w_str(),
-			((TFI*)right)->Name.w_str());
-	}
+	int __fastcall static cmpNameNumDesc(void* right, void* left) { return StrCmpLogicalW(((TFI*)left)->Name.w_str(), ((TFI*)right)->Name.w_str()); }
 
-	int __fastcall static cmpTimeAsc(void* left, void* right) {
-		return ((TFI*)left)->Date - ((TFI*)right)->Date;
-	}
+	int __fastcall static cmpTimeAsc(void* left, void* right) { return ((TFI*)left)->Date - ((TFI*)right)->Date; }
 
-	int __fastcall static cmpTimeDesc(void* right, void* left) {
-		return ((TFI*)left)->Date - ((TFI*)right)->Date;
-	}
+	int __fastcall static cmpTimeDesc(void* right, void* left) { return ((TFI*)left)->Date - ((TFI*)right)->Date; }
 
-	int __fastcall static cmpTypeAsc(void* left, void* right) {
-		return StrComp(((TFI*)left)->Ext.w_str(),
-			((TFI*)right)->Ext.w_str());
-	}
+	int __fastcall static cmpTypeAsc(void* left, void* right) { return StrComp(((TFI*)left)->Ext.w_str(), ((TFI*)right)->Ext.w_str()); }
 
-	int __fastcall static cmpTypeDesc(void* right, void* left) {
-		return StrComp(((TFI*)left)->Ext.w_str(),
-			((TFI*)right)->Ext.w_str());
-	}
+	int __fastcall static cmpTypeDesc(void* right, void* left) { return StrComp(((TFI*)left)->Ext.w_str(), ((TFI*)right)->Ext.w_str()); }
 
-	int __fastcall static cmpSizeAsc(void* left, void* right) {
-		return ((TFI*)left)->Size - ((TFI*)right)->Size;
-	}
+	int __fastcall static cmpSizeAsc(void* left, void* right) { return ((TFI*)left)->Size - ((TFI*)right)->Size; }
 
-	int __fastcall static cmpSizeDesc(void* right, void* left) {
-		return ((TFI*)left)->Size - ((TFI*)right)->Size;
-	}
+	int __fastcall static cmpSizeDesc(void* right, void* left) { return ((TFI*)left)->Size - ((TFI*)right)->Size; }
 
 #pragma end_region
 
@@ -342,20 +304,20 @@ private:
 	TColor __fastcall fn_IntToColor(int rgb);
 	double __fastcall fn_GetVer();
 	void __fastcall DisplayFromFile(TGdViewer* object, String sFilePath);
+    TBitmap* __fastcall LoadFromWICFile(String sFilePath);
 	void __fastcall DropFiles(TWMDropFiles Message);
 	void __fastcall ExecAction(String value);
 	void __fastcall fn_FindDir(String dir, String name);
 	void __fastcall fn_LoadGdvProperties(TGdViewer* gdv, TMemIniFile* ini);
 	void __fastcall fn_LoadImage(TGdViewer* gv, TFI* fi);
 	void __fastcall LoadImageSpread(TFI* fi1, TFI* fi2);
-	void __fastcall fn_LoadIni();
+
 	void __fastcall fn_LoadLang();
 	void __fastcall RunProcess(String, String);
 	void __fastcall SPI_LoadPlugin(String);
-	void __fastcall fn_SaveIni();
+
 	void __fastcall fn_BackColor(String value);
-	void __fastcall fn_Bmp2in1(Graphics::TBitmap* bmp, String path1,
-		String path2);
+	void __fastcall fn_Bmp2in1(Graphics::TBitmap* bmp, String path1, String path2);
 	void __fastcall fn_DeleteFile(int);
 	void __fastcall fn_EnableMenu(bool value);
 	void __fastcall fn_FileOpenDialog(bool);
@@ -387,7 +349,7 @@ private:
 	void __fastcall fn_ScrollBar(bool);
 	void __fastcall fn_SlideShow();
 	void __fastcall fn_Sort(SortOrder, bool);
-	void __fastcall fn_SpreadView(int);
+	void __fastcall fn_ViewEngine(int);
 	void __fastcall fn_StatusBar(bool);
 	void __fastcall fn_StatusText();
 	void __fastcall fn_ToolBar(bool);
@@ -403,8 +365,11 @@ private:
 	void __fastcall TForm1::fn_LoadRecent();
 	void __fastcall TForm1::fn_AddRecent(String path);
 
-	BEGIN_MESSAGE_MAP VCL_MESSAGE_HANDLER(WM_DROPFILES, TWMDropFiles, DropFiles)
-END_MESSAGE_MAP(TForm) public:
+	BEGIN_MESSAGE_MAP
+	VCL_MESSAGE_HANDLER(WM_DROPFILES, TWMDropFiles, DropFiles)
+	END_MESSAGE_MAP(TForm)
+
+   public:
 	// User declarations
 	__fastcall TForm1(TComponent* Owner);
 
@@ -413,10 +378,13 @@ END_MESSAGE_MAP(TForm) public:
 	String SlideShowStart, SlideShowStop;
 	String FullPath;
 
-public:
+	void __fastcall fn_LoadIni();
+	void __fastcall fn_SaveIni();
+
+   public:
 	TMemIniFile* ini;
 
-	struct { // Config structure
+	struct {  // Config structure
 		int rot;
 		bool asc;
 		bool Glass;
@@ -430,7 +398,7 @@ public:
 		String TitleText;
 		String StatusText;
 		String Ext;
-		int SpreadView;
+		int ViewEngine;
 		int CurGdv;
 	}
 

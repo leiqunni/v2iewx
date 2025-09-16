@@ -4,22 +4,21 @@
 
 //---------------------------------------------------------------------------
 #include <Classes.hpp>
-#include <Controls.hpp>
-#include <StdCtrls.hpp>
-#include <Forms.hpp>
 #include <ComCtrls.hpp>
-#include <XPMan.hpp>
-#include <Grids.hpp>
-#include <ValEdit.hpp>
+#include <Controls.hpp>
 #include <ExtCtrls.hpp>
+#include <Forms.hpp>
+#include <Grids.hpp>
+#include <StdCtrls.hpp>
+#include <ValEdit.hpp>
+#include <XPMan.hpp>
 //#include <GIFImg.hpp>
 #include <inifiles.hpp>
 #include <registry.hpp>
 
 //---------------------------------------------------------------------------
 class TForm3 : public TForm {
-	
-__published:	// IDE-managed Components
+   __published:  // IDE-managed Components
 	TButton* btnCancel;
 	TButton* btnOk;
 	TPanel* pnlButton;
@@ -59,17 +58,15 @@ __published:	// IDE-managed Components
 	void __fastcall cmbActionChange(TObject* Sender);
 	void __fastcall btnSendToClick(TObject* Sender);
 
-private:	// User declarations
+   private:  // User declarations
 	void __fastcall FileAssociate(String extension, String fileType, String description, String iclNum);
 	void __fastcall LoadIniFile();
 	void __fastcall SaveIniFile();
 
-public:		// User declarations
+   public:  // User declarations
 	__fastcall TForm3(TComponent* Owner);
-
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm3* Form3;
 //---------------------------------------------------------------------------
 #endif
-

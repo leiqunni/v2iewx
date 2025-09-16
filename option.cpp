@@ -16,3 +16,25 @@ __fastcall TForm3::TForm3(TComponent* Owner) : TForm(Owner) {
 	edtExt->Text = Form1->conf.Ext;
 }
 // ---------------------------------------------------------------------------
+
+void __fastcall TForm3::btnCancelClick(TObject* Sender) {
+	this->Close();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm3::btnOkClick(TObject* Sender) {
+	Form1->conf.TitleText = edtTitle->Text;
+	Form1->conf.StatusText = edtStatus->Text;
+	Form1->conf.Ext = edtExt->Text;
+	Form1->fn_SaveIni();
+	this->Close();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm3::btnApplyClick(TObject* Sender) {
+	Form1->conf.TitleText = edtTitle->Text;
+	Form1->conf.StatusText = edtStatus->Text;
+	Form1->conf.Ext = edtExt->Text;
+	Form1->fn_SaveIni();
+}
+//---------------------------------------------------------------------------
